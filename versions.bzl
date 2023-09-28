@@ -1,8 +1,5 @@
 
 VERSIONS = {
-    # This should match the version in `.ruby-version`
-    # It must also be availble, and preferably the default here:
-    #  https://github.com/netlify/build-image/blob/focal/included_software.md
     "python": "3.10",
     "aspect_bazel_lib": {
         "type": "github_archive",
@@ -12,20 +9,11 @@ VERSIONS = {
         "url": "https://github.com/{repo}/archive/{version}.tar.gz",
         "strip_prefix": "bazel-lib-{version}",
     },
-    "com_github_twbs_bootstrap": {
-        "type": "github_archive",
-        "repo": "twbs/bootstrap",
-        "version": "5.1.3",
-        "sha256": "55b951db46e1d69b4236494122fe559716a76c4b8a418c11f3fed6abc2d4de3f",
-        "url": "https://github.com/{repo}/archive/refs/tags/v{version}.tar.gz",
-        "strip_prefix": "bootstrap-{version}",
-        "build_file": "@envoy-website//bazel:bootstrap.BUILD",
-    },
     "envoy": {
         "type": "github_archive",
         "repo": "envoyproxy/envoy",
-        "version": "079a1ce5fab5d073b0be0f5753643e6d97d91d10",
-        "sha256": "0e66513fb786462f07c4bc47f8a11858cf1aa5d90629e34294b8cc37b300de4a",
+        "version": "4512e1d330f6d0b6b0253031cb7a54628d371086",
+        "sha256": "2bd25fc803cfe228734366e07678cf48a37d73c7c809cf84743ef0ec7d74a7a7",
         "url": "https://github.com/{repo}/archive/{version}.tar.gz",
         "strip_prefix": "envoy-{version}",
     },
