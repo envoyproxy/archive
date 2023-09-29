@@ -1,0 +1,25 @@
+name: Sync Envoy website
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: envoyproxy/toolshed/gh-actions/dispatch@actions-v0.0.18
+      with:
+        app_id: ${{ secrets.ENVOY_CI_SYNC_APP_ID }}
+        key: "${{ secrets.ENVOY_CI_SYNC_APP_KEY }}"
+        ref: main
+        repository: envoyproxy/envoy-website
+        workflow: envoy-sync.yaml
