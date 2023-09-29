@@ -1,4 +1,4 @@
-workspace(name = "envoy-website")
+workspace(name = "envoy_archive")
 
 load(":archive.bzl", "load_archives")
 load_archives()
