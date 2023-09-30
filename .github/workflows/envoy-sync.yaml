@@ -49,16 +49,3 @@ jobs:
         ENVOY_SRC_DIR: ../envoy
         COMMITTER_NAME: "update-envoy[bot]"
         COMMITTER_EMAIL: "135279899+update-envoy[bot]@users.noreply.github.com"
-
-  publish_website:
-    runs-on: ubuntu-22.04
-    needs:
-    - sync
-    steps:
-    - uses: envoyproxy/toolshed/gh-actions/dispatch@actions-v0.0.18
-      with:
-        app_id: ${{ secrets.ENVOY_CI_SYNC_APP_ID }}
-        key: "${{ secrets.ENVOY_CI_SYNC_APP_KEY }}"
-        ref: main
-        repository: envoyproxy/envoy-website
-        workflow: envoy-sync.yaml
