@@ -22,4 +22,4 @@ jobs:
         key: "${{ secrets.ENVOY_CI_SYNC_APP_KEY }}"
         ref: main
         repository: envoyproxy/envoy-website
-        workflow: envoy-sync.yaml
+        workflow: archive-sync.yaml
