@@ -5,6 +5,13 @@ permissions:
 
 on:
   workflow_dispatch:
+    # This is not used but is required by the website envoy-sync.yml
+    # so added here for compatibility
+    inputs:
+      commit_sha:
+        type: string
+        required: false
+        default: ""
 
 concurrency:
   group: ${{ github.workflow }}
