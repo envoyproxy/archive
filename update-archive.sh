@@ -40,7 +40,7 @@ archive_docs () {
     mkdir -p "${DOCS_FOLDER}/${version}"
     build_docs "${version}"
     git add "${DOCS_FOLDER}/${version}"
-    git commit "${DOCS_FOLDER}/${version}" -m "archive: Add documentation (v${version})"
+    git commit "${DOCS_FOLDER}/${version}" -m "archive: Add documentation (${version})"
 }
 
 SHOULD_PUSH=
