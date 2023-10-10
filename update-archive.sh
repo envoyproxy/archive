@@ -26,10 +26,10 @@ fi
 build_docs () {
     local version="$1"
     cd "${ENVOY_SRC}" || exit 1
-    git checkout "v${version}"
+    git checkout "${version}"
     export DOCS_BUILD_RELEASE=1
     ./docs/build.sh
-    mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/v${version}"
+    mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/${version}"
     rm -rf generated
     cd - || exit 1
 }
@@ -37,20 +37,20 @@ build_docs () {
 archive_docs () {
     local version="$1"
     echo "Archiving docs: ${version}"
-    mkdir -p "${DOCS_FOLDER}/v${version}"
+    mkdir -p "${DOCS_FOLDER}/${version}"
     build_docs "${version}"
-    git add "${DOCS_FOLDER}/v${version}"
-    git commit "${DOCS_FOLDER}/v${version}" -m "archive: Add documentation (v${version})"
+    git add "${DOCS_FOLDER}/${version}"
+    git commit "${DOCS_FOLDER}/${version}" -m "archive: Add documentation (v${version})"
 }
 
 SHOULD_PUSH=
 
 for version in "${RELEASES[@]}"; do
-    if [[ -e "${DOCS_FOLDER}/v${version}" ]]; then
+    if [[ -e "${DOCS_FOLDER}/${version}" ]]; then
         continue
     fi
     minor="${version%.*}"
-    if [[ " ${STABLES[*]} " =~ " $minor " ]]; then
+    if [[ " ${STABLES[*]} " =~ " ${minor:1} " ]]; then
         archive_docs "$version"
         SHOULD_PUSH=1
     fi
