@@ -28,8 +28,11 @@ build_docs () {
     cd "${ENVOY_SRC}" || exit 1
     git checkout "${version}"
     export DOCS_BUILD_RELEASE=1
-    # TODO(phlax): make this work with all current branches
-    ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
+    if [[ "$version" ~= ^(1.25|1.24)\..* ]]; then
+        ./docs/build.sh
+    else
+        ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
+    fi
     mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/${version}"
     rm -rf generated
     cd - || exit 1
