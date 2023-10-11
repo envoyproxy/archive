@@ -28,7 +28,8 @@ build_docs () {
     cd "${ENVOY_SRC}" || exit 1
     git checkout "${version}"
     export DOCS_BUILD_RELEASE=1
-    ./docs/build.sh
+    # TODO(phlax): make this work with all current branches
+    ./ci/do_ci.sh docs
     mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/${version}"
     rm -rf generated
     cd - || exit 1
