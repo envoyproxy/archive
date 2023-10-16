@@ -28,7 +28,7 @@ build_docs () {
     cd "${ENVOY_SRC}" || exit 1
     git checkout "${version}"
     export DOCS_BUILD_RELEASE=1
-    if [[ "$version" ~= ^(1.25|1.24)\..* ]]; then
+    if [[ "$version" =~ ^(1.25|1.24)\..* ]]; then
         ./docs/build.sh
     else
         ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
