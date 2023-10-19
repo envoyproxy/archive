@@ -52,6 +52,9 @@ jobs:
 
     - run: |
         cd archive
+        ENVOY_VERSION="$(git -C ../envoy rev-parse HEAD)"
+        echo "Syncing Envoy -> ${ENVOY_VERSION}"
+        bazel run //bazel:update envoy "${ENVOY_VERSION}"
         ./update-archive.sh
       env:
         ENVOY_SRC_DIR: ../envoy
