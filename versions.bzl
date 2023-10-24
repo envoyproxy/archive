@@ -1,14 +1,6 @@
 
 VERSIONS = {
     "python": "3.10",
-    "aspect_bazel_lib": {
-        "type": "github_archive",
-        "repo": "aspect-build/bazel-lib",
-        "version": "fcf1db5cd5acabae98009a26589dd097c6baa95d",
-        "sha256": "3d8c76cff1486f0fc07fdb6969e01b865cdbd9379ea7feac1b223e73589409f1",
-        "urls": ["https://github.com/{repo}/archive/{version}.tar.gz"],
-        "strip_prefix": "bazel-lib-{version}",
-    },
     "envoy": {
         "type": "github_archive",
         "repo": "envoyproxy/envoy",
