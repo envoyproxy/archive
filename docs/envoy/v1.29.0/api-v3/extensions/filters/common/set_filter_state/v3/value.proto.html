@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set-Filter-State filter state value (proto) &mdash; envoy tag-v1.29.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js?v=d00258e4"></script>
+        <script src="../../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="Common messages (XDS)" href="../../../../../common_messages/common_messages_xds.html" />
+    <link rel="prev" title="UDP socket config (proto)" href="../../../../../config/core/v3/udp_socket_config.proto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                tag-v1.29.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../api/api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/api_supported_versions.html">Supported API versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../api.html">v3 API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../bootstrap/bootstrap.html">Bootstrap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../clusters/clusters.html">Clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../http_routes/http_routes.html">HTTP route management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../config/config.html">Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../admin/admin.html">Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../data/data.html">Envoy data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../service/service.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../../common_messages/common_messages.html">Common messages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../common/async_files/v3/async_file_manager.proto.html">AsyncFileManager configuration (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/backoff.proto.html">Backoff strategy (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../service/discovery/v3/discovery.proto.html">Common discovery API components (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../fault/v3/fault.proto.html">Common fault injection types (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/base.proto.html">Common types (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../matcher/action/v3/skip_action.proto.html">Common match actions (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/common_inputs/network/v3/network_inputs.proto.html">Common network matching inputs (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../common/ratelimit/v3/ratelimit.proto.html">Common rate limit components (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/common_inputs/ssl/v3/ssl_inputs.proto.html">Common SSL matching inputs (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/config_source.proto.html">Configuration sources (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/input_matchers/consistent_hashing/v3/consistent_hashing.proto.html">Consistent hashing matcher (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../network/socket_interface/v3/default_socket_interface.proto.html">Default socket interface configuration (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/common_inputs/environment_variable/v3/input.proto.html">Environment variable input (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/extension.proto.html">Extension configuration (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../common/matching/v3/extension_matcher.proto.html">Extension matcher (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../dependency/v3/dependency.proto.html">Filter dependency specification (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../regex_engines/v3/google_re2.proto.html">Google RE2 (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/grpc_method_list.proto.html">gRPC method list (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/http_service.proto.html">HTTP services (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/grpc_service.proto.html">gRPC services (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../key_value/file_based/v3/config.proto.html">Key/value file-based store storage plugin (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/common/key_value/v3/config.proto.html">Key/value store storage plugin (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/common/mutation_rules/v3/mutation_rules.proto.html">Header mutation rules (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../early_data/v3/default_early_data_policy.proto.html">HTTP request early data policy (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/http_uri.proto.html">HTTP service URI  (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/input_matchers/ip/v3/ip.proto.html">IP matcher (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../matching/input_matchers/runtime_fraction/v3/runtime_fraction.proto.html">Runtime matcher (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/address.proto.html">Network addresses (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/protocol.proto.html">Protocol options (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/proxy_protocol.proto.html">Proxy protocol (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/resolver.proto.html">Resolver (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/socket_option.proto.html">Socket option (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/substitution_format_string.proto.html">Substitution format string (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/core/v3/udp_socket_config.proto.html">UDP socket config (proto)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Set-Filter-State filter state value (proto)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../common_messages/common_messages_xds.html">Common messages (XDS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../types/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api-docs/xds_protocol.html">xDS REST and gRPC protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/client_features.html">Well Known Client Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../../api/api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../api.html">v3 API reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../common_messages/common_messages.html">Common messages</a></li>
+      <li class="breadcrumb-item active">Set-Filter-State filter state value (proto)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/api-v3/extensions/filters/common/set_filter_state/v3/value.proto.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="set-filter-state-filter-state-value-proto">
+<span id="envoy-v3-api-file-envoy-extensions-filters-common-set-filter-state-v3-value-proto"></span><h1>Set-Filter-State filter state value (proto)<a class="headerlink" href="#set-filter-state-filter-state-value-proto" title="Permalink to this heading"></a></h1>
+<section id="extensions-filters-common-set-filter-state-v3-filterstatevalue">
+<span id="envoy-v3-api-msg-extensions-filters-common-set-filter-state-v3-filterstatevalue"></span><h2>extensions.filters.common.set_filter_state.v3.FilterStateValue<a class="headerlink" href="#extensions-filters-common-set-filter-state-v3-filterstatevalue" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/envoyproxy/envoy/blob/v1.29.0/api/envoy/extensions/filters/common/set_filter_state/v3/value.proto#L19">[extensions.filters.common.set_filter_state.v3.FilterStateValue proto]</a></p>
+<p>A filter state key and value pair.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;object_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;factory_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;format_string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;read_only&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;shared_with_upstream&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;skip_if_empty&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-object-key">
+<dt>object_key</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) Filter state object key. The key is used to lookup the object factory, unless <a class="reference internal" href="#envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-factory-key"><span class="std std-ref">factory_key</span></a> is set. See
+<a class="reference internal" href="../../../../../../configuration/advanced/well_known_filter_state.html#well-known-filter-state"><span class="std std-ref">the well-known filter state keys</span></a> for a list of valid object keys.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-factory-key">
+<dt>factory_key</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Optional filter object factory lookup key. See <a class="reference internal" href="../../../../../../configuration/advanced/well_known_filter_state.html#well-known-filter-state"><span class="std std-ref">the well-known filter state keys</span></a>
+for a list of valid factory keys.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-format-string">
+<dt>format_string</dt><dd><p>(<a class="reference internal" href="../../../../../config/core/v3/substitution_format_string.proto.html#envoy-v3-api-msg-config-core-v3-substitutionformatstring"><span class="std std-ref">config.core.v3.SubstitutionFormatString</span></a>, <em>REQUIRED</em>) Uses the <a class="reference internal" href="../../../../../../configuration/observability/access_log/usage.html#config-access-log-format-strings"><span class="std std-ref">format string</span></a> to
+instantiate the filter state object value.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-read-only">
+<dt>read_only</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bool</a>) If marked as read-only, the filter state key value is locked, and cannot
+be overridden by any filter, including this filter.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-shared-with-upstream">
+<dt>shared_with_upstream</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-enum-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream"><span class="std std-ref">extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream</span></a>) Configures the object to be shared with the upstream internal connections. See <a class="reference internal" href="../../../../../../configuration/other_features/internal_listener.html#config-internal-upstream-transport"><span class="std std-ref">internal upstream
+transport</span></a> for more details on the filter state sharing with
+the internal connections.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-common-set-filter-state-v3-filterstatevalue-skip-if-empty">
+<dt>skip_if_empty</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bool</a>) Skip the update if the value evaluates to an empty string.
+This option can be used to supply multiple alternatives for the same filter state object key.</p>
+</dd>
+</dl>
+</section>
+<section id="enum-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream">
+<span id="envoy-v3-api-enum-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream"></span><h2>Enum extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream<a class="headerlink" href="#enum-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/envoyproxy/envoy/blob/v1.29.0/api/envoy/extensions/filters/common/set_filter_state/v3/value.proto#L20">[extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream proto]</a></p>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream-none">
+<dt>NONE</dt><dd><p><em>(DEFAULT)</em> ⁣Object is not shared with the upstream internal connections.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream-once">
+<dt>ONCE</dt><dd><p>⁣Object is shared with the upstream internal connection.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-filters-common-set-filter-state-v3-filterstatevalue-sharedwithupstream-transitive">
+<dt>TRANSITIVE</dt><dd><p>⁣Object is shared with the upstream internal connection and any internal connection upstream from it.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../../../../config/core/v3/udp_socket_config.proto.html" class="btn btn-neutral float-left" title="UDP socket config (proto)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../../../../common_messages/common_messages_xds.html" class="btn btn-neutral float-right" title="Common messages (XDS)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2024, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
