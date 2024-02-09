@@ -1,0 +1,20 @@
+.. _version_history_1.24.12:
+
+1.24.12 (October 16, 2023)
+===========================
+
+
+
+
+
+
+Bug fixes
+---------
+
+*Changes expected to improve the state of the world and are unlikely to have negative effects*
+
+
+
+* **http**: Fixed a bug where processing of deferred streams with the value of ``http.max_requests_per_io_cycle`` more than 1,
+  can cause a crash.
+
