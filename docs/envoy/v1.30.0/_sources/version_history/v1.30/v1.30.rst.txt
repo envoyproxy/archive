@@ -1,0 +1,19 @@
+.. _version_history_v1.30:
+
+v1.30
+-----
+
+Latest release:
+  `1.30.0 <https://github.com/envoyproxy/envoy/releases/tag/v1.30.0>`_ (April 16, 2024)
+
+Initial release date:
+  April 16, 2024
+
+
+.. toctree::
+  :titlesonly:
+  :maxdepth: 2
+  :caption: Changelog
+
+  v1.30.0
+
