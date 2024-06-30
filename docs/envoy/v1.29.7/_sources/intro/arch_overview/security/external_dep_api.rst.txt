@@ -1,0 +1,19 @@
+External dependencies: ``api``
+==============================
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `bazel-skylib <https://github.com/bazelbuild/bazel-skylib>`__, `1.5.0 <https://github.com/bazelbuild/bazel-skylib/releases/tag/1.5.0>`__, 2023-11-06, , `Apache-2.0 <https://github.com/bazelbuild/bazel-skylib/blob/1.5.0/LICENSE>`__
+  `buf <https://buf.build>`__, `1.28.1 <https://github.com/bufbuild/buf/releases/tag/v1.28.1>`__, 2023-11-15, , `Apache-2.0 <https://github.com/bufbuild/buf/blob/v1.28.1/LICENSE>`__
+  `Go rules for Bazel <https://github.com/bazelbuild/rules_go>`__, `0.39.1 <https://github.com/bazelbuild/rules_go/releases/tag/v0.39.1>`__, 2023-04-20, , `Apache-2.0 <https://github.com/bazelbuild/rules_go/blob/v0.39.1/LICENSE.txt>`__
+  `Google APIs <https://github.com/googleapis/googleapis>`__, `114a745 <https://github.com/googleapis/googleapis/tree/114a745b2841a044e98cdbb19358ed29fcf4a5f1>`__, 2023-01-10, , `Apache-2.0 <https://github.com/googleapis/googleapis/blob/114a745b2841a044e98cdbb19358ed29fcf4a5f1/LICENSE>`__
+  `OpenCensus Proto <https://github.com/census-instrumentation/opencensus-proto>`__, `0.4.1 <https://github.com/census-instrumentation/opencensus-proto/releases/tag/v0.4.1>`__, 2022-09-23, , `Apache-2.0 <https://github.com/census-instrumentation/opencensus-proto/blob/v0.4.1/LICENSE>`__
+  `OpenTelemetry Proto <https://github.com/open-telemetry/opentelemetry-proto>`__, `1.0.0 <https://github.com/open-telemetry/opentelemetry-proto/releases/tag/v1.0.0>`__, 2023-07-03, , `Apache-2.0 <https://github.com/open-telemetry/opentelemetry-proto/blob/v1.0.0/LICENSE>`__
+  `Prometheus client model <https://github.com/prometheus/client_model>`__, `0.5.0 <https://github.com/prometheus/client_model/releases/tag/v0.5.0>`__, 2023-10-03, , `Apache-2.0 <https://github.com/prometheus/client_model/blob/v0.5.0/LICENSE>`__
+  `Protobuf Rules for Bazel <https://github.com/bazelbuild/rules_proto>`__, `4.0.0 <https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0>`__, 2021-09-15, , `Apache-2.0 <https://github.com/bazelbuild/rules_proto/blob/4.0.0/LICENSE>`__
+  `protoc-gen-validate (PGV) <https://github.com/bufbuild/protoc-gen-validate>`__, `1.0.2 <https://github.com/bufbuild/protoc-gen-validate/releases/tag/v1.0.2>`__, 2023-06-26, , `Apache-2.0 <https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/LICENSE>`__
+  `xDS API <https://github.com/cncf/xds>`__, `3a472e5 <https://github.com/cncf/xds/tree/3a472e524827f72d1ad621c4983dd5af54c46776>`__, 2023-11-16, , `Apache-2.0 <https://github.com/cncf/xds/blob/3a472e524827f72d1ad621c4983dd5af54c46776/LICENSE>`__
+  `Zipkin API <https://github.com/openzipkin/zipkin-api>`__, `1.0.0 <https://github.com/openzipkin/zipkin-api/releases/tag/1.0.0>`__, 2020-11-22, , `Apache-2.0 <https://github.com/openzipkin/zipkin-api/blob/1.0.0/LICENSE>`__
+
