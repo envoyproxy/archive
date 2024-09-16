@@ -7,12 +7,16 @@ ENVOY_SRC_DIR="${ENVOY_SRC_DIR:-../envoy}"
 ENVOY_SRC="$(realpath "${ENVOY_SRC_DIR}")"
 WORKSPACE="$(realpath .)"
 DOCS_FOLDER="docs/envoy"
+TEST_ONLY="${TEST_ONLY:-}"
+SHOULD_PUSH=
+
 
 # This should be done in the context of Envoy main (not necessarily in workspace)
-bazel build @envoy_repo//:project
-_RELEASES="$(jq -r '.releases[]' bazel-bin/external/envoy_repo/project.json | tr '\n' ' ')"
+bazel build --config=ci --config=remote-envoy-engflow @envoy_repo//:project
+
+_RELEASES="$(bazel run --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.releases[]' | tr '\n' ' ')"
 read -ra RELEASES <<< $_RELEASES
-_STABLES="$(jq -r '.stable_versions[]' bazel-bin/external/envoy_repo/project.json | tr '\n' ' ')"
+_STABLES="$(bazel run --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.stable_versions[]' | tr '\n' ' ')"
 read -ra STABLES <<< $_STABLES
 
 if [[ -n "$COMMITTER_NAME" ]]; then
@@ -31,6 +35,11 @@ build_docs () {
     if [[ "$version" =~ ^(1.25|1.24)\..* ]]; then
         ./docs/build.sh
     else
+        if git grep -q "remote-envoy-engflow" .bazelrc; then
+            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=remote-envoy-engflow"
+        elif git grep -q "rbe-envoy-engflow" .bazelrc; then
+            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=rbe-envoy-engflow"
+        fi
         ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
     fi
     mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/${version}"
@@ -47,20 +56,27 @@ archive_docs () {
     git commit "${DOCS_FOLDER}/${version}" -m "archive: Add documentation (${version})"
 }
 
-SHOULD_PUSH=
 
 for version in "${RELEASES[@]}"; do
+    minor="${version%.*}"
     if [[ -e "${DOCS_FOLDER}/${version}" ]]; then
         continue
     fi
-    minor="${version%.*}"
     if [[ " ${STABLES[*]} " =~ " ${minor:1} " ]]; then
         archive_docs "$version"
-        SHOULD_PUSH=1
+        if [[ -z "$TEST_ONLY" ]]; then
+            SHOULD_PUSH=1
+        else
+            # this should not have change, but seems there is an issue with tmp paths
+            git show --name-only
+        fi
     fi
 done
+
 
 if [[ -n "$SHOULD_PUSH" ]]; then
     echo "Pushing changes to the archive ..."
     git push origin HEAD:main
+else
+    git status
 fi
