@@ -1,0 +1,49 @@
+name: Rebuild archive (testing)
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+
+jobs:
+  sync:
+    permissions:
+      contents: read
+      packages: read
+    runs-on: ubuntu-22.04
+    steps:
+    # Checkout the Envoy repo
+    - name: 'Checkout Repository'
+      uses: actions/checkout@v4
+      with:
+        repository: envoyproxy/envoy
+        ref: main
+        path: envoy
+        fetch-depth: 0
+
+    # Checkout the repo
+    - name: 'Checkout Repository'
+      uses: actions/checkout@v4
+      with:
+        path: archive
+
+    - run: |
+        cd archive
+        rm -rf docs/envoy/v1.31.1
+        ENVOY_VERSION="$(git -C ../envoy rev-parse HEAD)"
+        echo "Syncing Envoy -> ${ENVOY_VERSION}"
+        bazel run --config=ci --config=remote-envoy-engflow //bazel:update envoy "${ENVOY_VERSION}"
+        ./update-archive.sh
+      env:
+        COMMITTER_NAME: "testing"
+        COMMITTER_EMAIL: "testing@envoyproxy.io"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENVOY_SRC_DIR: ../envoy
+        TEST_ONLY: true
