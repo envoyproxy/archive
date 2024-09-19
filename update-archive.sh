@@ -14,9 +14,12 @@ SHOULD_PUSH=
 # This should be done in the context of Envoy main (not necessarily in workspace)
 bazel build --config=ci --config=remote-envoy-engflow @envoy_repo//:project
 
-_RELEASES="$(bazel run --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.releases[]' | tr '\n' ' ')"
+# TODO: fix upstream stamping of project data
+CACHEBUST=$(git rev-parse HEAD | head -c7)
+
+_RELEASES="$(bazel run --action_env=CACHEBUST=${CACHEBUST} --host_action_env=CACHEBUST=${CACHEBUST} --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.releases[]' | tr '\n' ' ')"
 read -ra RELEASES <<< $_RELEASES
-_STABLES="$(bazel run --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.stable_versions[]' | tr '\n' ' ')"
+_STABLES="$(bazel run --action_env=CACHEBUST=${CACHEBUST} --host_action_env=CACHEBUST=${CACHEBUST} --config=ci --config=remote-envoy-engflow --@envoy//tools/jq:target=@envoy_repo//:project @envoy//tools/jq -- -r '.stable_versions[]' | tr '\n' ' ')"
 read -ra STABLES <<< $_STABLES
 
 if [[ -n "$COMMITTER_NAME" ]]; then
