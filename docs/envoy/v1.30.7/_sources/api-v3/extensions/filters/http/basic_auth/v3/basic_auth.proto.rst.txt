@@ -1,0 +1,118 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/http/basic_auth/v3/basic_auth.proto:
+
+Basic Auth (proto)
+==================
+
+.. _extension_envoy.filters.http.basic_auth:
+
+This extension has the qualified name ``envoy.filters.http.basic_auth``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension is intended to be robust against untrusted downstream traffic. It
+  assumes that the upstream is trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.filters.http <extension_category_envoy.filters.http>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.http.basic_auth.v3.BasicAuth <envoy_v3_api_msg_extensions.filters.http.basic_auth.v3.BasicAuth>`
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.http.basic_auth.v3.BasicAuthPerRoute <envoy_v3_api_msg_extensions.filters.http.basic_auth.v3.BasicAuthPerRoute>`
+
+
+
+Basic Auth :ref:`configuration overview <config_http_filters_basic_auth>`.
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.basic_auth.v3.BasicAuth:
+
+extensions.filters.http.basic_auth.v3.BasicAuth
+-----------------------------------------------
+
+
+:repo:`[extensions.filters.http.basic_auth.v3.BasicAuth proto] <api/envoy/extensions/filters/http/basic_auth/v3/basic_auth.proto#L31>`
+
+Basic HTTP authentication.
+
+Example:
+
+.. code-block:: yaml
+
+  users:
+    inline_string: |-
+      user1:{SHA}hashed_user1_password
+      user2:{SHA}hashed_user2_password
+
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "users": {...},
+    "forward_username_header": ...
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.basic_auth.v3.BasicAuth.users:
+
+
+users
+  (:ref:`config.core.v3.DataSource <envoy_v3_api_msg_config.core.v3.DataSource>`) Username-password pairs used to verify user credentials in the "Authorization" header.
+  The value needs to be the htpasswd format.
+  Reference to https://httpd.apache.org/docs/2.4/programs/htpasswd.html
+
+
+.. _envoy_v3_api_field_extensions.filters.http.basic_auth.v3.BasicAuth.forward_username_header:
+
+
+forward_username_header
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) This field specifies the header name to forward a successfully authenticated user to
+  the backend. The header will be added to the request with the username as the value.
+
+  If it is not specified, the username will not be forwarded.
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.basic_auth.v3.BasicAuthPerRoute:
+
+extensions.filters.http.basic_auth.v3.BasicAuthPerRoute
+-------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.basic_auth.v3.BasicAuthPerRoute proto] <api/envoy/extensions/filters/http/basic_auth/v3/basic_auth.proto#L47>`
+
+Extra settings that may be added to per-route configuration for
+a virtual host or a cluster.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "users": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.basic_auth.v3.BasicAuthPerRoute.users:
+
+
+users
+  (:ref:`config.core.v3.DataSource <envoy_v3_api_msg_config.core.v3.DataSource>`, *REQUIRED*) Username-password pairs for this route.
+
+

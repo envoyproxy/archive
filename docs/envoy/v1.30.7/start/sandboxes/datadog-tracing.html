@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datadog tracing &mdash; envoy tag-v1.30.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=40d0e020"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Double proxy (with mTLS encryption)" href="double-proxy.html" />
+    <link rel="prev" title="CSRF filter" href="csrf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                tag-v1.30.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../start.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../install.html">Installing Envoy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quick-start/index.html">Quick start</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Sandboxes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="setup.html">Setup the sandbox environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brotli.html">Brotli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html">Cache filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cors.html">CORS filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="csrf.html">CSRF filter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Datadog tracing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-build-the-sandbox">Step 1: Build the sandbox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-make-a-request-to-http">Step 2: Make a request to <code class="docutils literal notranslate"><span class="pre">http</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-view-the-traces-in-datadog-ui">Step 3: View the traces in Datadog UI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="double-proxy.html">Double proxy (with <code class="docutils literal notranslate"><span class="pre">mTLS</span></code> encryption)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic-config-cp.html">Dynamic configuration (control plane)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic-config-fs.html">Dynamic configuration (filesystem)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ext_authz.html">External authorization (<code class="docutils literal notranslate"><span class="pre">ext_authz</span></code>) filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fault-injection.html">Fault injection filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="front-proxy.html">Front proxy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="golang-http.html">Golang HTTP filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="golang-network.html">Golang network filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grpc-bridge.html">gRPC bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html">Gzip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaeger-tracing.html">Jaeger tracing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kafka.html">Kafka broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="load-reporting-service.html">Load reporting service (<code class="docutils literal notranslate"><span class="pre">LRS</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locality-load-balancing.html">Locality Weighted Load Balancing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="local_ratelimit.html">Local Ratelimit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lua.html">Lua filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lua-cluster-specifier.html">Lua cluster specifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mysql.html">MySQL filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="opentelemetry.html">OpenTelemetry tracing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="postgres.html">PostgreSQL filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rbac.html">Role Based Access Control (RBAC) - HTTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="redis.html">Redis filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="route-mirror.html">Route mirroring policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="single-page-app.html">Single page React app (with OAuth)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skywalking.html">Skywalking tracing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tls.html">Transport layer security (<code class="docutils literal notranslate"><span class="pre">TLS</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tls-inspector.html">TLS Inspector Listener Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tls-sni.html">TLS Server name indication (<code class="docutils literal notranslate"><span class="pre">SNI</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udp.html">User Datagram Protocol (<code class="docutils literal notranslate"><span class="pre">UDP</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wasm-cc.html">Wasm C++ filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="websocket.html">WebSockets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipkin.html">Zipkin tracing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zstd.html">Zstd</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../docker.html">Using the Envoy Docker Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../building.html">Building</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../start.html">Getting Started</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Sandboxes</a></li>
+      <li class="breadcrumb-item active">Datadog tracing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/start/sandboxes/datadog-tracing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datadog-tracing">
+<span id="install-sandboxes-datadog"></span><h1>Datadog tracing<a class="headerlink" href="#datadog-tracing" title="Permalink to this heading"></a></h1>
+<aside class="sidebar">
+<p class="sidebar-title">Requirements</p>
+<dl class="simple">
+<dt><a class="reference internal" href="setup.html#start-sandboxes-setup"><span class="std std-ref">Sandbox environment</span></a></dt><dd><p>Setup your sandbox environment with Docker and Docker Compose,
+and clone the Envoy repository with Git.</p>
+</dd>
+</dl>
+</aside>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before proceeding, please ensure you have a Datadog account set up. If you don’t already have one, you can <a class="reference external" href="https://app.datadoghq.eu/signup">sign up for Datadog here</a>.</p>
+<dl class="simple">
+<dt><a class="reference internal" href="setup.html#start-sandboxes-setup-curl"><span class="std std-ref">curl</span></a></dt><dd><p>Used to make HTTP requests.</p>
+</dd>
+</dl>
+</div>
+<p>The Datadog tracing sandbox demonstrates Envoy’s <a class="reference internal" href="../../intro/arch_overview/observability/tracing.html#arch-overview-tracing"><span class="std std-ref">request tracing</span></a>
+capabilities using <a class="reference external" href="https://datadoghq.com/">Datadog</a> as the tracing provider.</p>
+<p>This example includes a Datadog Agent which will forward to Datadog’s backend traces sent from Envoy and the upstream HTTP service.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">envoy</span></code> service is exposed on port <code class="docutils literal notranslate"><span class="pre">10000</span></code> and the request flow is as follow:</p>
+<blockquote>
+<div><p>User -&gt; <code class="docutils literal notranslate"><span class="pre">envoy</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">http</span></code></p>
+</div></blockquote>
+<p>The Envoy proxy is configured (<a class="reference download internal" download="" href="../../_downloads/cf14a7f445cd86d955c6b581f9ab1cc9/envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">envoy.yaml</span></code></a>) to generate and propagate tracing context to upstream services and also to
+report tracing data to the Datadog Agent through an Envoy cluster named <code class="docutils literal notranslate"><span class="pre">datadog_agent</span></code>.</p>
+<p>Each span records the latency of upstream API calls as well as information needed to correlate the span with other related spans (e.g., the trace ID).</p>
+<section id="step-1-build-the-sandbox">
+<h2>Step 1: Build the sandbox<a class="headerlink" href="#step-1-build-the-sandbox" title="Permalink to this heading"></a></h2>
+<p>Change directory to <code class="docutils literal notranslate"><span class="pre">examples/datadog-tracing</span></code> in the Envoy repository.</p>
+<p>To build this sandbox example, and start the example services run the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">envoy/examples/datadog-tracing</span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DD_API_KEY</span><span class="o">=</span>&lt;YOUR_API_KEY&gt;
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>pull
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>-d
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>ps
+
+<span class="go">            Name                          Command             State            Ports</span>
+<span class="go">-----------------------------------------------------------------------------------------------------------</span>
+<span class="go">datadog-tracing-dd-agent-1   &quot;/bin/entrypoint.sh&quot;             running      8125/udp, 0.0.0.0:8126-&gt;8126/tcp</span>
+<span class="go">datadog-tracing-envoy-1      &quot;/docker-entrypoint.…&quot;           running      10000/tcp, 0.0.0.0:10000-&gt;1337/tcp</span>
+<span class="go">datadog-tracing-http-1       &quot;node --require dd-t…&quot;           running      0.0.0.0:8080-&gt;8080/tcp</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-make-a-request-to-http">
+<h2>Step 2: Make a request to <code class="docutils literal notranslate"><span class="pre">http</span></code><a class="headerlink" href="#step-2-make-a-request-to-http" title="Permalink to this heading"></a></h2>
+<p>Now send a request to the HTTP service, by calling <a class="reference external" href="http://localhost:10000">http://localhost:10000</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>localhost:10000
+<span class="go">{</span>
+<span class="go">  &quot;service&quot;: &quot;http&quot;,</span>
+<span class="go">  &quot;headers&quot;: {</span>
+<span class="go">    &quot;host&quot;: &quot;localhost:10000&quot;,</span>
+<span class="go">    &quot;user-agent&quot;: &quot;curl/7.81.0&quot;,</span>
+<span class="go">    &quot;accept&quot;: &quot;*/*&quot;,</span>
+<span class="go">    &quot;x-forwarded-for&quot;: &quot;172.16.14.142&quot;,</span>
+<span class="go">    &quot;x-forwarded-proto&quot;: &quot;http&quot;,</span>
+<span class="go">    &quot;x-envoy-internal&quot;: &quot;true&quot;,</span>
+<span class="go">    &quot;x-request-id&quot;: &quot;cfa52b85-8660-9532-b347-bd484da76166&quot;,</span>
+<span class="go">    &quot;x-envoy-expected-rq-timeout-ms&quot;: &quot;15000&quot;,</span>
+<span class="go">    &quot;x-foobar-banana&quot;: &quot;&quot;,</span>
+<span class="go">    &quot;x-datadog-trace-id&quot;: &quot;13944358220549386131&quot;,</span>
+<span class="go">    &quot;x-datadog-parent-id&quot;: &quot;13944358220549386131&quot;,</span>
+<span class="go">    &quot;x-datadog-sampling-priority&quot;: &quot;1&quot;,</span>
+<span class="go">    &quot;x-datadog-tags&quot;: &quot;_dd.p.tid=663fe98600000000,_dd.p.dm=-0&quot;,</span>
+<span class="go">    &quot;traceparent&quot;: &quot;00-663fe98600000000c1844febd4a4ef93-c1844febd4a4ef93-01&quot;,</span>
+<span class="go">    &quot;tracestate&quot;: &quot;dd=s:1;t.dm:-0&quot;</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-view-the-traces-in-datadog-ui">
+<h2>Step 3: View the traces in Datadog UI<a class="headerlink" href="#step-3-view-the-traces-in-datadog-ui" title="Permalink to this heading"></a></h2>
+<p>Log in your Datadog account and navigate to APM tracing page.</p>
+<img alt="../../_images/datadog-ui-landing.png" src="../../_images/datadog-ui-landing.png" />
+<p>Click on any of the trace with the service name <code class="docutils literal notranslate"><span class="pre">envoy</span></code>. From here you can explore the paths taken by the requests, as well as the latency incurred at each hop,
+and other contextual information.</p>
+<img alt="../../_images/datadog-ui-trace.png" src="../../_images/datadog-ui-trace.png" />
+<p>Note the Datadog tracer identifies the Envoy proxies by the name provided in the <code class="docutils literal notranslate"><span class="pre">tracing.provider.typed_config.service_name</span></code> configuration.</p>
+<p>You can also explore the map graph to view relationships between nodes and the path of traces.</p>
+<img alt="../../_images/datadog-ui-map.png" src="../../_images/datadog-ui-map.png" />
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../intro/arch_overview/observability/tracing.html#arch-overview-tracing"><span class="std std-ref">Request tracing</span></a></dt><dd><p>Learn more about using Envoy’s request tracing.</p>
+</dd>
+<dt><a class="reference external" href="https://datadoghq.com/">Datadog</a></dt><dd><p>Datadog website.</p>
+</dd>
+<dt><a class="reference external" href="https://opentelemetry.io/">OpenTelemetry tracing</a></dt><dd><p>OpenTelemetry tracing sandbox.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="csrf.html" class="btn btn-neutral float-left" title="CSRF filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="double-proxy.html" class="btn btn-neutral float-right" title="Double proxy (with mTLS encryption)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2024, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
