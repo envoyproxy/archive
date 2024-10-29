@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebSockets &mdash; envoy tag-v1.29.10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=b846bc20"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Zipkin tracing" href="zipkin.html" />
+    <link rel="prev" title="Wasm C++ filter" href="wasm-cc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                tag-v1.29.10
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../start.html">Getting Started</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Sandboxes</a></li>
+      <li class="breadcrumb-item active">WebSockets</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/start/sandboxes/websocket.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="websockets">
+<span id="install-sandboxes-websocket"></span><h1>WebSockets<a class="headerlink" href="#websockets" title="Permalink to this heading"></a></h1>
+<aside class="sidebar">
+<p class="sidebar-title">Requirements</p>
+<dl class="simple">
+<dt><a class="reference internal" href="setup.html#start-sandboxes-setup"><span class="std std-ref">Sandbox environment</span></a></dt><dd><p>Setup your sandbox environment with Docker and Docker Compose,
+and clone the Envoy repository with Git.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt><a class="reference internal" href="setup.html#start-sandboxes-setup-openssl"><span class="std std-ref">openssl</span></a></dt><dd><p>Generate <code class="docutils literal notranslate"><span class="pre">SSL</span></code> keys and certificates.</p>
+</dd>
+</dl>
+</aside>
+<p>This example walks through some of the ways that Envoy can be configured to proxy WebSockets.</p>
+<p>It demonstrates terminating a WebSocket connection with and without <code class="docutils literal notranslate"><span class="pre">TLS</span></code>, and provides some basic examples
+of proxying to encrypted and non-encrypted upstream sockets.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For the sake of simplicity, the examples provided here do not authenticate any client certificates,
+or validate any of the provided certificates.</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">TLS</span></code>, you are strongly encouraged to <a class="reference internal" href="../quick-start/securing.html#start-quick-start-securing-validation"><span class="std std-ref">validate</span></a>
+all certificates wherever possible.</p>
+<p>You should also <a class="reference internal" href="../quick-start/securing.html#start-quick-start-securing-mtls"><span class="std std-ref">authenticate clients</span></a>
+where you control both sides of the connection, or relevant protocols are available.</p>
+</div>
+<section id="step-1-create-a-certificate-file-for-wss">
+<h2>Step 1: Create a certificate file for wss<a class="headerlink" href="#step-1-create-a-certificate-file-for-wss" title="Permalink to this heading"></a></h2>
+<p>Change directory to <code class="docutils literal notranslate"><span class="pre">examples/websocket</span></code> in the Envoy repository.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">envoy/examples/websocket</span>
+<span class="gp">$ </span>mkdir<span class="w"> </span>-p<span class="w"> </span>certs
+<span class="gp">$ </span>openssl<span class="w"> </span>req<span class="w"> </span>-batch<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>certs/key.pem<span class="w"> </span>-out<span class="w"> </span>certs/cert.pem
+<span class="go">Generating a RSA private key</span>
+<span class="go">..................................................................................................................+++++</span>
+<span class="go">......+++++</span>
+<span class="go">writing new private key to &#39;certs/key.pem&#39;</span>
+<span class="go">-----</span>
+<span class="gp">$ </span>openssl<span class="w"> </span>pkcs12<span class="w"> </span>-export<span class="w"> </span>-passout<span class="w"> </span>pass:<span class="w"> </span>-out<span class="w"> </span>certs/output.pkcs12<span class="w"> </span>-inkey<span class="w"> </span>certs/key.pem<span class="w"> </span>-in<span class="w"> </span>certs/cert.pem
+</pre></div>
+</div>
+</section>
+<section id="step-2-build-and-start-the-sandbox">
+<h2>Step 2: Build and start the sandbox<a class="headerlink" href="#step-2-build-and-start-the-sandbox" title="Permalink to this heading"></a></h2>
+<p>This starts four proxies listening on <code class="docutils literal notranslate"><span class="pre">localhost</span></code> ports <code class="docutils literal notranslate"><span class="pre">10000</span></code>, <code class="docutils literal notranslate"><span class="pre">15000</span></code>, <code class="docutils literal notranslate"><span class="pre">20000</span></code>, <code class="docutils literal notranslate"><span class="pre">30000</span></code>.</p>
+<p>It also starts two upstream services, one <code class="docutils literal notranslate"><span class="pre">ws</span></code> and one <code class="docutils literal notranslate"><span class="pre">wss</span></code>.</p>
+<p>The upstream services listen on the internal Docker network on ports <code class="docutils literal notranslate"><span class="pre">80</span></code> and <code class="docutils literal notranslate"><span class="pre">443</span></code> respectively.</p>
+<p>The socket servers are very trivial implementations, that simply output <code class="docutils literal notranslate"><span class="pre">[ws]</span> <span class="pre">HELO</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[wss]</span> <span class="pre">HELO</span></code> in response to any input.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>pull
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>-d
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>ps
+
+<span class="go">            Name                             Command               State            Ports</span>
+<span class="go">---------------------------------------------------------------------------------------------------</span>
+<span class="go">websocket_proxy-ws_1                /docker-entrypoint.sh /usr ... Up      0.0.0.0:10000-&gt;10000/tcp</span>
+<span class="go">websocket_proxy-ws-route_1          /docker-entrypoint.sh /usr ... Up      0.0.0.0:15000-&gt;10000/tcp</span>
+<span class="go">websocket_proxy-wss_1               /docker-entrypoint.sh /usr ... Up      0.0.0.0:20000-&gt;10000/tcp</span>
+<span class="go">websocket_proxy-wss-passthrough_1   /docker-entrypoint.sh /usr ... Up      0.0.0.0:30000-&gt;10000/tcp</span>
+<span class="go">websocket_service-ws_1              websocat -E ws-listen:0.0. ... Up</span>
+<span class="go">websocket_service-wss_1             websocat wss-listen:0.0.0. ... Up</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-test-proxying-ws-ws">
+<h2>Step 3: Test proxying <code class="docutils literal notranslate"><span class="pre">ws</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">ws</span></code><a class="headerlink" href="#step-3-test-proxying-ws-ws" title="Permalink to this heading"></a></h2>
+<p>The proxy listening on port <code class="docutils literal notranslate"><span class="pre">10000</span></code> terminates the WebSocket connection without <code class="docutils literal notranslate"><span class="pre">TLS</span></code> and then proxies
+to an upstream socket, also without <code class="docutils literal notranslate"><span class="pre">TLS</span></code>.</p>
+<p>In order for Envoy to terminate the WebSocket connection, the
+<a class="reference internal" href="../../api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto.html#envoy-v3-api-msg-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-upgradeconfig"><span class="std std-ref">upgrade_configs</span></a>
+in <a class="reference internal" href="../../api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto.html#envoy-v3-api-msg-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager"><span class="std std-ref">HttpConnectionManager</span></a>
+must be set, as can be seen in the provided <a class="reference download internal" download="" href="../../_downloads/1ab278c53aed7b4844c89c7856334949/envoy-ws.yaml"><code class="xref download docutils literal notranslate"><span class="pre">ws</span> <span class="pre">-&gt;</span> <span class="pre">ws</span> <span class="pre">configuration</span></code></a>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">static_resources</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nt">listeners</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos"> 5</span><span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
+<span class="linenos"> 6</span><span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filters</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.network.http_connection_manager</span>
+<span class="linenos">10</span><span class="w">        </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">          </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span>
+<span class="linenos">12</span><span class="w">          </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress_ws_to_ws</span>
+<span class="hll"><span class="linenos">13</span><span class="w">          </span><span class="nt">upgrade_configs</span><span class="p">:</span>
+</span><span class="hll"><span class="linenos">14</span><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">upgrade_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">websocket</span>
+</span><span class="linenos">15</span><span class="w">          </span><span class="nt">route_config</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local_route</span>
+<span class="linenos">17</span><span class="w">            </span><span class="nt">virtual_hosts</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+<span class="linenos">19</span><span class="w">              </span><span class="nt">domains</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
+<span class="linenos">21</span><span class="w">              </span><span class="nt">routes</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">                  </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="linenos">24</span><span class="w">                </span><span class="nt">route</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">                  </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">service_ws</span>
+<span class="linenos">26</span><span class="w">          </span><span class="nt">http_filters</span><span class="p">:</span>
+<span class="linenos">27</span><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.http.router</span>
+<span class="linenos">28</span><span class="w">            </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">29</span><span class="w">              </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.filters.http.router.v3.Router</span>
+</pre></div>
+</div>
+<p>You can start an interactive session with the socket as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span>--network<span class="o">=</span>host<span class="w"> </span>solsson/websocat<span class="w"> </span>ws://localhost:10000
+<span class="go">HELO</span>
+<span class="go">[ws] HELO</span>
+<span class="go">GOODBYE</span>
+<span class="go">[ws] HELO</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">Ctrl-c</span></code> to exit the socket session.</p>
+</section>
+<section id="step-4-test-proxying-ws-ws-on-specific-route">
+<h2>Step 4: Test proxying <code class="docutils literal notranslate"><span class="pre">ws</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">ws</span></code> on specific route<a class="headerlink" href="#step-4-test-proxying-ws-ws-on-specific-route" title="Permalink to this heading"></a></h2>
+<p>The proxy listening on port <code class="docutils literal notranslate"><span class="pre">15000</span></code> terminates the WebSocket connection without <code class="docutils literal notranslate"><span class="pre">TLS</span></code> on specific route <code class="docutils literal notranslate"><span class="pre">/ws</span></code> and then proxies
+to an upstream socket, also without <code class="docutils literal notranslate"><span class="pre">TLS</span></code>.</p>
+<p>In order for Envoy to terminate the WebSocket connection, the
+<a class="reference internal" href="../../api-v3/config/route/v3/route_components.proto.html#envoy-v3-api-msg-config-route-v3-routeaction-upgradeconfig"><span class="std std-ref">upgrade_configs</span></a>
+in <a class="reference internal" href="../../api-v3/config/route/v3/route_components.proto.html#envoy-v3-api-msg-config-route-v3-routeaction"><span class="std std-ref">RouteAction</span></a>
+must be set, as can be seen in the provided <a class="reference download internal" download="" href="../../_downloads/dfdbc2bdb1098702ec8e62db4ac675af/envoy-ws-route.yaml"><code class="xref download docutils literal notranslate"><span class="pre">ws</span> <span class="pre">-&gt;</span> <span class="pre">ws</span> <span class="pre">configuration</span></code></a>:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/dfdbc2bdb1098702ec8e62db4ac675af/envoy-ws-route.yaml"><code class="xref download docutils literal notranslate"><span class="pre">envoy-ws-route.yaml</span></code></a></span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="w">              </span><span class="nt">routes</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">                  </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/ws&quot;</span>
+<span class="linenos">4</span><span class="w">                </span><span class="nt">route</span><span class="p">:</span>
+<span class="linenos">5</span><span class="w">                  </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">service_ws</span>
+<span class="hll"><span class="linenos">6</span><span class="w">                  </span><span class="nt">upgrade_configs</span><span class="p">:</span>
+</span><span class="hll"><span class="linenos">7</span><span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">upgrade_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">websocket</span>
+</span></pre></div>
+</div>
+</div>
+<p>You can start an interactive session with the socket as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span>--network<span class="o">=</span>host<span class="w"> </span>solsson/websocat<span class="w"> </span>ws://localhost:15000/ws
+<span class="go">HELO</span>
+<span class="go">[ws] HELO</span>
+<span class="go">GOODBYE</span>
+<span class="go">[ws] HELO</span>
+
+<span class="gp">$ </span>curl<span class="w"> </span>http://localhost:15000
+<span class="go">NotWebSocket</span>
+
+<span class="gp">$ </span>curl<span class="w"> </span>http://localhost:15000/ws
+<span class="go">Only WebSocket connections are welcome here</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">Ctrl-c</span></code> to exit the socket session.</p>
+</section>
+<section id="step-5-test-proxying-wss-wss">
+<h2>Step 5: Test proxying <code class="docutils literal notranslate"><span class="pre">wss</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">wss</span></code><a class="headerlink" href="#step-5-test-proxying-wss-wss" title="Permalink to this heading"></a></h2>
+<p>The proxy listening on port <code class="docutils literal notranslate"><span class="pre">20000</span></code> terminates the WebSocket connection with <code class="docutils literal notranslate"><span class="pre">TLS</span></code> and then proxies
+to an upstream <code class="docutils literal notranslate"><span class="pre">TLS</span></code> WebSocket.</p>
+<p>In addition to the
+<a class="reference internal" href="../../api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto.html#envoy-v3-api-msg-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-upgradeconfig"><span class="std std-ref">upgrade_configs</span></a>
+in <a class="reference internal" href="../../api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto.html#envoy-v3-api-msg-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager"><span class="std std-ref">HttpConnectionManager</span></a>,
+the <a class="reference download internal" download="" href="../../_downloads/e04701b0321b373ba1bf910a733c47f3/envoy-wss.yaml"><code class="xref download docutils literal notranslate"><span class="pre">wss</span> <span class="pre">-&gt;</span> <span class="pre">wss</span> <span class="pre">configuration</span></code></a> adds a <code class="docutils literal notranslate"><span class="pre">TLS</span></code>
+<a class="reference internal" href="../../api-v3/extensions/transport_sockets/tls/v3/tls.proto.html#extension-envoy-transport-sockets-tls"><span class="std std-ref">transport_socket</span></a> to both the
+<a class="reference internal" href="../../api-v3/config/listener/v3/listener.proto.html#envoy-v3-api-msg-config-listener-v3-listener"><span class="std std-ref">listener</span></a> and the
+<a class="reference internal" href="../../api-v3/config/cluster/v3/cluster.proto.html#envoy-v3-api-msg-config-cluster-v3-cluster"><span class="std std-ref">cluster</span></a>.</p>
+<p>You can start an interactive session with the socket as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span>--network<span class="o">=</span>host<span class="w"> </span>solsson/websocat<span class="w"> </span>--insecure<span class="w"> </span>wss://localhost:20000
+<span class="go">HELO</span>
+<span class="go">[wss] HELO</span>
+<span class="go">GOODBYE</span>
+<span class="go">[wss] HELO</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">Ctrl-c</span></code> to exit the socket session.</p>
+</section>
+<section id="step-6-test-proxying-wss-passthrough">
+<h2>Step 6: Test proxying <code class="docutils literal notranslate"><span class="pre">wss</span></code> passthrough<a class="headerlink" href="#step-6-test-proxying-wss-passthrough" title="Permalink to this heading"></a></h2>
+<p>The proxy listening on port <code class="docutils literal notranslate"><span class="pre">30000</span></code> passes through all <code class="docutils literal notranslate"><span class="pre">TCP</span></code> traffic to an upstream <code class="docutils literal notranslate"><span class="pre">TLS</span></code> WebSocket.</p>
+<p>The <a class="reference download internal" download="" href="../../_downloads/3b87dc0b24e3aef0deb1b30071fcec25/envoy-wss-passthrough.yaml"><code class="xref download docutils literal notranslate"><span class="pre">wss</span> <span class="pre">passthrough</span> <span class="pre">configuration</span></code></a> requires no <code class="docutils literal notranslate"><span class="pre">TLS</span></code>
+or <code class="docutils literal notranslate"><span class="pre">HTTP</span></code> setup, and instead uses a simple
+<a class="reference internal" href="../../api-v3/extensions/filters/network/tcp_proxy/v3/tcp_proxy.proto.html#envoy-v3-api-msg-extensions-filters-network-tcp-proxy-v3-tcpproxy"><span class="std std-ref">tcp_proxy</span></a>.</p>
+<p>You can start an interactive session with the socket as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span>--network<span class="o">=</span>host<span class="w"> </span>solsson/websocat<span class="w"> </span>--insecure<span class="w"> </span>wss://localhost:30000
+<span class="go">HELO</span>
+<span class="go">[wss] HELO</span>
+<span class="go">GOODBYE</span>
+<span class="go">[wss] HELO</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">Ctrl-c</span></code> to exit the socket session.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../quick-start/securing.html#start-quick-start-securing"><span class="std std-ref">Securing Envoy quick start guide</span></a></dt><dd><p>Outline of key concepts for securing Envoy.</p>
+</dd>
+<dt><a class="reference internal" href="double-proxy.html#install-sandboxes-double-proxy"><span class="std std-ref">Double proxy sandbox</span></a></dt><dd><p>An example of securing traffic between proxies with validation and
+mutual authentication using <code class="docutils literal notranslate"><span class="pre">mTLS</span></code> with non-<code class="docutils literal notranslate"><span class="pre">HTTP</span></code> traffic.</p>
+</dd>
+<dt><a class="reference internal" href="tls.html#install-sandboxes-tls"><span class="std std-ref">TLS sandbox</span></a></dt><dd><p>Examples of various <code class="docutils literal notranslate"><span class="pre">TLS</span></code> termination patterns with Envoy.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wasm-cc.html" class="btn btn-neutral float-left" title="Wasm C++ filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="zipkin.html" class="btn btn-neutral float-right" title="Zipkin tracing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2024, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
