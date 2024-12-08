@@ -4,7 +4,7 @@ v1.29
 -----
 
 Latest release:
-  `1.29.11 <https://github.com/envoyproxy/envoy/releases/tag/v1.29.11>`_ (November 29, 2024)
+  `1.29.11 <https://github.com/envoyproxy/envoy/releases/tag/v1.29.11>`_ (December 8, 2024)
 
 Initial release date:
   January 16, 2024
