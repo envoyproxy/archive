@@ -34,6 +34,8 @@ build_docs () {
     local version="$1"
     cd "${ENVOY_SRC}" || exit 1
     git checkout "${version}"
+    sed -i 's/morganite/mordenite/g' .bazelrc
+    sed -i 's/59f14d4fb373083b9dc8d389f16bbb817b5f936d1d436aa67e16eb6936028a51/fc694942e8a7491dcc1dde1bddf48a31370a1f46fef862bc17acf07c34dc6325/g' bazel/repository_locations.bzl
     export DOCS_BUILD_RELEASE=1
     if [[ "$version" =~ ^(1.25|1.24)\..* ]]; then
         ./docs/build.sh
