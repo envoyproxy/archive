@@ -1,0 +1,9 @@
+[build]
+publish = "_site"
+command = "./build-archive.sh"
+# ignore = "./netlify-should-run.sh"
+
+[build.environment]
+  YARN_VERSION = "1.22.10"
+  NODE_OPTIONS="--max-old-space-size=8192"
+  BAZELISK_HOME="/opt/build/cache/bazelisk"
