@@ -12,6 +12,7 @@ on:
         type: string
         required: false
         default: ""
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}
