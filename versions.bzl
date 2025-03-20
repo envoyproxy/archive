@@ -1,12 +1,20 @@
 
 VERSIONS = {
-    "python": "3.10",
+    "python": "3.12",
     "envoy": {
         "type": "github_archive",
         "repo": "envoyproxy/envoy",
-        "version": "c811a885ef4d02aaa1cce02dde62f0ff6a1b0c38",
-        "sha256": "846281edbf600a473d6379c28a882ec71bfc3a6ca9cafae038eeab19f5a30189",
+        "version": "0b930118d82724d49e15b6a6104bd436a9eabba1",
+        "sha256": "b8506fb2760d9e23830751e01d15517d035c854deee7efd8c4aafb2bc32541ee",
         "urls": ["https://github.com/{repo}/archive/{version}.tar.gz"],
         "strip_prefix": "envoy-{version}",
+    },
+    "rules_python": {
+        "type": "github_archive",
+        "repo": "bazel-contrib/rules_python",
+        "version": "1.0.0",
+        "sha256": "4f7e2aa1eb9aa722d96498f5ef514f426c1f55161c3c9ae628c857a7128ceb07",
+        "urls": ["https://github.com/{repo}/releases/download/{version}/rules_python-{version}.tar.gz"],
+        "strip_prefix": "rules_python-1.0.0",
     },
 }
