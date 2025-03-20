@@ -1,0 +1,50 @@
+.. _envoy_v3_api_file_envoy/extensions/resource_monitors/cpu_utilization/v3/cpu_utilization.proto:
+
+CPU utilization (proto)
+=======================
+
+.. _extension_envoy.resource_monitors.cpu_utilization:
+
+This extension has the qualified name ``envoy.resource_monitors.cpu_utilization``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension does not operate on the data plane and hence is intended to be robust against untrusted traffic.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.resource_monitors <extension_category_envoy.resource_monitors>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig <envoy_v3_api_msg_extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig>`
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig:
+
+extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig
+--------------------------------------------------------------------
+
+
+:repo:`[extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig proto] <api/envoy/extensions/resource_monitors/cpu_utilization/v3/cpu_utilization.proto#L17>`
+
+The CPU utilization resource monitor reports the Envoy process the CPU Utilization of the entire host.
+Today, this only works on Linux and is calculated using the stats in the /proc/stat file.
+
+
+
+
