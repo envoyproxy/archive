@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building an Envoy Docker image &mdash; envoy tag-v1.30.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=65b9dbb5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuration reference" href="../../configuration/configuration.html" />
+    <link rel="prev" title="Building" href="../building.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                tag-v1.30.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../start.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../install.html">Installing Envoy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quick-start/index.html">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sandboxes/index.html">Sandboxes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker.html">Using the Envoy Docker Image</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../building.html">Building</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../building.html#linux-mac-target-requirements">Linux/Mac Target Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building.html#windows-target-requirements">Windows Target Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building.html#detailed-instructions">Detailed instructions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../building.html#modifying-envoy">Modifying Envoy</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Building an Envoy Docker image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../start.html">Getting Started</a></li>
+          <li class="breadcrumb-item"><a href="../building.html">Building</a></li>
+      <li class="breadcrumb-item active">Building an Envoy Docker image</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/start/building/local_docker_build.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-an-envoy-docker-image">
+<span id="install-sandboxes-local-docker-build"></span><h1>Building an Envoy Docker image<a class="headerlink" href="#building-an-envoy-docker-image" title="Permalink to this heading"></a></h1>
+<p>The following steps guide you through building your own Envoy binary, and
+putting that in a clean Ubuntu container.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>These instructions run commands in Docker using <code class="docutils literal notranslate"><span class="pre">ci/run_envoy_docker.sh</span></code>.</p>
+<p>By default this will place bazel run files and any artefacts in <code class="docutils literal notranslate"><span class="pre">/tmp/envoy-docker-build</span></code>.</p>
+<p>You can override this by setting the <code class="docutils literal notranslate"><span class="pre">ENVOY_DOCKER_BUILD_DIR</span></code> env var to a path of your choosing.</p>
+</div>
+<p><strong>Step 1: Build Envoy</strong></p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">envoyproxy/envoy-build</span></code> you will compile Envoy.
+This image has all software needed to build Envoy. From your Envoy directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">src/envoy</span>
+<span class="gp">$ </span>./ci/run_envoy_docker.sh<span class="w"> </span><span class="s1">&#39;./ci/do_ci.sh release&#39;</span>
+</pre></div>
+</div>
+<p>That command will take some time to run because it is compiling an Envoy binary and running tests.</p>
+<p>If your system has limited resources, or you wish to build without running the tests, you can
+also build as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">src/envoy</span>
+<span class="gp">$ </span>./ci/run_envoy_docker.sh<span class="w"> </span><span class="s1">&#39;./ci/do_ci.sh release.server_only&#39;</span>
+</pre></div>
+</div>
+<p>For more information on building and different build targets, please refer to <a class="reference external" href="https://github.com/envoyproxy/envoy/blob/v1.30.11/ci/README.md">ci/README.md</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These instructions for building Envoy use
+<a class="reference external" href="https://hub.docker.com/r/envoyproxy/envoy-build-ubuntu/tags">envoyproxy/envoy-build-ubuntu</a> image.
+You will need 4-5GB of disk space to accommodate this image.</p>
+<p>This script runs as effective root on your host system.</p>
+</div>
+<p><strong>Step 2: Build image with only Envoy binary</strong></p>
+<p>In this step we’ll build the Envoy deployment images.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">docker</span></code> CI target expects a release tarball to have been built previously using one of the steps above.</p>
+</div>
+<p>In order to build Docker inside the Envoy build image we need to set the env var <code class="docutils literal notranslate"><span class="pre">ENVOY_DOCKER_IN_DOCKER</span></code></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">src/envoy/</span>
+<span class="gp">$ </span><span class="nv">ENVOY_DOCKER_IN_DOCKER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>./ci/run_envoy_docker.sh<span class="w"> </span><span class="s1">&#39;./ci/do_ci.sh docker&#39;</span>
+</pre></div>
+</div>
+<p>Now you can use the Envoy image to build the any of the sandboxes by changing
+the <code class="docutils literal notranslate"><span class="pre">FROM</span></code> line in a related Dockerfile.</p>
+<p>This can be particularly useful if you are interested in modifying Envoy, and testing
+your changes.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../building.html" class="btn btn-neutral float-left" title="Building" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../configuration/configuration.html" class="btn btn-neutral float-right" title="Configuration reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
