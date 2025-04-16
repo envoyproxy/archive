@@ -34,6 +34,8 @@ jobs:
       with:
         path: archive
 
+    - uses: envoyproxy/toolshed/gh-actions/diskspace@actions-v0.0.18
+
     - run: |
         cd archive
         rm -rf docs/envoy/v1.31.1

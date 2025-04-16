@@ -52,6 +52,8 @@ jobs:
         token: ${{ steps.appauth.outputs.token  }}
         path: archive
 
+    - uses: envoyproxy/toolshed/gh-actions/diskspace@actions-v0.0.18
+
     - run: |
         cd archive
         ENVOY_VERSION="$(git -C ../envoy rev-parse HEAD)"
