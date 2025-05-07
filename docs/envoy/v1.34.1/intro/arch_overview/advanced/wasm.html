@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasm &mdash; envoy tag-v1.34.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=e9f00b5f"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Dynamic modules" href="dynamic_modules.html" />
+    <link rel="prev" title="Matching Filter Chains in Listeners" href="matching/matching_listener.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../intro.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../what_is_envoy.html">What is Envoy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../arch_overview.html">Architecture overview</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../intro/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../listeners/listeners_toc.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../http/http.html">HTTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../upstream/upstream.html">Upstream clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../observability/observability.html">Observability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/security.html">Security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../operations/operations.html">Operations &amp; configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../other_features/other_features.html">Other features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../other_protocols/other_protocols.html">Other protocols</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="data_sharing_between_filters.html">Sharing data between filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="attributes.html">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="matching/matching.html">Generic Matching</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Wasm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dynamic_modules.html">Dynamic modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../life_of_a_request.html">Life of a Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../deployment_types/deployment_types.html">Deployment types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_help.html">Getting help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../intro.html">Introduction</a></li>
+          <li class="breadcrumb-item"><a href="../arch_overview.html">Architecture overview</a></li>
+          <li class="breadcrumb-item"><a href="advanced.html">Advanced</a></li>
+      <li class="breadcrumb-item active">Wasm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/intro/arch_overview/advanced/wasm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wasm">
+<span id="arch-overview-wasm"></span><h1>Wasm<a class="headerlink" href="#wasm" title="Link to this heading"></a></h1>
+<p>Envoy supports execution of Wasm plugins: the Wasm modules written against the <a class="reference external" href="https://github.com/proxy-wasm/spec">Proxy-Wasm specification</a>, which defines an extension interface through which the modules can implement
+custom extension logic. Currently, the <a class="reference external" href="https://github.com/proxy-wasm/spec/tree/main/abi-versions/v0.2.1">Proxy-Wasm ABI (Application Binary Interface) version 0.2.1</a> is recommended. Wasm offers a portable and compact
+binary executable format that can be compiled once from a variety of languages (<a class="reference external" href="https://github.com/proxy-wasm/proxy-wasm-cpp-sdk">C++</a>, <a class="reference external" href="https://github.com/proxy-wasm/proxy-wasm-rust-sdk">Rust</a>) and
+run anywhere. Please see the <a class="reference internal" href="../../../start/sandboxes/wasm-cc.html#install-sandboxes-wasm-filter"><span class="std std-ref">sandbox example</span></a> for instructions on how to create
+and deploy a Wasm module.</p>
+<p>Envoy provides several extension points at which Wasm plugins can be invoked:</p>
+<ul class="simple">
+<li><p>As an <a class="reference internal" href="../../../api-v3/extensions/filters/http/wasm/v3/wasm.proto.html#envoy-v3-api-msg-extensions-filters-http-wasm-v3-wasm"><span class="std std-ref">HTTP filter</span></a></p></li>
+<li><p>As a <a class="reference internal" href="../../../api-v3/extensions/filters/network/wasm/v3/wasm.proto.html#envoy-v3-api-msg-extensions-filters-network-wasm-v3-wasm"><span class="std std-ref">network-level (L4) filter</span></a></p></li>
+<li><p>As a <a class="reference internal" href="../../../api-v3/extensions/stat_sinks/wasm/v3/wasm.proto.html#envoy-v3-api-msg-extensions-stat-sinks-wasm-v3-wasm"><span class="std std-ref">StatsSink</span></a></p></li>
+<li><p>As an <a class="reference internal" href="../../../api-v3/extensions/access_loggers/wasm/v3/wasm.proto.html#envoy-v3-api-msg-extensions-access-loggers-wasm-v3-wasmaccesslog"><span class="std std-ref">AccessLogger</span></a></p></li>
+<li><p>As a <a class="reference internal" href="../../../api-v3/extensions/wasm/v3/wasm.proto.html#envoy-v3-api-msg-extensions-wasm-v3-wasmservice"><span class="std std-ref">background service</span></a></p></li>
+</ul>
+<p>The particular functions that Envoy invokes on a Wasm plugin depend on the extension point at which it is configured.</p>
+<section id="contexts-plugins-and-vms">
+<h2>Contexts, plugins, and VMs<a class="headerlink" href="#contexts-plugins-and-vms" title="Link to this heading"></a></h2>
+<p>A Wasm context refers to the interface implementation between the host (Envoy) and the guest (Wasm bytecode). For an
+HTTP filter, there are two types of contexts: a <em>root context</em> (context with ID 0) represents the configuration-only
+context, and a <em>per-request context</em> that is created once per each request.</p>
+<p>A Wasm VM refers to the execution instance of a Wasm bytecode module. Multiple VMs can be created for the same bytecode
+when using the <code class="docutils literal notranslate"><span class="pre">vm_id</span></code> field, and they each would have separate per-VM memory. The opposite is also true, the same VM
+can contain multiple implementations for different extensions (plugins), to be used in different contexts. VM sharing
+optimizes the runtime overhead and reduces the total binary size of the bytecode since the extensions can share the
+code.</p>
+<p>A Wasm plugin is the link between the context and the VM. It identifies which Wasm VM to use for a context, which
+extension to invoke within the Wasm VM execution instance (via the <a class="reference internal" href="../../../api-v3/extensions/wasm/v3/wasm.proto.html#envoy-v3-api-field-extensions-wasm-v3-pluginconfig-root-id"><span class="std std-ref">root_id</span></a> field value), and how to route the configuration call to
+the extension during the xDS update.</p>
+</section>
+<section id="execution-model-for-filters">
+<h2>Execution model for filters<a class="headerlink" href="#execution-model-for-filters" title="Link to this heading"></a></h2>
+<p>At runtime, the Wasm modules are executed inline in the worker threads via a series of stream callbacks as defined by
+the ABI. The worker threads operate independently and do not share the Wasm execution instances and their runtime
+memory. Asynchronous or blocking operations are delegated to Envoy to perform; upon completion, Envoy then invokes a
+separate completion callback on the plugin.</p>
+<p>At configuration time, the Wasm modules are loaded into the Wasm engine on the main thread. A separate Wasm execution
+instance is spawned for each combination of the module binary and the <a class="reference internal" href="../../../api-v3/extensions/wasm/v3/wasm.proto.html#envoy-v3-api-field-extensions-wasm-v3-vmconfig-vm-id"><span class="std std-ref">vm_id</span></a> field value. The instance receives the Wasm configuration for
+each plugin via a callback, possibly repeatedly for each xDS listener encapsulating the Wasm filter. If the callback
+accepts the configuration, the main execution instance is cloned to each worker thread.</p>
+<p>Note that this configuration model is distinct for the Wasm filter. Unlike a regular HTTP filter that is instantiated
+independently for each xDS listener, xDS listeners share the same main Wasm execution instance across xDS updates.</p>
+</section>
+<section id="envoy-attributes">
+<h2>Envoy Attributes<a class="headerlink" href="#envoy-attributes" title="Link to this heading"></a></h2>
+<p>Wasm ABI exposes Envoy-specific host attributes via the dedicated <a class="reference external" href="https://github.com/proxy-wasm/spec/tree/main/abi-versions/v0.2.1#proxy_get_property">proxy_get_property</a> interface stub. These are the
+standard <a class="reference internal" href="attributes.html#arch-overview-attributes"><span class="std std-ref">attributes</span></a> and the values are returned via the type-specific binary
+serialization.</p>
+</section>
+<section id="foreign-functions">
+<h2>Foreign functions<a class="headerlink" href="#foreign-functions" title="Link to this heading"></a></h2>
+<p>Envoy offers additional functionality over the Proxy-Wasm ABI via <a class="reference external" href="https://github.com/proxy-wasm/spec/tree/main/abi-versions/v0.2.1#proxy_call_foreign_function">proxy_call_foreign_function</a> binary interface:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">verify_signature</span></code> verifies cryptographic signatures.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compress</span></code> applies <code class="docutils literal notranslate"><span class="pre">zlib</span></code> compression.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uncompress</span></code> applies <code class="docutils literal notranslate"><span class="pre">zlib</span></code> decompression.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">declare_property</span></code> creates a placeholder filter state object with the type information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_envoy_filter_state</span></code> set a filter state object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear_route_cache</span></code> updates the selected route.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expr_create</span></code> compiles a CEL expression for evaluation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expr_evalute</span></code> evaluates a compiled CEL expression.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expr_delete</span></code> deletes a compiled CEL expression.</p></li>
+</ul>
+</section>
+<section id="wasm-runtime">
+<h2>Wasm runtime<a class="headerlink" href="#wasm-runtime" title="Link to this heading"></a></h2>
+<p>Envoy Wasm can be <a class="reference internal" href="../../../api-v3/extensions/wasm/v3/wasm.proto.html#envoy-v3-api-field-extensions-wasm-v3-vmconfig-runtime"><span class="std std-ref">configured</span></a> to use one of several Wasm
+runtime implementations: <code class="docutils literal notranslate"><span class="pre">V8</span></code>, <code class="docutils literal notranslate"><span class="pre">WAMR</span></code>, or <code class="docutils literal notranslate"><span class="pre">Wasmtime</span></code>, as long as the runtime is included in the Envoy
+distribution.  There is also a special pseudo-Wasm runtime, called the “Null VM”, in which Wasm plugin code is compiled
+to native (non-Wasm) code and statically linked directly into the Envoy binary.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matching/matching_listener.html" class="btn btn-neutral float-left" title="Matching Filter Chains in Listeners" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dynamic_modules.html" class="btn btn-neutral float-right" title="Dynamic modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
