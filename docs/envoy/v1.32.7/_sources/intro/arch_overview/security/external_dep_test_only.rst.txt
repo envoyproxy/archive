@@ -1,0 +1,29 @@
+External dependencies: ``test_only``
+====================================
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Bazel build tools <https://github.com/bazelbuild/buildtools>`__, `7.3.1 <https://github.com/bazelbuild/buildtools/releases/tag/v7.3.1>`__, 2024-08-27, , 
+  `Benchmark <https://github.com/google/benchmark>`__, `1.9.0 <https://github.com/google/benchmark/releases/tag/v1.9.0>`__, 2024-08-16, , `Apache-2.0 <https://github.com/google/benchmark/blob/v1.9.0/LICENSE>`__
+  `compiler-rt <https://compiler-rt.llvm.org>`__, `14.0.0 <https://github.com/llvm/llvm-project/releases/tag/llvmorg-14.0.0>`__, 2022-03-23, `cpe:2.3:a:llvm:compiler-rt:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Allvm%3Acompiler-rt%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/llvm/llvm-project/blob/llvmorg-14.0.0/compiler-rt/LICENSE.TXT>`__
+  `Emscripten SDK <https://github.com/emscripten-core/emsdk>`__, `0ea8f8a <https://github.com/emscripten-core/emsdk/tree/0ea8f8a8707070e9a7c83fbb4a3065683bcf1799>`__, 2022-03-09, , `Emscripten SDK <https://github.com/emscripten-core/emsdk/blob/0ea8f8a8707070e9a7c83fbb4a3065683bcf1799/LICENSE>`__
+  `envoy_examples <https://github.com/envoyproxy/examples>`__, `0.0.5 <https://github.com/envoyproxy/examples/releases/tag/v0.0.5>`__, 2024-09-05, , `Apache-2.0 <https://github.com/envoyproxy/examples/blob/v0.0.5/LICENSE>`__
+  `Fuzzing Rules for Bazel <https://github.com/bazelbuild/rules_fuzzing>`__, `0.5.2 <https://github.com/bazelbuild/rules_fuzzing/releases/tag/v0.5.2>`__, 2024-05-14, , `Apache-2.0 <https://github.com/bazelbuild/rules_fuzzing/blob/v0.5.2/LICENSE>`__
+  `Google Test <https://github.com/google/googletest>`__, `a4ab0ab <https://github.com/google/googletest/tree/a4ab0abb93620ce26efad9de9296b73b16e88588>`__, 2020-09-10, `cpe:2.3:a:google:google_test:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Agoogle_test%3A%2A&search_type=all>`__, `BSD-3-Clause <https://github.com/google/googletest/blob/a4ab0abb93620ce26efad9de9296b73b16e88588/LICENSE>`__
+  `Kafka (server binary) <https://kafka.apache.org>`__, `3.8.0 <https://archive.apache.org/dist/kafka/3.8.0/kafka_2.13-3.8.0.tgz>`__, 2024-07-23, , 
+  `libpfm <https://sourceforge.net/projects/perfmon2>`__, `4.11.0 <https://downloads.sourceforge.net/project/perfmon2/libpfm4/libpfm-4.11.0.tar.gz>`__, 2020-09-03, , 
+  `libprotobuf-mutator <https://github.com/google/libprotobuf-mutator>`__, `3b28530 <https://github.com/google/libprotobuf-mutator/tree/3b28530531b154a748fe9884bc9219b4966f0754>`__, 2023-04-25, , `Apache-2.0 <https://github.com/google/libprotobuf-mutator/blob/v3b28530531b154a748fe9884bc9219b4966f0754/LICENSE>`__
+  `WebAssembly for Proxies (Rust SDK) <https://github.com/proxy-wasm/proxy-wasm-rust-sdk>`__, `0.2.2 <https://github.com/proxy-wasm/proxy-wasm-rust-sdk/releases/tag/v0.2.2>`__, 2024-07-21, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-rust-sdk/blob/v0.2.2/LICENSE>`__
+
+
+envoy.filters.http.aws_request_signing
+--------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `aws-c-auth <https://github.com/awslabs/aws-c-auth>`__, `0.7.31 <https://github.com/awslabs/aws-c-auth/releases/tag/v0.7.31>`__, 2024-09-16, , `Apache-2.0 <https://github.com/awslabs/aws-c-auth/blob/v0.7.31/LICENSE>`__
+
