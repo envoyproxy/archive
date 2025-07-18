@@ -1,0 +1,73 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/http/dynamic_modules/v3/dynamic_modules.proto:
+
+HTTP filter for dynamic modules (proto)
+=======================================
+
+
+.. warning::
+   This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the :ref:`threat model <arch_overview_threat_model>`, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter:
+
+extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter
+--------------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter proto] <api/envoy/extensions/filters/http/dynamic_modules/v3/dynamic_modules.proto#L26>`
+
+Configuration of the HTTP filter for dynamic modules. This filter allows loading shared object files
+that can be loaded via dlopen by the HTTP filter.
+
+A module can be loaded by multiple HTTP filters, hence the program can be structured in a way that
+the module is loaded only once and shared across multiple filters providing multiple functionalities.
+
+Currently, the implementation is work in progress and not usable.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "dynamic_module_config": {...},
+    "filter_name": ...,
+    "filter_config": ...
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter.dynamic_module_config:
+
+
+dynamic_module_config
+  (:ref:`extensions.dynamic_modules.v3.DynamicModuleConfig <envoy_v3_api_msg_extensions.dynamic_modules.v3.DynamicModuleConfig>`) Specifies the shared-object level configuration.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter.filter_name:
+
+
+filter_name
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) The name for this filter configuration. This can be used to distinguish between different filter implementations
+  inside a dynamic module. For example, a module can have completely different filter implementations.
+  When Envoy receives this configuration, it passes the filter_name to the dynamic module's HTTP filter config init function
+  together with the filter_config.
+  That way a module can decide which in-module filter implementation to use based on the name at load time.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter.filter_config:
+
+
+filter_config
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) The configuration for the filter chosen by filter_name. This is passed to the module's HTTP filter initialization function.
+  Together with the filter_name, the module can decide which in-module filter implementation to use and
+  fine-tune the behavior of the filter.
+
+  For example, if a module has two filter implementations, one for logging and one for header manipulation,
+  filter_name is used to choose either logging or header manipulation. The filter_config can be used to
+  configure the logging level or the header manipulation behavior.
+
+
