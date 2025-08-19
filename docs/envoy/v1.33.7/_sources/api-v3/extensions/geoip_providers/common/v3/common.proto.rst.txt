@@ -1,0 +1,135 @@
+.. _envoy_v3_api_file_envoy/extensions/geoip_providers/common/v3/common.proto:
+
+Common Geolocation Provider Configuration (proto)
+=================================================
+
+
+Common geolocation provider :ref:`configuration overview <config_geoip_providers_common>`.
+Common configuration shared across geolocation providers.
+
+
+
+
+.. _envoy_v3_api_msg_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig:
+
+extensions.geoip_providers.common.v3.CommonGeoipProviderConfig
+--------------------------------------------------------------
+
+
+:repo:`[extensions.geoip_providers.common.v3.CommonGeoipProviderConfig proto] <api/envoy/extensions/geoip_providers/common/v3/common.proto#L17>`
+
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "geo_headers_to_add": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.geo_headers_to_add:
+
+
+geo_headers_to_add
+  (:ref:`extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd <envoy_v3_api_msg_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd>`, *REQUIRED*) Configuration for geolocation headers to add to request.
+
+
+.. _envoy_v3_api_msg_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd:
+
+extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd
+--------------------------------------------------------------------------------------
+
+
+:repo:`[extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd proto] <api/envoy/extensions/geoip_providers/common/v3/common.proto#L21>`
+
+The set of geolocation headers to add to request. If any of the configured headers is present
+in the incoming request, it will be overridden by the :ref:`Geoip filter <config_http_filters_geoip>`.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "country": ...,
+    "city": ...,
+    "region": ...,
+    "asn": ...,
+    "is_anon": ...,
+    "anon_vpn": ...,
+    "anon_hosting": ...,
+    "anon_tor": ...,
+    "anon_proxy": ...
+  }
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.country:
+
+
+country
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the header will be used to populate the country ISO code associated with the IP address.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.city:
+
+
+city
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the header will be used to populate the city associated with the IP address.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.region:
+
+
+region
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the header will be used to populate the region ISO code associated with the IP address.
+  The least specific subdivision will be selected as region value.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.asn:
+
+
+asn
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the header will be used to populate the ASN associated with the IP address.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.is_anon:
+
+
+is_anon
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the IP address will be checked if it belongs to any type of anonymization network (e.g. VPN, public proxy etc)
+  and header will be populated with the check result. Header value will be set to either "true" or "false" depending on the check result.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.anon_vpn:
+
+
+anon_vpn
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the IP address will be checked if it belongs to a VPN and header will be populated with the check result.
+  Header value will be set to either "true" or "false" depending on the check result.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.anon_hosting:
+
+
+anon_hosting
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the IP address will be checked if it belongs to a hosting provider and header will be populated with the check result.
+  Header value will be set to either "true" or "false" depending on the check result.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.anon_tor:
+
+
+anon_tor
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the IP address will be checked if it belongs to a TOR exit node and header will be populated with the check result.
+  Header value will be set to either "true" or "false" depending on the check result.
+
+
+.. _envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd.anon_proxy:
+
+
+anon_proxy
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If set, the IP address will be checked if it belongs to a public proxy and header will be populated with the check result.
+  Header value will be set to either "true" or "false" depending on the check result.
+
+
+
