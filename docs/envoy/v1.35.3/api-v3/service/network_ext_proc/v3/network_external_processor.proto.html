@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network External Processing Service (proto) &mdash; envoy tag-v1.35.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=0ba54f75"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Common messages" href="../../../common_messages/common_messages.html" />
+    <link rel="prev" title="Redis external authentication service (proto)" href="../../redis_auth/v3/redis_external_auth.proto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../api/api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/api_supported_versions.html">Supported API versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html">v3 API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../bootstrap/bootstrap.html">Bootstrap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../clusters/clusters.html">Clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../http_routes/http_routes.html">HTTP route management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../config/config.html">Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../admin/admin.html">Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../data/data.html">Envoy data</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../service.html">Services</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../auth/v3/attribute_context.proto.html">Attribute context (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../auth/v3/external_auth.proto.html">Authorization service (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../status/v3/csds.proto.html">Client status discovery service (CSDS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extension/v3/config_discovery.proto.html">Extension config discovery service (ECDS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext_proc/v3/external_processor.proto.html">External processing service (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../accesslog/v3/als.proto.html">gRPC access log service (ALS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../health/v3/hds.proto.html">Health discovery service (HDS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../load_stats/v3/lrs.proto.html">Load reporting service (LRS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../metrics/v3/metrics_service.proto.html">Metrics service (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ratelimit/v3/rls.proto.html">Rate limit service (RLS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../rate_limit_quota/v3/rlqs.proto.html">Rate Limit Quota Service (RLQS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runtime/v3/rtds.proto.html">Runtime discovery service (RTDS) (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../config/tap/v3/common.proto.html">Tap common configuration (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tap/v3/tap.proto.html">Tap sink service (proto)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../redis_auth/v3/redis_external_auth.proto.html">Redis external authentication service (proto)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Network External Processing Service (proto)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../common_messages/common_messages.html">Common messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../common_messages/common_messages_xds.html">Common messages (XDS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../types/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api-docs/xds_protocol.html">xDS REST and gRPC protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/client_features.html">Well Known Client Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../api/api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="../../../api.html">v3 API reference</a></li>
+          <li class="breadcrumb-item"><a href="../../service.html">Services</a></li>
+      <li class="breadcrumb-item active">Network External Processing Service (proto)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/api-v3/service/network_ext_proc/v3/network_external_processor.proto.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="network-external-processing-service-proto">
+<span id="envoy-v3-api-file-envoy-service-network-ext-proc-v3-network-external-processor-proto"></span><h1>Network External Processing Service (proto)<a class="headerlink" href="#network-external-processing-service-proto" title="Link to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the <a class="reference internal" href="../../../../intro/arch_overview/security/threat_model.html#arch-overview-threat-model"><span class="std std-ref">threat model</span></a>, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.</p>
+</div>
+<p>The Network External Processing filter allows an external service to dynamically
+interact with and modify L4 network traffic passing through Envoy. Unlike the
+HTTP External Processing filter, this service operates at the TCP/UDP level,
+providing access to raw network data.</p>
+<p>The filter communicates with an external gRPC service that can:</p>
+<ol class="arabic simple">
+<li><p>Inspect network traffic in both directions (client-&gt;server and server-&gt;client)</p></li>
+<li><p>Modify the payload data</p></li>
+<li><p>Control connection lifecycle (continue, close gracefully, or reset)</p></li>
+</ol>
+<p>Use cases include:</p>
+<ol class="arabic simple">
+<li><p>Custom protocol inspection and modification</p></li>
+<li><p>Advanced traffic manipulation</p></li>
+<li><p>Security scanning and filtering</p></li>
+<li><p>Dynamic connection management</p></li>
+</ol>
+<p>The service uses a bidirectional gRPC stream, maintaining state throughout
+the connection lifetime while allowing asynchronous processing.</p>
+<section id="service-network-ext-proc-v3-data">
+<span id="envoy-v3-api-msg-service-network-ext-proc-v3-data"></span><h2>service.network_ext_proc.v3.Data<a class="headerlink" href="#service-network-ext-proc-v3-data" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.35.3/api/envoy/service/network_ext_proc/v3/network_external_processor.proto#L61">[service.network_ext_proc.v3.Data proto]</a></p>
+<p>The payload data from network layer</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;end_of_stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-data-data">
+<dt>data</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bytes</a>) The raw payload data</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-data-end-of-stream">
+<dt>end_of_stream</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bool</a>) Indicates whether this is the last data frame in the current direction.
+The external processor should still respond to this message even
+if there is no more data expected in this direction.</p>
+</dd>
+</dl>
+</section>
+<section id="service-network-ext-proc-v3-processingrequest">
+<span id="envoy-v3-api-msg-service-network-ext-proc-v3-processingrequest"></span><h2>service.network_ext_proc.v3.ProcessingRequest<a class="headerlink" href="#service-network-ext-proc-v3-processingrequest" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.35.3/api/envoy/service/network_ext_proc/v3/network_external_processor.proto#L74">[service.network_ext_proc.v3.ProcessingRequest proto]</a></p>
+<p>ProcessingRequest contains data sent from Envoy to the external processing server.
+Each request contains either read data (from client) or write data (to client)
+along with optional metadata.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;read_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;write_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingrequest-read-data">
+<dt>read_data</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-service-network-ext-proc-v3-data"><span class="std std-ref">service.network_ext_proc.v3.Data</span></a>) ReadData contains the network data intercepted in the request path (client to server).
+This is sent to the external processor when data arrives from the downstream client.
+If this is set, write_data should not be set.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingrequest-write-data">
+<dt>write_data</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-service-network-ext-proc-v3-data"><span class="std std-ref">service.network_ext_proc.v3.Data</span></a>) WriteData contains the network data intercepted in the response path (server to client).
+This is sent to the external processor when data arrives from the upstream server.
+If this is set, read_data should not be set.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-service-network-ext-proc-v3-processingrequest-metadata">
+<dt>metadata</dt><dd><p>(<a class="reference internal" href="../../../config/core/v3/base.proto.html#envoy-v3-api-msg-config-core-v3-metadata"><span class="std std-ref">config.core.v3.Metadata</span></a>) Optional metadata associated with the request.
+This can include connection properties, filter configuration, and any other
+contextual information that might be useful for processing decisions.</p>
+<p>The metadata is not automatically propagated from request to response.
+The external processor must include any needed metadata in its response.</p>
+</dd>
+</dl>
+</section>
+<section id="service-network-ext-proc-v3-processingresponse">
+<span id="envoy-v3-api-msg-service-network-ext-proc-v3-processingresponse"></span><h2>service.network_ext_proc.v3.ProcessingResponse<a class="headerlink" href="#service-network-ext-proc-v3-processingresponse" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.35.3/api/envoy/service/network_ext_proc/v3/network_external_processor.proto#L98">[service.network_ext_proc.v3.ProcessingResponse proto]</a></p>
+<p>ProcessingResponse contains the response from the external processing server to Envoy.
+Each response corresponds to a ProcessingRequest and indicates how the network
+traffic should be handled.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;read_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;write_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;data_processing_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;connection_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;dynamic_metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingresponse-read-data">
+<dt>read_data</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-service-network-ext-proc-v3-data"><span class="std std-ref">service.network_ext_proc.v3.Data</span></a>) The processed ReadData containing potentially modified data for the request path.
+This should be sent in response to a ProcessingRequest with read_data, and the
+previous data in ProcessingRequest will be replaced by the new data in Envoy’s data plane.
+If this is set, write_data should not be set.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingresponse-write-data">
+<dt>write_data</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-service-network-ext-proc-v3-data"><span class="std std-ref">service.network_ext_proc.v3.Data</span></a>) The processed WriteData containing potentially modified data for the response path.
+This should be sent in response to a ProcessingRequest with write_data, and the
+previous data in ProcessingRequest will be replaced by the new data in Envoy’s data plane.
+If this is set, read_data should not be set.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingresponse-data-processing-status">
+<dt>data_processing_status</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-enum-service-network-ext-proc-v3-processingresponse-dataprocessedstatus"><span class="std std-ref">service.network_ext_proc.v3.ProcessingResponse.DataProcessedStatus</span></a>) Indicates whether the data was modified or not.
+This is mandatory and tells Envoy whether to use the original or modified data.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-service-network-ext-proc-v3-processingresponse-connection-status">
+<dt>connection_status</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-enum-service-network-ext-proc-v3-processingresponse-connectionstatus"><span class="std std-ref">service.network_ext_proc.v3.ProcessingResponse.ConnectionStatus</span></a>) Optional: Determines the connection behavior after processing.
+If not specified, CONTINUE is assumed, and the connection proceeds normally.
+Use CLOSE or CLOSE_RST to terminate the connection based on processing results.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-service-network-ext-proc-v3-processingresponse-dynamic-metadata">
+<dt>dynamic_metadata</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct">Struct</a>) Optional metadata associated with the request.
+This can include connection properties, filter configuration, and any other
+contextual information that might be useful for processing decisions.</p>
+<p>The metadata is not automatically propagated from request to response.
+The external processor must include any needed metadata in its response.</p>
+</dd>
+</dl>
+</section>
+<section id="enum-service-network-ext-proc-v3-processingresponse-dataprocessedstatus">
+<span id="envoy-v3-api-enum-service-network-ext-proc-v3-processingresponse-dataprocessedstatus"></span><h2>Enum service.network_ext_proc.v3.ProcessingResponse.DataProcessedStatus<a class="headerlink" href="#enum-service-network-ext-proc-v3-processingresponse-dataprocessedstatus" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.35.3/api/envoy/service/network_ext_proc/v3/network_external_processor.proto#L100">[service.network_ext_proc.v3.ProcessingResponse.DataProcessedStatus proto]</a></p>
+<p>DataProcessedStatus indicates whether the data was modified by the external processor.</p>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-dataprocessedstatus-unknown">
+<dt>UNKNOWN</dt><dd><p><em>(DEFAULT)</em> ⁣The data processed status is unknown.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-dataprocessedstatus-unmodified">
+<dt>UNMODIFIED</dt><dd><p>⁣The data remains unchanged. Envoy will use the original data.
+This is useful when the processor only wants to inspect but not modify the traffic.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-dataprocessedstatus-modified">
+<dt>MODIFIED</dt><dd><p>⁣The data has been modified. Envoy will use the modified data provided in the response.
+This allows the processor to transform the network traffic as needed.</p>
+</dd>
+</dl>
+</section>
+<section id="enum-service-network-ext-proc-v3-processingresponse-connectionstatus">
+<span id="envoy-v3-api-enum-service-network-ext-proc-v3-processingresponse-connectionstatus"></span><h2>Enum service.network_ext_proc.v3.ProcessingResponse.ConnectionStatus<a class="headerlink" href="#enum-service-network-ext-proc-v3-processingresponse-connectionstatus" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.35.3/api/envoy/service/network_ext_proc/v3/network_external_processor.proto#L114">[service.network_ext_proc.v3.ProcessingResponse.ConnectionStatus proto]</a></p>
+<p>ConnectionStatus determines what happens to the connection after processing.</p>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-connectionstatus-continue">
+<dt>CONTINUE</dt><dd><p><em>(DEFAULT)</em> ⁣Continue normal processing of the connection.
+This is the default behavior and allows traffic to flow normally.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-connectionstatus-close">
+<dt>CLOSE</dt><dd><p>⁣Close the connection with normal TCP FIN.
+This allows for clean connection termination with a normal close sequence.
+Any buffered data will be sent before closing.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-service-network-ext-proc-v3-processingresponse-connectionstatus-close-rst">
+<dt>CLOSE_RST</dt><dd><p>⁣Immediately reset the connection with TCP RST.
+This forcibly terminates the connection without a clean shutdown,
+discarding any buffered data. Use this for security-critical situations
+or when immediate termination is required.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../redis_auth/v3/redis_external_auth.proto.html" class="btn btn-neutral float-left" title="Redis external authentication service (proto)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../../common_messages/common_messages.html" class="btn btn-neutral float-right" title="Common messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
