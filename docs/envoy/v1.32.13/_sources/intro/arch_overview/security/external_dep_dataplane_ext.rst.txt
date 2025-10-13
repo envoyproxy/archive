@@ -1,0 +1,592 @@
+External dependencies: ``dataplane_ext``
+========================================
+
+
+envoy.access_loggers.extension_filters.cel
+------------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.access_loggers.wasm
+-------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.bootstrap.wasm
+--------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.compression.brotli.compressor
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `brotli <https://brotli.org>`__, `1.1.0 <https://github.com/google/brotli/releases/tag/v1.1.0>`__, 2023-08-31, `cpe:2.3:a:google:brotli:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Abrotli%3A%2A&search_type=all>`__, `MIT <https://github.com/google/brotli/blob/v1.1.0/LICENSE>`__
+
+
+envoy.compression.brotli.decompressor
+-------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `brotli <https://brotli.org>`__, `1.1.0 <https://github.com/google/brotli/releases/tag/v1.1.0>`__, 2023-08-31, `cpe:2.3:a:google:brotli:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Abrotli%3A%2A&search_type=all>`__, `MIT <https://github.com/google/brotli/blob/v1.1.0/LICENSE>`__
+
+
+envoy.compression.qatzip.compressor
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `LZ4 <http://www.lz4.org/>`__, `1.10.0 <https://github.com/lz4/lz4/releases/tag/v1.10.0>`__, 2024-07-22, , 
+  `qatlib <https://github.com/intel/qatlib>`__, `24.02.0 <https://github.com/intel/qatlib/releases/tag/24.02.0>`__, 2024-02-20, , `BSD-3-Clause <https://github.com/intel/qatlib/blob/24.02.0/LICENSE>`__
+  `qatzip <https://github.com/intel/qatzip>`__, `1.2.0 <https://github.com/intel/QATzip/releases/tag/v1.2.0>`__, 2024-02-08, , `BSD-3-Clause <https://github.com/intel/QATzip/blob/v1.2.0/LICENSE>`__
+
+
+envoy.compression.qatzstd.compressor
+------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `QAT-ZSTD-Plugin <https://github.com/intel/QAT-ZSTD-Plugin/>`__, `0.2.0 <https://github.com/intel/QAT-ZSTD-Plugin/releases/tag/v0.2.0>`__, 2024-08-26, , 
+  `qatlib <https://github.com/intel/qatlib>`__, `24.02.0 <https://github.com/intel/qatlib/releases/tag/24.02.0>`__, 2024-02-20, , `BSD-3-Clause <https://github.com/intel/qatlib/blob/24.02.0/LICENSE>`__
+
+
+envoy.compression.zstd.compressor
+---------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `zstd <https://facebook.github.io/zstd>`__, `1.5.6 <https://github.com/facebook/zstd/releases/tag/v1.5.6>`__, 2024-03-30, `cpe:2.3:a:facebook:zstandard:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Afacebook%3Azstandard%3A%2A&search_type=all>`__, 
+
+
+envoy.compression.zstd.decompressor
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `zstd <https://facebook.github.io/zstd>`__, `1.5.6 <https://github.com/facebook/zstd/releases/tag/v1.5.6>`__, 2024-03-30, `cpe:2.3:a:facebook:zstandard:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Afacebook%3Azstandard%3A%2A&search_type=all>`__, 
+
+
+envoy.filters.http.aws_lambda
+-----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `curl <https://curl.haxx.se>`__, `8.16.0 <https://github.com/curl/curl/releases/tag/curl-8_16_0>`__, 2025-09-10, `cpe:2.3:a:haxx:libcurl:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Ahaxx%3Alibcurl%3A%2A&search_type=all>`__, `curl <https://github.com/curl/curl/blob/curl-8_16_0/COPYING>`__
+
+
+envoy.filters.http.aws_request_signing
+--------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `curl <https://curl.haxx.se>`__, `8.16.0 <https://github.com/curl/curl/releases/tag/curl-8_16_0>`__, 2025-09-10, `cpe:2.3:a:haxx:libcurl:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Ahaxx%3Alibcurl%3A%2A&search_type=all>`__, `curl <https://github.com/curl/curl/blob/curl-8_16_0/COPYING>`__
+
+
+envoy.filters.http.ext_proc
+---------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.filters.http.gcp_authn
+----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `jwt_verify_lib <https://github.com/google/jwt_verify_lib>`__, `b59e807 <https://github.com/google/jwt_verify_lib/tree/b59e8075d4a4f975ba6f109e1916d6e60aeb5613>`__, 2023-05-17, , `Apache-2.0 <https://github.com/google/jwt_verify_lib/blob/b59e8075d4a4f975ba6f109e1916d6e60aeb5613/LICENSE>`__
+
+
+envoy.filters.http.grpc_field_extraction
+----------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `grpc-httpjson-transcoding <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding>`__, `8f0d092 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/tree/8f0d092ecf60470f504f506e2851173a8033a62c>`__, 2024-09-19, , `Apache-2.0 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/blob/8f0d092ecf60470f504f506e2851173a8033a62c/LICENSE>`__
+  `ocp <https://github.com/opencomputeproject/ocp-diag-core>`__, `e965ac0 <https://github.com/opencomputeproject/ocp-diag-core/tree/e965ac0ac6db6686169678e2a6c77ede904fa82c>`__, 2023-05-05, , `Apache-2.0 <https://github.com/opencomputeproject/ocp-diag-core/blob/e965ac0ac6db6686169678e2a6c77ede904fa82c/LICENSE>`__
+  `proto-converter <https://github.com/grpc-ecosystem/proto-converter>`__, `1db7653 <https://github.com/grpc-ecosystem/proto-converter/tree/1db76535b86b80aa97489a1edcc7009e18b67ab7>`__, 2024-06-25, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-converter/blob/1db76535b86b80aa97489a1edcc7009e18b67ab7/LICENSE>`__
+  `proto-field-extraction <https://github.com/grpc-ecosystem/proto-field-extraction>`__, `d5d39f0 <https://github.com/grpc-ecosystem/proto-field-extraction/tree/d5d39f0373e9b6691c32c85929838b1006bcb3fb>`__, 2024-07-10, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-field-extraction/blob/d5d39f0373e9b6691c32c85929838b1006bcb3fb/LICENSE>`__
+  `proto_processing_lib <https://github.com/grpc-ecosystem/proto_processing_lib>`__, `968fd5e <https://github.com/grpc-ecosystem/proto_processing_lib/tree/968fd5e3c2278d0e0462b0c56574615711025502>`__, 2024-08-30, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto_processing_lib/blob/968fd5e3c2278d0e0462b0c56574615711025502/LICENSE>`__
+
+
+envoy.filters.http.grpc_json_transcoder
+---------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `grpc-httpjson-transcoding <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding>`__, `8f0d092 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/tree/8f0d092ecf60470f504f506e2851173a8033a62c>`__, 2024-09-19, , `Apache-2.0 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/blob/8f0d092ecf60470f504f506e2851173a8033a62c/LICENSE>`__
+  `proto-converter <https://github.com/grpc-ecosystem/proto-converter>`__, `1db7653 <https://github.com/grpc-ecosystem/proto-converter/tree/1db76535b86b80aa97489a1edcc7009e18b67ab7>`__, 2024-06-25, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-converter/blob/1db76535b86b80aa97489a1edcc7009e18b67ab7/LICENSE>`__
+  `proto-field-extraction <https://github.com/grpc-ecosystem/proto-field-extraction>`__, `d5d39f0 <https://github.com/grpc-ecosystem/proto-field-extraction/tree/d5d39f0373e9b6691c32c85929838b1006bcb3fb>`__, 2024-07-10, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-field-extraction/blob/d5d39f0373e9b6691c32c85929838b1006bcb3fb/LICENSE>`__
+  `proto_processing_lib <https://github.com/grpc-ecosystem/proto_processing_lib>`__, `968fd5e <https://github.com/grpc-ecosystem/proto_processing_lib/tree/968fd5e3c2278d0e0462b0c56574615711025502>`__, 2024-08-30, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto_processing_lib/blob/968fd5e3c2278d0e0462b0c56574615711025502/LICENSE>`__
+
+
+envoy.filters.http.jwt_authn
+----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `jwt_verify_lib <https://github.com/google/jwt_verify_lib>`__, `b59e807 <https://github.com/google/jwt_verify_lib/tree/b59e8075d4a4f975ba6f109e1916d6e60aeb5613>`__, 2023-05-17, , `Apache-2.0 <https://github.com/google/jwt_verify_lib/blob/b59e8075d4a4f975ba6f109e1916d6e60aeb5613/LICENSE>`__
+
+
+envoy.filters.http.language
+---------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `ICU Library <https://github.com/unicode-org/icu>`__, `72-1 <https://github.com/unicode-org/icu/releases/tag/release-72-1>`__, 2022-10-18, , `ICU <https://github.com/unicode-org/icu/blob/release-72-1/icu4c/LICENSE>`__
+
+
+envoy.filters.http.lua
+----------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `LuaJIT <https://luajit.org>`__, `d06beb0 <https://github.com/LuaJIT/LuaJIT/tree/d06beb0480c5d1eb53b3343e78063950275aa281>`__, 2024-03-10, `cpe:2.3:a:luajit:luajit:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aluajit%3Aluajit%3A%2A&search_type=all>`__, `MIT <https://github.com/LuaJIT/LuaJIT/blob/d06beb0480c5d1eb53b3343e78063950275aa281/COPYRIGHT>`__
+
+
+envoy.filters.http.oauth2
+-------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `jwt_verify_lib <https://github.com/google/jwt_verify_lib>`__, `b59e807 <https://github.com/google/jwt_verify_lib/tree/b59e8075d4a4f975ba6f109e1916d6e60aeb5613>`__, 2023-05-17, , `Apache-2.0 <https://github.com/google/jwt_verify_lib/blob/b59e8075d4a4f975ba6f109e1916d6e60aeb5613/LICENSE>`__
+
+
+envoy.filters.http.proto_message_extraction
+-------------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `grpc-httpjson-transcoding <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding>`__, `8f0d092 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/tree/8f0d092ecf60470f504f506e2851173a8033a62c>`__, 2024-09-19, , `Apache-2.0 <https://github.com/grpc-ecosystem/grpc-httpjson-transcoding/blob/8f0d092ecf60470f504f506e2851173a8033a62c/LICENSE>`__
+  `ocp <https://github.com/opencomputeproject/ocp-diag-core>`__, `e965ac0 <https://github.com/opencomputeproject/ocp-diag-core/tree/e965ac0ac6db6686169678e2a6c77ede904fa82c>`__, 2023-05-05, , `Apache-2.0 <https://github.com/opencomputeproject/ocp-diag-core/blob/e965ac0ac6db6686169678e2a6c77ede904fa82c/LICENSE>`__
+  `proto-converter <https://github.com/grpc-ecosystem/proto-converter>`__, `1db7653 <https://github.com/grpc-ecosystem/proto-converter/tree/1db76535b86b80aa97489a1edcc7009e18b67ab7>`__, 2024-06-25, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-converter/blob/1db76535b86b80aa97489a1edcc7009e18b67ab7/LICENSE>`__
+  `proto-field-extraction <https://github.com/grpc-ecosystem/proto-field-extraction>`__, `d5d39f0 <https://github.com/grpc-ecosystem/proto-field-extraction/tree/d5d39f0373e9b6691c32c85929838b1006bcb3fb>`__, 2024-07-10, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto-field-extraction/blob/d5d39f0373e9b6691c32c85929838b1006bcb3fb/LICENSE>`__
+  `proto_processing_lib <https://github.com/grpc-ecosystem/proto_processing_lib>`__, `968fd5e <https://github.com/grpc-ecosystem/proto_processing_lib/tree/968fd5e3c2278d0e0462b0c56574615711025502>`__, 2024-08-30, , `Apache-2.0 <https://github.com/grpc-ecosystem/proto_processing_lib/blob/968fd5e3c2278d0e0462b0c56574615711025502/LICENSE>`__
+
+
+envoy.filters.http.rate_limit_quota
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.filters.http.rbac
+-----------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.filters.http.wasm
+-----------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.filters.network.dubbo_proxy
+---------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `hessian2-codec <https://github.com/alibaba/hessian2-codec.git>`__, `e9bb36e <https://github.com/alibaba/hessian2-codec/tree/e9bb36e206f2c5054b50d11f88bb1b95c77766f8>`__, 2022-10-10, , `Apache-2.0 <https://github.com/alibaba/hessian2-codec/blob/e9bb36e206f2c5054b50d11f88bb1b95c77766f8/LICENSE>`__
+
+
+envoy.filters.network.generic_proxy
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `hessian2-codec <https://github.com/alibaba/hessian2-codec.git>`__, `e9bb36e <https://github.com/alibaba/hessian2-codec/tree/e9bb36e206f2c5054b50d11f88bb1b95c77766f8>`__, 2022-10-10, , `Apache-2.0 <https://github.com/alibaba/hessian2-codec/blob/e9bb36e206f2c5054b50d11f88bb1b95c77766f8/LICENSE>`__
+
+
+envoy.filters.network.kafka_broker
+----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Kafka (source) <https://kafka.apache.org>`__, `3.9.1 <https://github.com/apache/kafka/releases/tag/3.9.1>`__, 2025-05-12, `cpe:2.3:a:apache:kafka:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aapache%3Akafka%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/apache/kafka/blob/3.9.1/LICENSE>`__
+
+
+envoy.filters.network.kafka_mesh
+--------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Kafka (C/C++ client) <https://github.com/confluentinc/librdkafka>`__, `2.3.0 <https://github.com/confluentinc/librdkafka/releases/tag/v2.3.0>`__, 2023-10-25, , `librdkafka <https://github.com/confluentinc/librdkafka/blob/v2.3.0/LICENSE>`__
+  `Kafka (source) <https://kafka.apache.org>`__, `3.9.1 <https://github.com/apache/kafka/releases/tag/3.9.1>`__, 2025-05-12, `cpe:2.3:a:apache:kafka:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aapache%3Akafka%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/apache/kafka/blob/3.9.1/LICENSE>`__
+
+
+envoy.filters.network.mysql_proxy
+---------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `C++ SQL Parser Library <https://github.com/envoyproxy/sql-parser>`__, `3b40ba2 <https://github.com/envoyproxy/sql-parser/tree/3b40ba2d106587bdf053a292f7e3bb17e818a57f>`__, 2020-06-10, , `MIT <https://github.com/envoyproxy/sql-parser/blob/3b40ba2d106587bdf053a292f7e3bb17e818a57f/LICENSE>`__
+
+
+envoy.filters.network.postgres_proxy
+------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `C++ SQL Parser Library <https://github.com/envoyproxy/sql-parser>`__, `3b40ba2 <https://github.com/envoyproxy/sql-parser/tree/3b40ba2d106587bdf053a292f7e3bb17e818a57f>`__, 2020-06-10, , `MIT <https://github.com/envoyproxy/sql-parser/blob/3b40ba2d106587bdf053a292f7e3bb17e818a57f/LICENSE>`__
+
+
+envoy.filters.network.rbac
+--------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.filters.network.wasm
+--------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.formatter.cel
+-------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.generic_proxy.codecs.dubbo
+--------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `hessian2-codec <https://github.com/alibaba/hessian2-codec.git>`__, `e9bb36e <https://github.com/alibaba/hessian2-codec/tree/e9bb36e206f2c5054b50d11f88bb1b95c77766f8>`__, 2022-10-10, , `Apache-2.0 <https://github.com/alibaba/hessian2-codec/blob/e9bb36e206f2c5054b50d11f88bb1b95c77766f8/LICENSE>`__
+
+
+envoy.geoip_providers.maxmind
+-----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `maxmind_libmaxminddb <https://github.com/maxmind/libmaxminddb>`__, `1.11.0 <https://github.com/maxmind/libmaxminddb/releases/tag/1.11.0>`__, 2024-08-21, `cpe:2.3:a:maxmind:libmaxminddb:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Amaxmind%3Alibmaxminddb%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/maxmind/libmaxminddb/blob/1.11.0/LICENSE>`__
+
+
+envoy.grpc_credentials.aws_iam
+------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `curl <https://curl.haxx.se>`__, `8.16.0 <https://github.com/curl/curl/releases/tag/curl-8_16_0>`__, 2025-09-10, `cpe:2.3:a:haxx:libcurl:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Ahaxx%3Alibcurl%3A%2A&search_type=all>`__, `curl <https://github.com/curl/curl/blob/curl-8_16_0/COPYING>`__
+
+
+envoy.matching.input_matchers.hyperscan
+---------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Boost <https://www.boost.org/>`__, `1.84.0 <https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz>`__, 2023-12-13, `cpe:2.3:a:boost:boost:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aboost%3Aboost%3A%2A&search_type=all>`__, `Boost <https://github.com/boostorg/boost/blob/boost-1.84.0/LICENSE_1_0.txt>`__
+  `Colm <https://www.colm.net/open-source/colm/>`__, `2d8ba76 <https://github.com/adrian-thurston/colm/tree/2d8ba76ddaf6634f285d0a81ee42d5ee77d084cf>`__, 2021-12-28, , `MIT <https://github.com/adrian-thurston/colm/blob/2d8ba76ddaf6634f285d0a81ee42d5ee77d084cf/COPYING>`__
+  `Hyperscan <https://hyperscan.io>`__, `5.4.2 <https://github.com/intel/hyperscan/releases/tag/v5.4.2>`__, 2023-04-19, , `BSD-3-Clause <https://github.com/intel/hyperscan/blob/v5.4.2/LICENSE>`__
+  `Ragel <https://www.colm.net/open-source/ragel/>`__, `d4577c9 <https://github.com/adrian-thurston/ragel/tree/d4577c924451b331c73c8ed0af04f6efd35ac0b4>`__, 2021-12-28, , `MIT <https://github.com/adrian-thurston/ragel/blob/d4577c924451b331c73c8ed0af04f6efd35ac0b4/COPYING>`__
+  `Vectorscan <https://www.vectorcamp.gr/vectorscan/>`__, `5.4.11 <https://codeload.github.com/VectorCamp/vectorscan/tar.gz/refs/tags/vectorscan/5.4.11>`__, 2023-11-20, , `BSD-3-Clause <https://github.com/VectorCamp/vectorscan/blob/vectorscan/5.4.11/LICENSE>`__
+
+
+envoy.matching.inputs.cel_data_input
+------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.matching.matchers.cel_matcher
+-----------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.network.connection_balance.dlb
+------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Intel Dlb <https://networkbuilders.intel.com/solutionslibrary/queue-management-and-load-balancing-on-intel-architecture>`__, `8.8.0 <https://downloadmirror.intel.com/819078/dlb_linux_src_release_8.8.0.txz>`__, 2023-12-15, , 
+
+
+envoy.rate_limit_descriptors.expr
+---------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.rbac.matchers.upstream_ip_port
+------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+
+
+envoy.regex_engines.hyperscan
+-----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Boost <https://www.boost.org/>`__, `1.84.0 <https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz>`__, 2023-12-13, `cpe:2.3:a:boost:boost:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aboost%3Aboost%3A%2A&search_type=all>`__, `Boost <https://github.com/boostorg/boost/blob/boost-1.84.0/LICENSE_1_0.txt>`__
+  `Colm <https://www.colm.net/open-source/colm/>`__, `2d8ba76 <https://github.com/adrian-thurston/colm/tree/2d8ba76ddaf6634f285d0a81ee42d5ee77d084cf>`__, 2021-12-28, , `MIT <https://github.com/adrian-thurston/colm/blob/2d8ba76ddaf6634f285d0a81ee42d5ee77d084cf/COPYING>`__
+  `Hyperscan <https://hyperscan.io>`__, `5.4.2 <https://github.com/intel/hyperscan/releases/tag/v5.4.2>`__, 2023-04-19, , `BSD-3-Clause <https://github.com/intel/hyperscan/blob/v5.4.2/LICENSE>`__
+  `Ragel <https://www.colm.net/open-source/ragel/>`__, `d4577c9 <https://github.com/adrian-thurston/ragel/tree/d4577c924451b331c73c8ed0af04f6efd35ac0b4>`__, 2021-12-28, , `MIT <https://github.com/adrian-thurston/ragel/blob/d4577c924451b331c73c8ed0af04f6efd35ac0b4/COPYING>`__
+  `Vectorscan <https://www.vectorcamp.gr/vectorscan/>`__, `5.4.11 <https://codeload.github.com/VectorCamp/vectorscan/tar.gz/refs/tags/vectorscan/5.4.11>`__, 2023-11-20, , `BSD-3-Clause <https://github.com/VectorCamp/vectorscan/blob/vectorscan/5.4.11/LICENSE>`__
+
+
+envoy.router.cluster_specifier_plugin.lua
+-----------------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `LuaJIT <https://luajit.org>`__, `d06beb0 <https://github.com/LuaJIT/LuaJIT/tree/d06beb0480c5d1eb53b3343e78063950275aa281>`__, 2024-03-10, `cpe:2.3:a:luajit:luajit:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aluajit%3Aluajit%3A%2A&search_type=all>`__, `MIT <https://github.com/LuaJIT/LuaJIT/blob/d06beb0480c5d1eb53b3343e78063950275aa281/COPYRIGHT>`__
+
+
+envoy.stat_sinks.wasm
+---------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Common Expression Language (CEL) C++ library <https://opensource.google/projects/cel>`__, `0abd738 <https://github.com/google/cel-cpp/tree/0abd738f9f54388452e6ebb0955eb039f9162b3d>`__, 2023-12-20, , 
+  `FlatBuffers <https://github.com/google/flatbuffers>`__, `24.3.25 <https://github.com/google/flatbuffers/releases/tag/v24.3.25>`__, 2024-03-26, `cpe:2.3:a:google:flatbuffers:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Aflatbuffers%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.string_matcher.lua
+------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `LuaJIT <https://luajit.org>`__, `d06beb0 <https://github.com/LuaJIT/LuaJIT/tree/d06beb0480c5d1eb53b3343e78063950275aa281>`__, 2024-03-10, `cpe:2.3:a:luajit:luajit:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aluajit%3Aluajit%3A%2A&search_type=all>`__, `MIT <https://github.com/LuaJIT/LuaJIT/blob/d06beb0480c5d1eb53b3343e78063950275aa281/COPYRIGHT>`__
+
+
+envoy.tls.key_providers.cryptomb
+--------------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `libipp-crypto <https://github.com/intel/cryptography-primitives>`__, `2021.11.1 <https://github.com/intel/cryptography-primitives/releases/tag/ippcp_2021.11.1>`__, 2024-02-28, `cpe:2.3:a:intel:cryptography_for_intel_integrated_performance_primitives:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Aintel%3Acryptography_for_intel_integrated_performance_primitives%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/intel/cryptography-primitives/blob/ippcp_2021.11.1/LICENSE>`__
+
+
+envoy.tls.key_providers.qat
+---------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `qatlib <https://github.com/intel/qatlib>`__, `24.02.0 <https://github.com/intel/qatlib/releases/tag/24.02.0>`__, 2024-02-20, , `BSD-3-Clause <https://github.com/intel/qatlib/blob/24.02.0/LICENSE>`__
+
+
+envoy.tracers.opencensus
+------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `curl <https://curl.haxx.se>`__, `8.16.0 <https://github.com/curl/curl/releases/tag/curl-8_16_0>`__, 2025-09-10, `cpe:2.3:a:haxx:libcurl:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Ahaxx%3Alibcurl%3A%2A&search_type=all>`__, `curl <https://github.com/curl/curl/blob/curl-8_16_0/COPYING>`__
+
+
+envoy.transport_sockets.alts
+----------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Protobuf and gRPC rules for Bazel <https://github.com/rules-proto-grpc/rules_proto_grpc>`__, `4.6.0 <https://github.com/rules-proto-grpc/rules_proto_grpc/releases/tag/4.6.0>`__, 2023-12-14, , `Apache-2.0 <https://github.com/rules-proto-grpc/rules_proto_grpc/blob/4.6.0/LICENSE>`__
+
+
+envoy.wasm.runtime.null
+-----------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.wasm.runtime.v8
+---------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Chromium's trace event headers <https://chromium.googlesource.com/chromium/src/base/trace_event/common/>`__, `521ac34 <https://storage.googleapis.com/envoyproxy-wee8/chromium-base_trace_event_common-521ac34ebd795939c7e16b37d9d3ddb40e8ed556.tar.gz>`__, 2022-10-12, , 
+  `Conversion to/from half-precision floating point formats <https://github.com/Maratyszcza/FP16>`__, `0a92994 <https://github.com/Maratyszcza/FP16/tree/0a92994d729ff76a58f692d3028ca1b64b145d91>`__, 2021-03-20, , 
+  `Intel ITT API <https://github.com/intel/ittapi>`__, `a3911ff <https://github.com/intel/ittapi/tree/a3911fff01a775023a06af8754f9ec1e5977dd97>`__, 2021-05-25, , 
+  `V8 <https://v8.dev>`__, `12.9.202.27 <https://github.com/v8/v8/releases/tag/12.9.202.27>`__, 2024-10-07, `cpe:2.3:a:google:v8:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Agoogle%3Av8%3A%2A&search_type=all>`__, 
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
+
+envoy.wasm.runtime.wamr
+-----------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+  `Webassembly Micro Runtime <https://github.com/bytecodealliance/wasm-micro-runtime>`__, `WAMR-2.2.0 <https://github.com/bytecodealliance/wasm-micro-runtime/releases/tag/WAMR-2.2.0>`__, 2024-10-22, , `Apache-2.0 <https://github.com/bytecodealliance/wasm-micro-runtime/blob/WAMR-2.2.0/LICENSE>`__
+
+
+envoy.wasm.runtime.wasmtime
+---------------------------
+
+.. csv-table::
+  :header: Name, Version, Release date, CPE, License
+  :widths: 2, 1, 1, 2, 1
+
+  `Bazel rust rules <https://github.com/bazelbuild/rules_rust>`__, `0.51.0 <https://github.com/bazelbuild/rules_rust/releases/tag/0.51.0>`__, 2024-09-19, , `Apache-2.0 <https://github.com/bazelbuild/rules_rust/blob/0.51.0/LICENSE.txt>`__
+  `wasmtime <https://github.com/bytecodealliance/wasmtime>`__, `24.0.4 <https://github.com/bytecodealliance/wasmtime/releases/tag/v24.0.4>`__, 2025-07-18, `cpe:2.3:a:bytecodealliance:wasmtime:* <https://nvd.nist.gov/vuln/search/results?form_type=Advanced&results_type=overview&query=cpe%3A2.3%3Aa%3Abytecodealliance%3Awasmtime%3A%2A&search_type=all>`__, `Apache-2.0 <https://github.com/bytecodealliance/wasmtime/blob/v24.0.4/LICENSE>`__
+  `WebAssembly for Proxies (C++ host implementation) <https://github.com/proxy-wasm/proxy-wasm-cpp-host>`__, `c4d7bb0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/tree/c4d7bb0fda912e24c64daf2aa749ec54cec99412>`__, 2024-12-19, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-host/blob/c4d7bb0fda912e24c64daf2aa749ec54cec99412/LICENSE>`__
+  `WebAssembly for Proxies (C++ SDK) <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk>`__, `921039a <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/tree/921039ae983ce053bf5cba78a85a3c08ff9791e5>`__, 2023-05-01, , `Apache-2.0 <https://github.com/proxy-wasm/proxy-wasm-cpp-sdk/blob/921039ae983ce053bf5cba78a85a3c08ff9791e5/LICENSE>`__
+
