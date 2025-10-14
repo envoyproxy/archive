@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reverse tunnels overview &mdash; envoy tag-v1.36.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ae221bf4"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="io_uring" href="io_uring.html" />
+    <link rel="prev" title="Rate limit service" href="rate_limit.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuration.html">Configuration reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../http/http.html">HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../upstream/upstream.html">Upstream clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observability/observability.html">Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations/operations.html">Operations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="other_features.html">Other features</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dlb.html">DLB Connection Balancer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperscan.html">Hyperscan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internal_listener.html">Internal Listener</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rate_limit.html">Rate limit service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rate_limit.html#rate-limit-quota-service">Rate limit quota service</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reverse tunnels overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initiator-configuration-downstream-envoy">Initiator configuration (downstream Envoy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#responder-configuration-upstream-envoy">Responder configuration (upstream Envoy)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#security-considerations">Security considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="io_uring.html">io_uring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vcl.html">VCL Socket Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wasm.html">Wasm runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wasm_service.html">Wasm service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qatzip.html">Qatzip Compressor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qatzstd.html">Qatzstd Compressor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="string_matcher.html">String Matcher</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../other_protocols/other_protocols.html">Other protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced/advanced.html">Advanced</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../best_practices/best_practices.html">Configuration best practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../configuration.html">Configuration reference</a></li>
+          <li class="breadcrumb-item"><a href="other_features.html">Other features</a></li>
+      <li class="breadcrumb-item active">Reverse tunnels overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/configuration/other_features/reverse_tunnel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="reverse-tunnels-overview">
+<span id="overview-reverse-tunnel"></span><h1>Reverse tunnels overview<a class="headerlink" href="#reverse-tunnels-overview" title="Link to this heading"></a></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The reverse tunnels feature is experimental and is currently under active development.</p>
+</div>
+<p>Envoy supports reverse tunnels that enable establishing persistent connections from downstream Envoy
+instances to upstream Envoy instances without requiring the upstream to be directly reachable from the
+downstream. This feature is particularly useful in scenarios where downstream instances are behind NATs,
+firewalls, or in private networks, and need to communicate with upstream instances in public networks
+or cloud environments.</p>
+<p>Reverse tunnels invert the typical connection model: the downstream Envoy initiates TCP connections to
+upstream Envoy instances and keeps them alive for reuse. These connections are established using a
+handshake protocol, after which traffic can be forwarded bidirectionally. Services behind the upstream
+Envoy can send requests through the tunnel to downstream services behind the initiator Envoy, effectively
+treating the normally unreachable downstream services as if they were directly accessible.</p>
+<a class="reference internal image-reference" href="../../_images/reverse_tunnel_arch.svg"><img alt="../../_images/reverse_tunnel_arch.svg" class="align-center" src="../../_images/reverse_tunnel_arch.svg" style="width: 90%;" />
+</a>
+<p id="config-reverse-tunnel-bootstrap">Reverse tunnels require the following extensions:</p>
+<ol class="arabic simple">
+<li><p><strong>Downstream socket interface</strong>: Registered as a bootstrap extension on the initiator Envoy to initiate and maintain reverse tunnels.</p></li>
+<li><p><strong>Upstream socket interface</strong>: Registered as a bootstrap extension on the responder Envoy to accept and manage reverse tunnels.</p></li>
+<li><p><strong>Reverse tunnel network filter</strong>: Configured on the responder Envoy to accept and validate reverse tunnel handshake requests.</p></li>
+<li><p><strong>Reverse connection cluster</strong>: Configured on the responder Envoy to route data requests to downstream nodes through established reverse tunnels.</p></li>
+</ol>
+<section id="initiator-configuration-downstream-envoy">
+<span id="config-reverse-tunnel-initiator"></span><span id="config-reverse-tunnel-configuration-files"></span><h2>Initiator configuration (downstream Envoy)<a class="headerlink" href="#initiator-configuration-downstream-envoy" title="Link to this heading"></a></h2>
+<p>The initiator Envoy (downstream) requires the following configuration components to establish reverse tunnels:</p>
+<section id="downstream-socket-interface">
+<span id="config-reverse-tunnel-downstream-socket-interface"></span><h3>Downstream socket interface<a class="headerlink" href="#downstream-socket-interface" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/de384e94ea31014635e7e7c1a94219bf/initiator-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">initiator-envoy.yaml</span></code></a></span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.bootstrap.reverse_tunnel.downstream_socket_interface</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">10</span><span class="w">    </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">11</span><span class="w">      </span><span class="no">type.googleapis.com/envoy.extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;downstream_reverse_connection&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>This extension enables the initiator Envoy to establish and maintain reverse tunnel connections to the responder Envoy.</p>
+</section>
+<section id="reverse-tunnel-listener">
+<span id="config-reverse-tunnel-listener"></span><h3>Reverse tunnel listener<a class="headerlink" href="#reverse-tunnel-listener" title="Link to this heading"></a></h3>
+<p>The reverse tunnel listener triggers reverse connection initiation to the upstream Envoy and encodes
+identity metadata for the local Envoy instance. The listener’s address field uses a special <code class="docutils literal notranslate"><span class="pre">rc://</span></code>
+format to specify connection parameters, and its route configuration defines which downstream services
+are reachable through the reverse tunnel.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/de384e94ea31014635e7e7c1a94219bf/initiator-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">initiator-envoy.yaml</span></code></a></span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">17</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reverse_conn_listener</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nt">listener_filters_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0s</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nt">listener_filters</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="linenos">20</span><span class="w">    </span><span class="c1"># Use custom address with reverse connection metadata encoded in URL format</span>
+<span class="linenos">21</span><span class="w">    </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">        </span><span class="c1"># This encodes: src_node_id, src_cluster_id, src_tenant_id</span>
+<span class="linenos">24</span><span class="w">        </span><span class="c1"># and remote clusters: upstream-cluster with 1 connection</span>
+<span class="linenos">25</span><span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rc://downstream-node:downstream-cluster:downstream-tenant@upstream-cluster:1&quot;</span>
+<span class="linenos">26</span><span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="linenos">27</span><span class="w">        </span><span class="c1"># Use custom resolver that can parse reverse connection metadata</span>
+<span class="linenos">28</span><span class="w">        </span><span class="nt">resolver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;envoy.resolvers.reverse_connection&quot;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="linenos">30</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filters</span><span class="p">:</span>
+<span class="linenos">31</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.network.http_connection_manager</span>
+<span class="linenos">32</span><span class="w">        </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">33</span><span class="w">          </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">34</span><span class="w">            </span><span class="no">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span>
+<span class="linenos">35</span><span class="w">          </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reverse_conn_listener</span>
+<span class="linenos">36</span><span class="w">          </span><span class="nt">route_config</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">            </span><span class="nt">virtual_hosts</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="linenos">39</span><span class="w">              </span><span class="nt">domains</span><span class="p">:</span>
+<span class="linenos">40</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
+<span class="linenos">41</span><span class="w">              </span><span class="nt">routes</span><span class="p">:</span>
+<span class="linenos">42</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span>
+<span class="linenos">43</span><span class="w">                  </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/downstream_service&#39;</span>
+<span class="linenos">44</span><span class="w">                </span><span class="nt">route</span><span class="p">:</span>
+<span class="linenos">45</span><span class="w">                  </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">downstream-service</span>
+<span class="linenos">46</span><span class="w">          </span><span class="nt">http_filters</span><span class="p">:</span>
+<span class="linenos">47</span><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.http.router</span>
+<span class="linenos">48</span><span class="w">            </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">49</span><span class="w">              </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">50</span><span class="w">                </span><span class="no">type.googleapis.com/envoy.extensions.filters.http.router.v3.Router</span>
+</pre></div>
+</div>
+</div>
+<p>The special <code class="docutils literal notranslate"><span class="pre">rc://</span></code> address format encodes connection and identity metadata:</p>
+<p><code class="docutils literal notranslate"><span class="pre">rc://src_node_id:src_cluster_id:src_tenant_id&#64;remote_cluster:connection_count</span></code></p>
+<p>In the example above, this expands to:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">src_node_id</span></code>: <code class="docutils literal notranslate"><span class="pre">downstream-node</span></code> - Unique identifier for this specific Envoy instance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src_cluster_id</span></code>: <code class="docutils literal notranslate"><span class="pre">downstream-cluster</span></code> - Logical grouping identifier for this Envoy and its peers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src_tenant_id</span></code>: <code class="docutils literal notranslate"><span class="pre">downstream-tenant</span></code> - Tenant identifier for multi-tenant isolation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remote_cluster</span></code>: <code class="docutils literal notranslate"><span class="pre">upstream-cluster</span></code> - Name of the upstream cluster to connect to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">connection_count</span></code>: <code class="docutils literal notranslate"><span class="pre">1</span></code> - Number of reverse connections to establish to the remote cluster.</p></li>
+</ul>
+<p>The identifiers serve the following purposes:</p>
+<ul class="simple">
+<li><p><strong>src_node_id</strong>: Each node must have a unique <code class="docutils literal notranslate"><span class="pre">src_node_id</span></code> across the entire system to ensure proper routing and connection management. Data requests can target a specific node by its ID.</p></li>
+<li><p><strong>src_cluster_id</strong>: Multiple nodes can share the same <code class="docutils literal notranslate"><span class="pre">src_cluster_id</span></code>, forming a logical group. Data requests sent using the cluster ID will be load balanced across all nodes in that cluster. The <code class="docutils literal notranslate"><span class="pre">src_cluster_id</span></code> must not collide with any <code class="docutils literal notranslate"><span class="pre">src_node_id</span></code>.</p></li>
+<li><p><strong>src_tenant_id</strong>: Used in multi-tenant environments to isolate traffic and resources between different tenants or organizational units.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">downstream-service</span></code> cluster in the example refers to the service behind the initiator Envoy that will be accessed via reverse tunnels from services behind the responder Envoy.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/de384e94ea31014635e7e7c1a94219bf/initiator-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">initiator-envoy.yaml</span></code></a></span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">69</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">downstream-service</span>
+<span class="linenos">70</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT_DNS</span>
+<span class="linenos">71</span><span class="w">    </span><span class="nt">connect_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span>
+<span class="linenos">72</span><span class="w">    </span><span class="nt">load_assignment</span><span class="p">:</span>
+<span class="linenos">73</span><span class="w">      </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">downstream-service</span>
+<span class="linenos">74</span><span class="w">      </span><span class="nt">endpoints</span><span class="p">:</span>
+<span class="linenos">75</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lb_endpoints</span><span class="p">:</span>
+<span class="linenos">76</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">endpoint</span><span class="p">:</span>
+<span class="linenos">77</span><span class="w">            </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos">78</span><span class="w">              </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos">79</span><span class="w">                </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">downstream-service</span>
+<span class="linenos">80</span><span class="w">                </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="upstream-cluster">
+<h3>Upstream cluster<a class="headerlink" href="#upstream-cluster" title="Link to this heading"></a></h3>
+<p>Each upstream Envoy to which reverse tunnels should be established requires a cluster configuration.
+This cluster can be defined statically in the bootstrap configuration or added dynamically via the
+<a class="reference internal" href="../upstream/cluster_manager/cds.html#config-cluster-manager-cds"><span class="std std-ref">Cluster Discovery Service (CDS)</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/de384e94ea31014635e7e7c1a94219bf/initiator-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">initiator-envoy.yaml</span></code></a></span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">54</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upstream-cluster</span>
+<span class="linenos">55</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT_DNS</span>
+<span class="linenos">56</span><span class="w">    </span><span class="nt">connect_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span>
+<span class="linenos">57</span><span class="w">    </span><span class="nt">load_assignment</span><span class="p">:</span>
+<span class="linenos">58</span><span class="w">      </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upstream-cluster</span>
+<span class="linenos">59</span><span class="w">      </span><span class="nt">endpoints</span><span class="p">:</span>
+<span class="linenos">60</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lb_endpoints</span><span class="p">:</span>
+<span class="linenos">61</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">endpoint</span><span class="p">:</span>
+<span class="linenos">62</span><span class="w">            </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos">63</span><span class="w">              </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos">64</span><span class="w">                </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upstream-envoy</span><span class="w">  </span><span class="c1"># Address of upstream-envoy</span>
+<span class="linenos">65</span><span class="w">                </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w">  </span><span class="c1"># Port for rev_conn_api_listener</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="multiple-cluster-support">
+<h3>Multiple cluster support<a class="headerlink" href="#multiple-cluster-support" title="Link to this heading"></a></h3>
+<p>To establish reverse tunnels to multiple upstream clusters simultaneously, use the <code class="docutils literal notranslate"><span class="pre">additional_addresses</span></code>
+field on the listener. Each address in this list specifies an additional upstream cluster and the number
+of connections to establish to it.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">multi_cluster_listener</span>
+<span class="nt">address</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rc://node-1:downstream-cluster:tenant-a@cluster-a:2&quot;</span>
+<span class="w">    </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">additional_addresses</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rc://node-1:downstream-cluster:tenant-a@cluster-b:3&quot;</span>
+<span class="w">      </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">filter_chains</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.network.tcp_proxy</span>
+<span class="w">    </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy</span>
+<span class="w">      </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp</span>
+<span class="w">      </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dynamic_cluster</span>
+</pre></div>
+</div>
+<p>This configuration establishes:</p>
+<ul class="simple">
+<li><p>2 connections to <code class="docutils literal notranslate"><span class="pre">cluster-a</span></code></p></li>
+<li><p>3 connections to <code class="docutils literal notranslate"><span class="pre">cluster-b</span></code></p></li>
+</ul>
+</section>
+<section id="tls-configuration">
+<h3>TLS configuration<a class="headerlink" href="#tls-configuration" title="Link to this heading"></a></h3>
+<p>For secure reverse tunnel establishment, configure a TLS transport socket on the upstream cluster.
+The example below shows mutual TLS (mTLS) configuration with certificate pinning:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upstream-cluster</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT_DNS</span>
+<span class="nt">connect_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span>
+<span class="nt">transport_socket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.transport_sockets.tls</span>
+<span class="w">  </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="w">    </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext</span>
+<span class="w">    </span><span class="nt">common_tls_context</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tls_certificates</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">certificate_chain</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/ssl/certs/client-cert.pem&quot;</span>
+<span class="w">        </span><span class="nt">private_key</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/ssl/private/client-key.pem&quot;</span>
+<span class="w">      </span><span class="nt">validation_context</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/ssl/certs/ca-cert.pem&quot;</span>
+<span class="w">        </span><span class="nt">verify_certificate_spki</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;NdQcW/8B5PcygH/5tnDNXeA2WS/2JzV3K1PKz7xQlKo=&quot;</span>
+<span class="w">      </span><span class="nt">alpn_protocols</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;h2&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;http/1.1&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">sni</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">upstream-envoy.example.com</span>
+</pre></div>
+</div>
+<p>This configuration provides mutual TLS authentication between the initiator and responder Envoys.
+The client certificate authenticates the initiator, while the server certificate and SPKI pinning
+authenticate the responder. The ALPN configuration negotiates HTTP/2, which is required for reverse
+tunnel operation.</p>
+</section>
+</section>
+<section id="responder-configuration-upstream-envoy">
+<span id="config-reverse-tunnel-responder"></span><h2>Responder configuration (upstream Envoy)<a class="headerlink" href="#responder-configuration-upstream-envoy" title="Link to this heading"></a></h2>
+<p>The responder Envoy (upstream) requires the following configuration components to accept reverse tunnels:</p>
+<section id="upstream-socket-interface">
+<span id="config-reverse-tunnel-upstream-socket-interface"></span><h3>Upstream socket interface<a class="headerlink" href="#upstream-socket-interface" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/22698c2f5af027f3ff5142eb6a431dc7/responder-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">responder-envoy.yaml</span></code></a></span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.bootstrap.reverse_tunnel.upstream_socket_interface</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">10</span><span class="w">    </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">11</span><span class="w">      </span><span class="no">type.googleapis.com/envoy.extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;upstream_reverse_connection&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>This extension enables the responder Envoy to accept and manage incoming reverse tunnel connections from initiator Envoys.</p>
+</section>
+<section id="reverse-tunnel-network-filter">
+<span id="config-reverse-tunnel-network-filter"></span><h3>Reverse tunnel network filter<a class="headerlink" href="#reverse-tunnel-network-filter" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">envoy.filters.network.reverse_tunnel</span></code> network filter implements the reverse tunnel handshake
+protocol. It validates incoming connection requests and accepts or rejects them based on the handshake
+parameters.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/22698c2f5af027f3ff5142eb6a431dc7/responder-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">responder-envoy.yaml</span></code></a></span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">17</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rev_conn_api_listener</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
+<span class="linenos">21</span><span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filters</span><span class="p">:</span>
+<span class="linenos">24</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.network.reverse_tunnel</span>
+<span class="linenos">25</span><span class="w">        </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">26</span><span class="w">          </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">27</span><span class="w">            </span><span class="no">type.googleapis.com/envoy.extensions.filters.network.reverse_tunnel.v3.ReverseTunnel</span>
+<span class="linenos">28</span><span class="w">          </span><span class="nt">ping_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="reverse-connection-cluster">
+<span id="config-reverse-connection-cluster"></span><h3>Reverse connection cluster<a class="headerlink" href="#reverse-connection-cluster" title="Link to this heading"></a></h3>
+<p>The reverse connection cluster is a special cluster type that routes traffic through established reverse
+tunnels rather than creating new outbound connections. When a data request arrives at the upstream Envoy
+for a downstream node, the cluster looks up a cached reverse tunnel connection to that node and reuses it.</p>
+<p>Each data request must include a <code class="docutils literal notranslate"><span class="pre">host_id</span></code> that identifies the target downstream node. This ID can be
+specified directly in request headers or computed from them. The cluster extracts the <code class="docutils literal notranslate"><span class="pre">host_id</span></code> using
+the configured <code class="docutils literal notranslate"><span class="pre">host_id_format</span></code> field and uses it to look up the appropriate reverse tunnel connection.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/22698c2f5af027f3ff5142eb6a431dc7/responder-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">responder-envoy.yaml</span></code></a></span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 92</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reverse_connection_cluster</span>
+<span class="linenos"> 93</span><span class="w">    </span><span class="nt">connect_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200s</span>
+<span class="linenos"> 94</span><span class="w">    </span><span class="nt">lb_policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CLUSTER_PROVIDED</span>
+<span class="linenos"> 95</span><span class="w">    </span><span class="nt">cluster_type</span><span class="p">:</span>
+<span class="linenos"> 96</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.clusters.reverse_connection</span>
+<span class="linenos"> 97</span><span class="w">      </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos"> 98</span><span class="w">        </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos"> 99</span><span class="w">          </span><span class="no">type.googleapis.com/envoy.extensions.clusters.reverse_connection.v3.ReverseConnectionClusterConfig</span>
+<span class="linenos">100</span><span class="w">        </span><span class="nt">cleanup_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+<span class="linenos">101</span><span class="w">        </span><span class="c1"># This is the actual host ID that will be used by the reverse connection cluster to look up a socket.</span>
+<span class="linenos">102</span><span class="w">        </span><span class="c1"># The reverse connection cluster checks if there are cached sockets for this cluster, if so, it will</span>
+<span class="linenos">103</span><span class="w">        </span><span class="c1"># use the socket. Otherwise, it assumes this is a downstream node and looks for cached sockets with</span>
+<span class="linenos">104</span><span class="w">        </span><span class="c1"># this as the node instead.</span>
+<span class="linenos">105</span><span class="w">        </span><span class="nt">host_id_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%REQ(x-computed-host-id)%&quot;</span>
+<span class="linenos">106</span><span class="w">    </span><span class="nt">typed_extension_protocol_options</span><span class="p">:</span>
+<span class="linenos">107</span><span class="w">      </span><span class="nt">envoy.extensions.upstreams.http.v3.HttpProtocolOptions</span><span class="p">:</span>
+<span class="linenos">108</span><span class="w">        </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">109</span><span class="w">          </span><span class="no">type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions</span>
+<span class="linenos">110</span><span class="w">        </span><span class="nt">explicit_http_config</span><span class="p">:</span>
+<span class="linenos">111</span><span class="w">          </span><span class="c1"># Right the moment, reverse connections are supported over HTTP/2 only.</span>
+<span class="linenos">112</span><span class="w">          </span><span class="nt">http2_protocol_options</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</pre></div>
+</div>
+</div>
+<p>The reverse connection cluster configuration includes several key fields:</p>
+<section id="load-balancing-policy">
+<h4>Load balancing policy<a class="headerlink" href="#load-balancing-policy" title="Link to this heading"></a></h4>
+<p>Must be set to <code class="docutils literal notranslate"><span class="pre">CLUSTER_PROVIDED</span></code> to delegate load balancing to the custom cluster implementation.</p>
+</section>
+<section id="host-id-format">
+<h4>Host ID format<a class="headerlink" href="#host-id-format" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">host_id_format</span></code> field uses Envoy’s <a class="reference internal" href="../observability/access_log/usage.html#config-access-log-format-strings"><span class="std std-ref">formatter system</span></a> to
+extract the target downstream node identifier from the request context. Supported formatters include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%REQ(header-name)%</span></code>: Extract value from a request header.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%DYNAMIC_METADATA(namespace:key)%</span></code>: Extract value from dynamic metadata.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%FILTER_STATE(key)%</span></code>: Extract value from filter state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%DOWNSTREAM_REMOTE_ADDRESS%</span></code>: Use the downstream connection address.</p></li>
+<li><p>Plain text and combinations of the above.</p></li>
+</ul>
+<p>See the <a class="reference internal" href="#config-reverse-connection-egress-listener"><span class="std std-ref">Egress listener for data traffic</span></a> section for an example of processing headers
+to set the <code class="docutils literal notranslate"><span class="pre">host_id</span></code>.</p>
+</section>
+<section id="protocol">
+<h4>Protocol<a class="headerlink" href="#protocol" title="Link to this heading"></a></h4>
+<p>Only HTTP/2 is supported for reverse connections. This is required to support multiplexing multiple
+data requests over a single TCP connection.</p>
+</section>
+<section id="connection-reuse">
+<h4>Connection reuse<a class="headerlink" href="#connection-reuse" title="Link to this heading"></a></h4>
+<p>Once a connection is established to a specific downstream node, it is cached and reused for all subsequent
+requests to that node. Each data request is multiplexed as a new HTTP/2 stream on the existing connection,
+avoiding the overhead of establishing new connections.</p>
+</section>
+</section>
+<section id="egress-listener-for-data-traffic">
+<span id="config-reverse-connection-egress-listener"></span><h3>Egress listener for data traffic<a class="headerlink" href="#egress-listener-for-data-traffic" title="Link to this heading"></a></h3>
+<p>An egress listener on the upstream Envoy accepts data requests and routes them to the reverse connection
+cluster. This listener typically includes header processing logic to extract or compute the <code class="docutils literal notranslate"><span class="pre">host_id</span></code>
+that identifies the target downstream node for each request.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text"><a class="reference download internal" download="" href="../../_downloads/22698c2f5af027f3ff5142eb6a431dc7/responder-envoy.yaml"><code class="xref download docutils literal notranslate"><span class="pre">responder-envoy.yaml</span></code></a></span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">31</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">egress_listener</span>
+<span class="linenos">32</span><span class="w">    </span><span class="nt">address</span><span class="p">:</span>
+<span class="linenos">33</span><span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="linenos">34</span><span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
+<span class="linenos">35</span><span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8085</span>
+<span class="linenos">36</span><span class="w">    </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filters</span><span class="p">:</span>
+<span class="linenos">38</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.http_connection_manager</span>
+<span class="linenos">39</span><span class="w">        </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">40</span><span class="w">          </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">41</span><span class="w">            </span><span class="no">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span>
+<span class="linenos">42</span><span class="w">          </span><span class="nt">stat_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">egress_http</span>
+<span class="linenos">43</span><span class="w">          </span><span class="nt">route_config</span><span class="p">:</span>
+<span class="linenos">44</span><span class="w">            </span><span class="nt">virtual_hosts</span><span class="p">:</span>
+<span class="linenos">45</span><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="linenos">46</span><span class="w">              </span><span class="nt">domains</span><span class="p">:</span>
+<span class="linenos">47</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
+<span class="linenos">48</span><span class="w">              </span><span class="nt">routes</span><span class="p">:</span>
+<span class="linenos">49</span><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span>
+<span class="linenos">50</span><span class="w">                  </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/downstream_service&quot;</span>
+<span class="linenos">51</span><span class="w">                </span><span class="nt">route</span><span class="p">:</span>
+<span class="linenos">52</span><span class="w">                  </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reverse_connection_cluster</span>
+<span class="linenos">53</span><span class="w">          </span><span class="nt">http_filters</span><span class="p">:</span>
+<span class="linenos">54</span><span class="w">          </span><span class="c1"># The Lua filter is used to extract the host ID from the headers and set it in the x-computed-host-id header.</span>
+<span class="linenos">55</span><span class="w">          </span><span class="c1"># This header is then used by the reverse connection cluster to look up a socket.</span>
+<span class="linenos">56</span><span class="w">          </span><span class="c1"># The reverse connection cluster checks if there are cached sockets for this host.</span>
+<span class="linenos">57</span><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.http.lua</span>
+<span class="linenos">58</span><span class="w">            </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">59</span><span class="w">              </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua</span>
+<span class="linenos">60</span><span class="w">              </span><span class="nt">inline_code</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="linenos">61</span><span class="w">                </span><span class="no">function envoy_on_request(request_handle)</span>
+<span class="linenos">62</span><span class="w">                  </span><span class="no">local headers = request_handle:headers()</span>
+<span class="linenos">63</span><span class="w">                  </span><span class="no">local node_id = headers:get(&quot;x-node-id&quot;)</span>
+<span class="linenos">64</span><span class="w">                  </span><span class="no">local cluster_id = headers:get(&quot;x-cluster-id&quot;)</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span><span class="w">                  </span><span class="no">local host_id = &quot;&quot;</span>
+<span class="linenos">67</span>
+<span class="linenos">68</span><span class="w">                  </span><span class="no">-- Priority 1: x-node-id header</span>
+<span class="linenos">69</span><span class="w">                  </span><span class="no">if node_id then</span>
+<span class="linenos">70</span><span class="w">                    </span><span class="no">host_id = node_id</span>
+<span class="linenos">71</span><span class="w">                    </span><span class="no">request_handle:logInfo(&quot;Using x-node-id as host_id: &quot; .. host_id)</span>
+<span class="linenos">72</span><span class="w">                  </span><span class="no">-- Priority 2: x-cluster-id header</span>
+<span class="linenos">73</span><span class="w">                  </span><span class="no">elseif cluster_id then</span>
+<span class="linenos">74</span><span class="w">                    </span><span class="no">host_id = cluster_id</span>
+<span class="linenos">75</span><span class="w">                    </span><span class="no">request_handle:logInfo(&quot;Using x-cluster-id as host_id: &quot; .. host_id)</span>
+<span class="linenos">76</span><span class="w">                  </span><span class="no">else</span>
+<span class="linenos">77</span><span class="w">                    </span><span class="no">request_handle:logError(&quot;No valid headers found: x-node-id or x-cluster-id&quot;)</span>
+<span class="linenos">78</span><span class="w">                    </span><span class="no">-- Don&#39;t set x-computed-host-id, which will cause cluster matching to fail</span>
+<span class="linenos">79</span><span class="w">                    </span><span class="no">return</span>
+<span class="linenos">80</span><span class="w">                  </span><span class="no">end</span>
+<span class="linenos">81</span>
+<span class="linenos">82</span><span class="w">                  </span><span class="no">-- Set the computed host ID for the reverse connection cluster</span>
+<span class="linenos">83</span><span class="w">                  </span><span class="no">headers:add(&quot;x-computed-host-id&quot;, host_id)</span>
+<span class="linenos">84</span><span class="w">                </span><span class="no">end</span>
+<span class="linenos">85</span><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.filters.http.router</span>
+<span class="linenos">86</span><span class="w">            </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="linenos">87</span><span class="w">              </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="linenos">88</span><span class="w">                </span><span class="no">type.googleapis.com/envoy.extensions.filters.http.router.v3.Router</span>
+</pre></div>
+</div>
+</div>
+<p>The example above demonstrates using a <a class="reference internal" href="../http/http_filters/lua_filter.html#config-http-filters-lua"><span class="std std-ref">Lua filter</span></a> to implement flexible
+header-based routing logic. This is one of several approaches for computing the <code class="docutils literal notranslate"><span class="pre">host_id</span></code> from request
+context; alternatives include using other HTTP filters, the <code class="docutils literal notranslate"><span class="pre">host_id_format</span></code> field with direct header
+mapping, or custom filter implementations. The Lua filter checks request headers in priority order and
+sets the <code class="docutils literal notranslate"><span class="pre">x-computed-host-id</span></code> header, which the reverse connection cluster uses to look up the appropriate
+tunnel connection.</p>
+<p>The header priority order is:</p>
+<ol class="arabic simple">
+<li><p><strong>x-node-id header</strong>: Highest priority—targets a specific downstream node.</p></li>
+<li><p><strong>x-cluster-id header</strong>: Fallback—targets a cluster, allowing load balancing across nodes.</p></li>
+<li><p><strong>None found</strong>: Logs an error and fails cluster matching.</p></li>
+</ol>
+<p><strong>Example request flows:</strong></p>
+<ol class="arabic">
+<li><p><strong>Request with node ID</strong> (highest priority):</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/downstream_service</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">x-node-id</span><span class="o">:</span> <span class="l">example-node</span>
+</pre></div>
+</div>
+<p>The filter sets <code class="docutils literal notranslate"><span class="pre">host_id</span> <span class="pre">=</span> <span class="pre">&quot;example-node&quot;</span></code> and routes to that specific node.</p>
+</li>
+<li><p><strong>Request with cluster ID</strong> (fallback):</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/downstream_service</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">x-cluster-id</span><span class="o">:</span> <span class="l">example-cluster</span>
+</pre></div>
+</div>
+<p>The filter sets <code class="docutils literal notranslate"><span class="pre">host_id</span> <span class="pre">=</span> <span class="pre">&quot;example-cluster&quot;</span></code> and routes to any node in that cluster.</p>
+</li>
+</ol>
+</section>
+</section>
+<section id="security-considerations">
+<span id="config-reverse-connection-security"></span><h2>Security considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h2>
+<p>Reverse tunnels should be used with appropriate security measures:</p>
+<ul class="simple">
+<li><p><strong>Authentication</strong>: Implement proper authentication mechanisms for handshake validation as part of the reverse tunnel handshake protocol.</p></li>
+<li><p><strong>Authorization</strong>: Validate that downstream nodes are authorized to connect to upstream clusters.</p></li>
+<li><p><strong>TLS</strong>: TLS can be configured for each upstream cluster that reverse tunnels are established to.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rate_limit.html" class="btn btn-neutral float-left" title="Rate limit service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="io_uring.html" class="btn btn-neutral float-right" title="io_uring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
