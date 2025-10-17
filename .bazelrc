@@ -5,6 +5,8 @@ common:ci --noshow_progress
 common:ci --noshow_loading_progress
 common:ci --test_output=errors
 
+common --noenable_bzlmod
+
 build --jobs=HOST_CPUS-1
 build --action_env=SPHINX_JOBS
 
