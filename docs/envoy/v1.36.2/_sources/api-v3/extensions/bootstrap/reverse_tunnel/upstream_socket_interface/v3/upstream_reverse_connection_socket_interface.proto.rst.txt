@@ -1,0 +1,82 @@
+.. _envoy_v3_api_file_envoy/extensions/bootstrap/reverse_tunnel/upstream_socket_interface/v3/upstream_reverse_connection_socket_interface.proto:
+
+Upstream reverse connection socket interface (proto)
+====================================================
+
+.. _extension_envoy.bootstrap.reverse_tunnel.upstream_socket_interface:
+
+This extension has the qualified name ``envoy.bootstrap.reverse_tunnel.upstream_socket_interface``
+
+
+.. note::
+  This extension is work-in-progress. Functionality is incomplete and it is not intended for production use.
+
+  This extension has an unknown security posture and should only be
+  used in deployments where both the downstream and upstream are
+  trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.bootstrap <extension_category_envoy.bootstrap>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface <envoy_v3_api_msg_extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface>`
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface:
+
+extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface
+---------------------------------------------------------------------------------------------------------
+
+
+:repo:`[extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface proto] <api/envoy/extensions/bootstrap/reverse_tunnel/upstream_socket_interface/v3/upstream_reverse_connection_socket_interface.proto#L19>`
+
+Configuration for the upstream reverse connection socket interface.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "stat_prefix": ...,
+    "ping_failure_threshold": {...},
+    "enable_detailed_stats": ...
+  }
+
+.. _envoy_v3_api_field_extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface.stat_prefix:
+
+
+stat_prefix
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Stat prefix for upstream reverse connection socket interface stats.
+
+
+.. _envoy_v3_api_field_extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface.ping_failure_threshold:
+
+
+ping_failure_threshold
+  (`UInt32Value <https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#uint32value>`_) Number of consecutive ping failures before an idle reverse connection socket is marked dead.
+  Defaults to 3 if unset. Must be at least 1.
+
+
+.. _envoy_v3_api_field_extensions.bootstrap.reverse_tunnel.upstream_socket_interface.v3.UpstreamReverseConnectionSocketInterface.enable_detailed_stats:
+
+
+enable_detailed_stats
+  (`bool <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Enable detailed per-node and per-cluster statistics.
+  When enabled, emits hidden statistics for individual nodes and clusters.
+  Defaults to false.
+
+
