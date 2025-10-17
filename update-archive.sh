@@ -55,10 +55,6 @@ build_docs () {
 archive_docs () {
     local version="$1"
     echo "Archiving docs: ${version}"
-    if [[ "$version" == "v1.34.10" ]]; then
-        echo "SKIP ${version}"
-       return
-    fi
     mkdir -p "${DOCS_FOLDER}/${version}"
     build_docs "${version}"
     git add "${DOCS_FOLDER}/${version}"
