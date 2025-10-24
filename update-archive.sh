@@ -2,7 +2,6 @@
 
 set -o pipefail
 
-
 ENVOY_SRC_DIR="${ENVOY_SRC_DIR:-../envoy}"
 ENVOY_SRC="$(realpath "${ENVOY_SRC_DIR}")"
 WORKSPACE="$(realpath .)"
@@ -47,6 +46,7 @@ build_docs () {
         fi
         ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
     fi
+    echo "Docs ${version} built ..."
     mv generated/docs/* "${WORKSPACE}/${DOCS_FOLDER}/${version}"
     rm -rf generated
     cd - || exit 1
@@ -57,6 +57,9 @@ archive_docs () {
     echo "Archiving docs: ${version}"
     mkdir -p "${DOCS_FOLDER}/${version}"
     build_docs "${version}"
+    if [[ -n "$TEST_ONLY" ]]; then
+        return
+    fi
     git add "${DOCS_FOLDER}/${version}"
     git commit "${DOCS_FOLDER}/${version}" -m "archive: Add documentation (${version})"
 }
@@ -72,16 +75,18 @@ for version in "${RELEASES[@]}"; do
         if [[ -z "$TEST_ONLY" ]]; then
             SHOULD_PUSH=1
         else
-            # this should not have change, but seems there is an issue with tmp paths
-            git show --name-only
+            if [[ -n "$(git status --porcelain "${DOCS_FOLDER}")" ]]; then
+                echo "Unexpected changes" >&2
+                exit 1
+            fi
         fi
     fi
 done
-
 
 if [[ -n "$SHOULD_PUSH" ]]; then
     echo "Pushing changes to the archive ..."
     git push origin HEAD:main
 else
+    echo "Not pushing changes to the archive ..."
     git status
 fi
