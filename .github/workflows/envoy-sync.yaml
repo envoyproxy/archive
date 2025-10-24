@@ -29,6 +29,13 @@ jobs:
           || github.actor == 'sync-envoy[bot]'
       }}
     steps:
+    - uses: envoyproxy/toolshed/gh-actions/bind-mounts@actions-v0.3.28
+      with:
+        mounts: |
+          - src: /mnt/workspace
+            target: GITHUB_WORKSPACE
+            chown: "runner:runner"
+
     - id: appauth
       uses: envoyproxy/toolshed/gh-actions/appauth@actions-v0.3.16
       with:
@@ -53,8 +60,6 @@ jobs:
         ref: main
         token: ${{ steps.appauth.outputs.token }}
         path: archive
-
-    - uses: envoyproxy/toolshed/gh-actions/diskspace@actions-v0.0.18
 
     - run: |
         cd archive
