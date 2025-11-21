@@ -45,7 +45,7 @@ jobs:
 
     # Checkout the Envoy repo
     - name: 'Checkout Repository'
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: envoyproxy/envoy
         ref: main
@@ -54,7 +54,7 @@ jobs:
 
     # Checkout the repo
     - name: 'Checkout Repository'
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         token: ${{ steps.appauth.outputs.token }}
         path: archive
