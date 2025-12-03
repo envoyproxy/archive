@@ -1,4 +1,5 @@
 load("@base_pip3//:requirements.bzl", "requirement")
+load("@python3_12//:defs.bzl", "py_binary")
 
 py_binary(
     name = "release_versions",
