@@ -1,0 +1,29 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/http/proto_api_scrubber/v3/matcher_actions.proto:
+
+Proto API Scrubber Matcher Actions (proto)
+==========================================
+
+
+.. warning::
+   This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the :ref:`threat model <arch_overview_threat_model>`, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.proto_api_scrubber.v3.RemoveFieldAction:
+
+extensions.filters.http.proto_api_scrubber.v3.RemoveFieldAction
+---------------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.proto_api_scrubber.v3.RemoveFieldAction proto] <api/envoy/extensions/filters/http/proto_api_scrubber/v3/matcher_actions.proto#L19>`
+
+Specifies an :ref:`Unified Matcher API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>` action to remove a field.
+This actual action needs to be implemented by the filter using it.
+
+
+
+

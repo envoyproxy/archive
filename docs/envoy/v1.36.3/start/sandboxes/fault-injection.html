@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fault injection filter &mdash; envoy tag-v1.36.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=99da919e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Front proxy" href="front-proxy.html" />
+    <link rel="prev" title="External authorization (ext_authz) filter" href="ext_authz.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../start.html">Getting Started</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Sandboxes</a></li>
+      <li class="breadcrumb-item active">Fault injection filter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/start/sandboxes/fault-injection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fault-injection-filter">
+<span id="install-sandboxes-fault-injection"></span><h1>Fault injection filter<a class="headerlink" href="#fault-injection-filter" title="Link to this heading"></a></h1>
+<aside class="sidebar">
+<p class="sidebar-title">Requirements</p>
+<dl class="simple">
+<dt><a class="reference internal" href="setup.html#start-sandboxes-setup"><span class="std std-ref">Sandbox environment</span></a></dt><dd><p>Setup your sandbox environment with Docker and Docker Compose,
+and clone the Envoy repository with Git.</p>
+</dd>
+</dl>
+</aside>
+<p>This simple example demonstrates Envoy’s <a class="reference internal" href="../../configuration/http/http_filters/fault_filter.html#config-http-filters-fault-injection"><span class="std std-ref">fault injection</span></a> capability
+using Envoy’s <a class="reference internal" href="../../configuration/operations/runtime.html#config-runtime"><span class="std std-ref">runtime support</span></a> to control the feature.</p>
+<p>It demonstrates fault injection that cause the request to abort and fail, and also faults that simply delay the
+response.</p>
+<section id="step-1-start-all-of-our-containers">
+<h2>Step 1: Start all of our containers<a class="headerlink" href="#step-1-start-all-of-our-containers" title="Link to this heading"></a></h2>
+<p>Change to the <code class="docutils literal notranslate"><span class="pre">fault_injection</span></code> directory.</p>
+<p>Terminal 1</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">examples/fault-injection</span>
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>pull
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>-d
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span>ps
+
+<span class="go">          Name                         Command               State               Ports</span>
+<span class="go">------------------------------------------------------------------------------------------------------</span>
+<span class="go">fault-injection_backend_1   gunicorn -b 0.0.0.0:80 htt       Up      0.0.0.0:8080-&gt;80/tcp</span>
+<span class="go">fault-injection_envoy_1     /docker-entrypoint.sh /usr       Up      10000/tcp, 0.0.0.0:9211-&gt;9211/tcp</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-start-sending-continuous-stream-of-http-requests">
+<h2>Step 2: Start sending continuous stream of HTTP requests<a class="headerlink" href="#step-2-start-sending-continuous-stream-of-http-requests" title="Link to this heading"></a></h2>
+<p>Terminal 2</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">examples/fault-injection</span>
+<span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>envoy<span class="w"> </span>bash
+<span class="gp">$ </span>bash<span class="w"> </span>send_request.sh
+</pre></div>
+</div>
+<p>The script above (<a class="reference download internal" download="" href="../../_downloads/5f20ac88be2cfdca65127e2b8d63bb6a/send_request.sh"><code class="xref download docutils literal notranslate"><span class="pre">send_request.sh</span></code></a>) sends a continuous stream
+of HTTP requests to Envoy, which in turn forwards the requests to the backend container.</p>
+<p>Fault injection is configured in Envoy but turned off (i.e. affects 0% of requests).</p>
+<p>Consequently, you should see a continuous sequence of <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">200</span></code> response codes.</p>
+</section>
+<section id="step-3-test-envoy-s-abort-fault-injection">
+<h2>Step 3: Test Envoy’s abort fault injection<a class="headerlink" href="#step-3-test-envoy-s-abort-fault-injection" title="Link to this heading"></a></h2>
+<p>Turn on <em>abort</em> fault injection via the runtime using the commands below.</p>
+<p>Terminal 3</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>envoy<span class="w"> </span>bash
+<span class="gp">$ </span>bash<span class="w"> </span>enable_abort_fault_injection.sh
+</pre></div>
+</div>
+<p>The script above enables HTTP aborts for 100% of requests.</p>
+<p>You should now see a continuous sequence of <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">503</span></code> responses for all requests.</p>
+<p>To disable the abort injection:</p>
+<p>Terminal 3</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>disable_abort_fault_injection.sh
+</pre></div>
+</div>
+</section>
+<section id="step-4-test-envoy-s-delay-fault-injection">
+<h2>Step 4: Test Envoy’s delay fault injection<a class="headerlink" href="#step-4-test-envoy-s-delay-fault-injection" title="Link to this heading"></a></h2>
+<p>Turn on <em>delay</em> fault injection via the runtime using the commands below.</p>
+<p>Terminal 3</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>envoy<span class="w"> </span>bash
+<span class="gp">$ </span>bash<span class="w"> </span>enable_delay_fault_injection.sh
+</pre></div>
+</div>
+<p>The script above will add a 3-second delay to 50% of HTTP requests.</p>
+<p>You should now see a continuous sequence of <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">200</span></code> responses for all requests, but half of the requests
+will take 3 seconds to complete.</p>
+<p>To disable the delay injection:</p>
+<p>Terminal 3</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>disable_delay_fault_injection.sh
+</pre></div>
+</div>
+</section>
+<section id="step-5-check-the-current-runtime-filesystem">
+<h2>Step 5: Check the current runtime filesystem<a class="headerlink" href="#step-5-check-the-current-runtime-filesystem" title="Link to this heading"></a></h2>
+<p>To see the current runtime filesystem overview:</p>
+<p>Terminal 3</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tree<span class="w"> </span>/srv/runtime
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../configuration/http/http_filters/fault_filter.html#config-http-filters-fault-injection"><span class="std std-ref">Fault injection</span></a></dt><dd><p>Learn more about Envoy’s HTTP fault injection filter.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ext_authz.html" class="btn btn-neutral float-left" title="External authorization (ext_authz) filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="front-proxy.html" class="btn btn-neutral float-right" title="Front proxy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
