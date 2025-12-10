@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Namespace Matching &mdash; envoy tag-v1.36.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7d10ef0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52530153"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="HTTP" href="../http/http.html" />
+    <link rel="prev" title="Listener discovery service (LDS)" href="lds.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuration.html">Configuration reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/overview.html">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="listeners.html">Listeners</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="listener_filters/listener_filters.html">Listener filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_filters/network_filters.html">Network filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udp_filters/udp_filters.html">UDP listener filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lds.html">Listener discovery service (LDS)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Network Namespace Matching</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#input-behavior">Input Behavior</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matching-strategies">Matching Strategies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statistics">Statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-configuration">Example Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../http/http.html">HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../upstream/upstream.html">Upstream clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observability/observability.html">Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations/operations.html">Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other_features/other_features.html">Other features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other_protocols/other_protocols.html">Other protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced/advanced.html">Advanced</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../best_practices/best_practices.html">Configuration best practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../configuration.html">Configuration reference</a></li>
+          <li class="breadcrumb-item"><a href="listeners.html">Listeners</a></li>
+      <li class="breadcrumb-item active">Network Namespace Matching</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/configuration/listeners/network_namespace_matching.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="network-namespace-matching">
+<span id="config-listeners-network-namespace-matching"></span><h1>Network Namespace Matching<a class="headerlink" href="#network-namespace-matching" title="Link to this heading"></a></h1>
+<p>Envoy supports routing connections to different filter chains based on the network namespace
+of the listener address. This feature is particularly useful in containerized environments
+where different services or environments are isolated using Linux network namespaces.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Network namespace matching is only supported on Linux systems. On other platforms,
+the network namespace input will always return an empty value, causing connections
+to use the default filter chain.</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Network namespace matching allows you to:</p>
+<ul class="simple">
+<li><p>Route traffic from different network namespaces to different filter chains within a single listener.</p></li>
+<li><p>Implement multi-tenant architectures where each tenant has its own network namespace.</p></li>
+<li><p>Provide environment-specific routing like production, staging, or development based on namespace isolation.</p></li>
+<li><p>Maintain separate configurations for different containerized services.</p></li>
+</ul>
+<p>The network namespace is determined by the <code class="docutils literal notranslate"><span class="pre">network_namespace_filepath</span></code> field in the
+<a class="reference internal" href="../../api-v3/config/core/v3/address.proto.html#envoy-v3-api-msg-config-core-v3-socketaddress"><span class="std std-ref">SocketAddress</span></a> configuration of the listener.</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>Network namespace matching is configured using the <a class="reference internal" href="../../api-v3/config/listener/v3/listener.proto.html#envoy-v3-api-field-config-listener-v3-listener-filter-chain-matcher"><span class="std std-ref">filter_chain_matcher</span></a> field with the
+<code class="docutils literal notranslate"><span class="pre">envoy.matching.inputs.network_namespace</span></code> input.</p>
+<section id="basic-configuration">
+<h3>Basic Configuration<a class="headerlink" href="#basic-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">listeners</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ns_aware_listener</span>
+<span class="w">  </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">      </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">      </span><span class="nt">network_namespace_filepath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/netns/development&quot;</span>
+<span class="w">  </span><span class="nt">additional_addresses</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">        </span><span class="nt">network_namespace_filepath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/netns/staging&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">        </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">        </span><span class="nt">network_namespace_filepath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/netns/production&quot;</span>
+
+<span class="w">  </span><span class="nt">filter_chain_matcher</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">        </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="w">          </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.NetworkNamespaceInput</span>
+<span class="w">      </span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">          </span><span class="s">&quot;/var/run/netns/production&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">            </span><span class="nt">action</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_chain</span>
+<span class="w">          </span><span class="s">&quot;/var/run/netns/staging&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">            </span><span class="nt">action</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging_chain</span>
+<span class="w">          </span><span class="s">&quot;/var/run/netns/development&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">            </span><span class="nt">action</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">development_chain</span>
+
+<span class="w">  </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_chain</span>
+<span class="w">    </span><span class="c1"># Production-specific filters</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging_chain</span>
+<span class="w">    </span><span class="c1"># Staging-specific filters</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging_chain</span>
+<span class="w">    </span><span class="c1"># Development-specific filters</span>
+
+<span class="w">  </span><span class="nt">default_filter_chain</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Default chain for unknown namespaces</span>
+</pre></div>
+</div>
+</section>
+<section id="multiple-listeners-approach">
+<h3>Multiple Listeners Approach<a class="headerlink" href="#multiple-listeners-approach" title="Link to this heading"></a></h3>
+<p>Alternatively, you can create separate listeners for each network namespace:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">listeners</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_listener</span>
+<span class="w">  </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">      </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">      </span><span class="nt">network_namespace_filepath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/netns/production&quot;</span>
+<span class="w">  </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># Production-specific configuration</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging_listener</span>
+<span class="w">  </span><span class="nt">address</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">socket_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">      </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w">  </span><span class="c1"># Same port, different namespace</span>
+<span class="w">      </span><span class="nt">network_namespace_filepath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/netns/staging&quot;</span>
+<span class="w">  </span><span class="nt">filter_chains</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># Staging-specific configuration</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="input-behavior">
+<h2>Input Behavior<a class="headerlink" href="#input-behavior" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">envoy.matching.inputs.network_namespace</span></code> input:</p>
+<ul class="simple">
+<li><p>Returns the network namespace filepath as a string when available.</p></li>
+<li><p>Returns an empty value (no match) when:</p>
+<ul>
+<li><p>No network namespace is configured for the listener address.</p></li>
+<li><p>The network namespace filepath is empty.</p></li>
+<li><p>Running on non-Linux platforms where network namespaces are not supported.</p></li>
+<li><p>The address type doesn’t support network namespaces (e.g., Unix domain sockets).</p></li>
+</ul>
+</li>
+<li><p>Always returns the namespace of the listener’s local address, not the client’s namespace.</p></li>
+</ul>
+</section>
+<section id="matching-strategies">
+<h2>Matching Strategies<a class="headerlink" href="#matching-strategies" title="Link to this heading"></a></h2>
+<section id="exact-match">
+<h3>Exact Match<a class="headerlink" href="#exact-match" title="Link to this heading"></a></h3>
+<p>Use exact string matching for specific namespaces:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">    </span><span class="s">&quot;/var/run/netns/production&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prod_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="s">&quot;/var/run/netns/staging&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;staging_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</section>
+<section id="prefix-match">
+<h3>Prefix Match<a class="headerlink" href="#prefix-match" title="Link to this heading"></a></h3>
+<p>Use prefix matching for namespace hierarchies:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">  </span><span class="nt">prefix_match_map</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;/var/run/netns/prod&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;production_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="s">&quot;/var/run/netns/dev&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;development_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</section>
+<section id="complex-matching">
+<h3>Complex Matching<a class="headerlink" href="#complex-matching" title="Link to this heading"></a></h3>
+<p>Combine with other inputs for sophisticated routing:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">  </span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;/var/run/netns/production&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">        </span><span class="nt">matcher</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.destination_port</span>
+<span class="w">            </span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">                </span><span class="s">&quot;8080&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prod_http_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">                </span><span class="s">&quot;8443&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prod_https_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Link to this heading"></a></h2>
+<section id="multi-tenant-architecture">
+<h3>Multi-Tenant Architecture<a class="headerlink" href="#multi-tenant-architecture" title="Link to this heading"></a></h3>
+<p>Route requests from different tenants to isolated backend services:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filter_chain_matcher</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">    </span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/tenant_a&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tenant_a_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/tenant_b&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tenant_b_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-isolation">
+<h3>Environment Isolation<a class="headerlink" href="#environment-isolation" title="Link to this heading"></a></h3>
+<p>Separate production, staging, and development traffic:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filter_chain_matcher</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">    </span><span class="nt">exact_match_map</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/production&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;production_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/staging&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;staging_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/development&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;development_chain&quot;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</section>
+<section id="service-mesh-integration">
+<h3>Service Mesh Integration<a class="headerlink" href="#service-mesh-integration" title="Link to this heading"></a></h3>
+<p>Route traffic based on service identity encoded in network namespaces:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filter_chain_matcher</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">matcher_tree</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.matching.inputs.network_namespace</span>
+<span class="w">    </span><span class="nt">prefix_match_map</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">        </span><span class="s">&quot;/var/run/netns/service-&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">matcher</span><span class="p">:</span>
+<span class="w">            </span><span class="c1"># Further routing based on service name extracted from namespace</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="statistics">
+<h2>Statistics<a class="headerlink" href="#statistics" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>listener.&lt;name&gt;.filter_chain_selected.&lt;chain_name&gt;</p></td>
+<td><p>Counter</p></td>
+<td><p>Total number of connections routed to the specified filter chain.</p></td>
+</tr>
+<tr class="row-odd"><td><p>listener.&lt;name&gt;.no_filter_chain_match</p></td>
+<td><p>Counter</p></td>
+<td><p>Total number of connections that did not match any filter chain.</p></td>
+</tr>
+<tr class="row-even"><td><p>listener_manager.listener_create_success</p></td>
+<td><p>Counter</p></td>
+<td><p>Total number of successfully created listeners.</p></td>
+</tr>
+<tr class="row-odd"><td><p>listener_manager.listener_create_failure</p></td>
+<td><p>Counter</p></td>
+<td><p>Total number of listener creation failures.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-configuration">
+<h2>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading"></a></h2>
+<p>See <a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.36.4/docs/root/configuration/listeners/network_namespace_matching_example.yaml">network_namespace_matching_example.yaml</a>
+for a complete example configuration demonstrating various network namespace matching scenarios.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lds.html" class="btn btn-neutral float-left" title="Listener discovery service (LDS)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../http/http.html" class="btn btn-neutral float-right" title="HTTP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
