@@ -6,6 +6,7 @@ common:ci --noshow_loading_progress
 common:ci --test_output=errors
 
 common --noenable_bzlmod
+common --@rules_python//python/config_settings:bootstrap_impl=script
 
 build --jobs=HOST_CPUS-1
 build --action_env=SPHINX_JOBS
@@ -23,7 +24,7 @@ build:bes-envoy-engflow --bes_timeout=3600s
 build:bes-envoy-engflow --bes_upload_mode=fully_async
 build:bes-envoy-engflow --nolegacy_important_outputs
 build:rbe-envoy-engflow --remote_executor=grpcs://mordenite.cluster.engflow.com
-build:rbe-envoy-engflow --remote_default_exec_properties=container-image=docker://gcr.io/envoy-ci/envoy-build@sha256:7adc40c09508f957624c4d2e0f5aeecb73a59207ee6ded53b107eac828c091b2
+build:rbe-envoy-engflow --remote_default_exec_properties=container-image=docker://gcr.io/envoy-ci/envoy-build@sha256:25a68eff24b7414a346977d545687b87851d1c5746c466798050fa12fc5d0686
 build:rbe-envoy-engflow --jobs=200
 
 build:remote-envoy-engflow --config=common-envoy-engflow

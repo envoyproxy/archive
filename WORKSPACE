@@ -19,6 +19,10 @@ load("@envoy//bazel:bazel_deps.bzl", "envoy_bazel_dependencies")
 
 envoy_bazel_dependencies()
 
+load("@envoy//bazel:bazel_deps.bzl", "envoy_bazel_dependencies")
+
+envoy_bazel_dependencies()
+
 load("@envoy//bazel:repositories_extra.bzl", "envoy_dependencies_extra")
 
 envoy_dependencies_extra()
@@ -38,6 +42,10 @@ envoy_repo()
 load("@envoy//bazel:toolchains.bzl", "envoy_toolchains")
 
 envoy_toolchains()
+
+load("@envoy//bazel:dependency_imports_extra.bzl", "envoy_dependency_imports_extra")
+
+envoy_dependency_imports_extra()
 
 load(":toolchains.bzl", "load_toolchains")
 load_toolchains()
