@@ -1,0 +1,75 @@
+.. _envoy_v3_api_file_envoy/extensions/bootstrap/reverse_tunnel/downstream_socket_interface/v3/downstream_reverse_connection_socket_interface.proto:
+
+Bootstrap settings for downstream reverse connection socket interface (proto)
+=============================================================================
+
+.. _extension_envoy.bootstrap.reverse_tunnel.downstream_socket_interface:
+
+This extension has the qualified name ``envoy.bootstrap.reverse_tunnel.downstream_socket_interface``
+
+
+.. note::
+  This extension is work-in-progress. Functionality is incomplete and it is not intended for production use.
+
+  This extension has an unknown security posture and should only be
+  used in deployments where both the downstream and upstream are
+  trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.bootstrap <extension_category_envoy.bootstrap>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface <envoy_v3_api_msg_extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface>`
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface:
+
+extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface
+-------------------------------------------------------------------------------------------------------------
+
+
+:repo:`[extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface proto] <api/envoy/extensions/bootstrap/reverse_tunnel/downstream_socket_interface/v3/downstream_reverse_connection_socket_interface.proto#L18>`
+
+Configuration for the downstream reverse connection socket interface.
+This interface initiates reverse connections to upstream Envoys and provides
+them as socket connections for downstream requests.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "stat_prefix": ...,
+    "enable_detailed_stats": ...
+  }
+
+.. _envoy_v3_api_field_extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface.stat_prefix:
+
+
+stat_prefix
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Stat prefix to be used for downstream reverse connection socket interface stats.
+
+
+.. _envoy_v3_api_field_extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface.enable_detailed_stats:
+
+
+enable_detailed_stats
+  (`bool <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Enable detailed per-host and per-cluster statistics.
+  When enabled, emits hidden statistics for individual hosts and clusters.
+  Defaults to false.
+
+
