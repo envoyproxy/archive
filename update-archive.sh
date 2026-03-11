@@ -77,6 +77,7 @@ for version in "${RELEASES[@]}"; do
         else
             if [[ -n "$(git status --porcelain "${DOCS_FOLDER}")" ]]; then
                 echo "Unexpected changes" >&2
+                git diff "${DOCS_FOLDER}"
                 exit 1
             fi
         fi

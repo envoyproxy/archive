@@ -62,7 +62,7 @@ jobs:
     # NOTE: the version that is removed for testing should be a currently supported branch
     - run: |
         cd archive
-        rm -rf docs/envoy/v1.36.1
+        rm -rf docs/envoy/v1.36.5
       if: |
         github.event_name == 'pull_request'
     - run: |
