@@ -78,7 +78,7 @@ jobs:
         cd archive
         ENVOY_VERSION="$(git -C ../envoy rev-parse HEAD)"
         echo "Syncing Envoy -> ${ENVOY_VERSION}"
-        bazel run --config=ci --config=remote-envoy-engflow //bazel:update envoy "${ENVOY_VERSION}"
+        CARGO_BAZEL_REPIN=true bazel run --config=ci --config=remote-envoy-engflow //bazel:update envoy "${ENVOY_VERSION}"
         ./update-archive.sh
       env:
         COMMITTER_NAME: "update-envoy[bot]"
