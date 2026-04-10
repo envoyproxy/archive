@@ -1,0 +1,121 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/common/set_filter_state/v3/value.proto:
+
+Set-Filter-State filter state value (proto)
+===========================================
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.common.set_filter_state.v3.FilterStateValue:
+
+extensions.filters.common.set_filter_state.v3.FilterStateValue
+--------------------------------------------------------------
+
+
+:repo:`[extensions.filters.common.set_filter_state.v3.FilterStateValue proto] <api/envoy/extensions/filters/common/set_filter_state/v3/value.proto#L19>`
+
+A filter state key and value pair.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "object_key": ...,
+    "factory_key": ...,
+    "format_string": {...},
+    "read_only": ...,
+    "shared_with_upstream": ...,
+    "skip_if_empty": ...
+  }
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.object_key:
+
+
+object_key
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_, *REQUIRED*) Filter state object key. The key is used to lookup the object factory, unless :ref:`factory_key
+  <envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.factory_key>` is set. See
+  :ref:`the well-known filter state keys <well_known_filter_state>` for a list of valid object keys.
+
+
+  
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.factory_key:
+
+
+factory_key
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Optional filter object factory lookup key. See :ref:`the well-known filter state keys <well_known_filter_state>`
+  for a list of valid factory keys.
+
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.format_string:
+
+
+format_string
+  (:ref:`config.core.v3.SubstitutionFormatString <envoy_v3_api_msg_config.core.v3.SubstitutionFormatString>`, *REQUIRED*) Uses the :ref:`format string <config_access_log_format_strings>` to
+  instantiate the filter state object value.
+
+
+  
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.read_only:
+
+
+read_only
+  (`bool <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) If marked as read-only, the filter state key value is locked, and cannot
+  be overridden by any filter, including this filter.
+
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.shared_with_upstream:
+
+
+shared_with_upstream
+  (:ref:`extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream <envoy_v3_api_enum_extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream>`) Configures the object to be shared with the upstream internal connections. See :ref:`internal upstream
+  transport <config_internal_upstream_transport>` for more details on the filter state sharing with
+  the internal connections.
+
+
+.. _envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.skip_if_empty:
+
+
+skip_if_empty
+  (`bool <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Skip the update if the value evaluates to an empty string.
+  This option can be used to supply multiple alternatives for the same filter state object key.
+
+
+.. _envoy_v3_api_enum_extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream:
+
+Enum extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream
+--------------------------------------------------------------------------------------
+
+
+:repo:`[extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream proto] <api/envoy/extensions/filters/common/set_filter_state/v3/value.proto#L20>`
+
+
+
+
+.. _envoy_v3_api_enum_value_extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream.NONE:
+
+
+NONE
+  *(DEFAULT)* ⁣Object is not shared with the upstream internal connections.
+
+
+.. _envoy_v3_api_enum_value_extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream.ONCE:
+
+
+ONCE
+  ⁣Object is shared with the upstream internal connection.
+
+
+.. _envoy_v3_api_enum_value_extensions.filters.common.set_filter_state.v3.FilterStateValue.SharedWithUpstream.TRANSITIVE:
+
+
+TRANSITIVE
+  ⁣Object is shared with the upstream internal connection and any internal connection upstream from it.
+
+
+

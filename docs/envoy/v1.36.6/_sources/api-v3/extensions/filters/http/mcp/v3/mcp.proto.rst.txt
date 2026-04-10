@@ -1,0 +1,68 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/http/mcp/v3/mcp.proto:
+
+MCP (proto)
+===========
+
+.. _extension_envoy.filters.http.mcp:
+
+This extension has the qualified name ``envoy.filters.http.mcp``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension has an unknown security posture and should only be
+  used in deployments where both the downstream and upstream are
+  trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.filters.http <extension_category_envoy.filters.http>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.http.mcp.v3.Mcp <envoy_v3_api_msg_extensions.filters.http.mcp.v3.Mcp>`
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.http.mcp.v3.McpOverride <envoy_v3_api_msg_extensions.filters.http.mcp.v3.McpOverride>`
+
+
+
+MCP filter :ref:`configuration overview <config_http_filters_mcp>`.
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp.v3.Mcp:
+
+extensions.filters.http.mcp.v3.Mcp
+----------------------------------
+
+
+:repo:`[extensions.filters.http.mcp.v3.Mcp proto] <api/envoy/extensions/filters/http/mcp/v3/mcp.proto#L16>`
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp.v3.McpOverride:
+
+extensions.filters.http.mcp.v3.McpOverride
+------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp.v3.McpOverride proto] <api/envoy/extensions/filters/http/mcp/v3/mcp.proto#L21>`
+
+McpOverride for MCP filter
+
+
+
+
