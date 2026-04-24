@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP JSON REST Bridge (proto) &mdash; envoy tag-v1.38.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=c8f67d13" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.ico"/>
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=69e4fe29"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="MCP Multiplexer/Demultiplexer (proto)" href="../../mcp_router/v3/mcp_router.proto.html" />
+    <link rel="prev" title="MCP (proto)" href="../../mcp/v3/mcp.proto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../api/api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/api_supported_versions.html">Supported API versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../api.html">v3 API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../bootstrap/bootstrap.html">Bootstrap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../clusters/clusters.html">Clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../http_routes/http_routes.html">HTTP route management</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../../config/config.html">Extensions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/accesslog/filters.html">Access log extension filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/formatter/formatter.html">Access log formatters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/accesslog/accesslog.html">Access loggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_mappers/certificate_mappers.html">Certificate mappers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_selectors/certificate_selectors.html">Certificate selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_validators/certificate_validators.html">Certificate validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/cluster/cluster.html">Cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/common/common.html">Common</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/compression/compression.html">Compression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/config_validators/config_validators.html">Config validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/content_parsers/content_parsers.html">Content parsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/contrib/contrib.html">Contrib extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/dns_resolver/dns_resolver.html">DNS resolver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/endpoint/endpoint.html">Endpoint</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../../config/filter/filter.html">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/grpc_credential/grpc_credential.html">Grpc credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/health_check_event_sinks/health_check_event_sinks.html">Health check event sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/health_checker/health_checker.html">Health checkers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/early_header_mutation.html">HTTP early header mutation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/cache_v2.html">HttpCacheV2 cache implementations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/custom_response.html">Custom response policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/ext_proc.html">External Processing Extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/header_formatters.html">HTTP header formatters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/header_validators.html">HTTP header validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/original_ip_detection.html">HTTP original IP detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/stateful_session.html">HTTP stateful session</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/injected_credentials/injected_credentials.html">Injected credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/geoip_provider/geoip_provider.html">Geolocation providers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/trace/trace.html">HTTP tracers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/internal_redirect/internal_redirect.html">Internal redirect predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/path/match/path_matcher.html">Path matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/path/rewrite/path_rewriter.html">Path rewriter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/quic/quic_extensions.html">Quic extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/descriptors/descriptors.html">Rate limit descriptors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/rbac.html">RBAC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/matchers.html">RBAC matchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/matchers.html#rbac-principals">RBAC principals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/request_id/request_id.html">Request ID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/resource_monitor/resource_monitor.html">Resource monitors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/retry/retry.html">Retry predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/stat_sinks/stat_sinks.html">Stat sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/string_matcher/string_matcher.html">String Matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/transport_socket/transport_socket.html">Transport sockets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/upstream/upstream.html">Upstream configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/wasm/wasm.html">WASM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/watchdog/watchdog.html">Watchdog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/load_balancing_policies/load_balancing_policies.html">Load balancing policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/cluster_specifier/cluster_specifier.html">Cluster specifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/local_address_selectors/local_address_selectors.html">Local address selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../admin/admin.html">Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../data/data.html">Envoy data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../service/service.html">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../common_messages/common_messages.html">Common messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../common_messages/common_messages_xds.html">Common messages (XDS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../types/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api-docs/xds_protocol.html">xDS REST and gRPC protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/client_features.html">Well Known Client Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../../api/api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../api.html">v3 API reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/config.html">Extensions</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/filter/filter.html">Filters</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/filter/http/http.html">HTTP filters</a></li>
+      <li class="breadcrumb-item active">MCP JSON REST Bridge (proto)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/api-v3/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mcp-json-rest-bridge-proto">
+<span id="envoy-v3-api-file-envoy-extensions-filters-http-mcp-json-rest-bridge-v3-mcp-json-rest-bridge-proto"></span><h1>MCP JSON REST Bridge (proto)<a class="headerlink" href="#mcp-json-rest-bridge-proto" title="Link to this heading"></a></h1>
+<p id="extension-envoy-filters-http-mcp-json-rest-bridge">This extension has the qualified name <code class="docutils literal notranslate"><span class="pre">envoy.filters.http.mcp_json_rest_bridge</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This extension is functional but has not had substantial production burn time,
+use only with this caveat.</p>
+<p>This extension has an unknown security posture and should only be
+used in deployments where both the downstream and upstream are
+trusted.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This extension extends and can be used with the following extension category:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../composite/v3/composite.proto.html#extension-category-envoy-filters-http"><span class="std std-ref">envoy.filters.http</span></a></p></li>
+</ul>
+<p>This extension must be configured with one of the following type URLs:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge"><span class="std std-ref">type.googleapis.com/envoy.extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge</span></a></p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the <a class="reference internal" href="../../../../../../intro/arch_overview/security/threat_model.html#arch-overview-threat-model"><span class="std std-ref">threat model</span></a>, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.</p>
+</div>
+<section id="extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge">
+<span id="envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge"></span><h2>extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge<a class="headerlink" href="#extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L92">[extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge proto]</a></p>
+<p>Configuration for the MCP MCP JSON REST Bridge.</p>
+<p>This extension translates Model Context Protocol (MCP) JSON-RPC requests into standard JSON-REST
+HTTP requests. This enables existing REST backends to function as MCP servers without native MCP
+support.</p>
+<p>Main functionalities:</p>
+<ol class="arabic simple">
+<li><p>Transcoding: Converts JSON-RPC request payload to HTTP REST request, and maps JSON response
+back to JSON-RPC.</p></li>
+<li><p>Session negotiation: Handles MCP connection prerequisites.</p></li>
+</ol>
+<p>The core logic transforms “tools/call” request into HTTP request following the <code class="docutils literal notranslate"><span class="pre">HttpRule</span></code>
+specification.</p>
+<p>Example 1: GET request with path and query parameters</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tools: {
+  name: &quot;getResource&quot;
+  http_rule: {
+    get: &quot;/v1/projects/{project_id}/resources/{resource_id}&quot;
+    // body is omitted for GET
+  }
+}
+If tools/call params are:
+{ &quot;name&quot;: &quot;getResource&quot;, &quot;arguments&quot;: {&quot;project_id&quot;: &quot;foo&quot;, &quot;resource_id&quot;: &quot;res-789&quot;, &quot;view&quot;: &quot;FULL&quot;} }
+Translation:
+- Method: GET
+- URL: /v1/projects/foo/resources/res-789?view=FULL
+  (Arguments not matching path templates become query parameters.)
+</pre></div>
+</div>
+<p>Example 2: POST request with wildcard body</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tools: {
+  name: &quot;createResource&quot;
+  http_rule: {
+    post: &quot;/v1/projects/{project_id}/resources&quot;
+    body: &quot;*&quot;
+  }
+}
+If tools/call params are:
+{ &quot;name&quot;: &quot;createResource&quot;, &quot;arguments&quot;: {&quot;project_id&quot;: &quot;foo&quot;, &quot;resource_id&quot;: &quot;res-456&quot;, &quot;payload&quot;: { &quot;data&quot;: &quot;some value&quot; }} }
+Translation:
+- Method: POST
+- URL: /v1/projects/foo/resources
+- Body: {&quot;resource_id&quot;: &quot;res-456&quot;, &quot;payload&quot;: { &quot;data&quot;: &quot;some value&quot; }}
+  (Arguments not used in the path form the body, as per body: &quot;*&quot;.)
+</pre></div>
+</div>
+<p>Example 3: PUT request with a specific field as body</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tools: {
+  name: &quot;updateResource&quot;
+  http_rule: {
+    put: &quot;/v1/projects/{project_id}&quot;
+    body: &quot;payload&quot;
+  }
+}
+If tools/call params are:
+{ &quot;name&quot;: &quot;updateResource&quot;, &quot;arguments&quot;: {&quot;project_id&quot;: &quot;foo&quot;, &quot;resource_id&quot;: &quot;res-456&quot;, &quot;payload&quot;: { &quot;data&quot;: &quot;updated value&quot; }} }
+Translation:
+- Method: PUT
+- URL: /v1/projects/foo?resource_id=res-456
+- Body: {&quot;data&quot;: &quot;updated value&quot;}
+  (Only the &quot;payload&quot; field from arguments is used as the body. Other arguments not in the
+  path, like &#39;resource_id&#39;, become query parameters.)
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;server_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;tool_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge-server-info">
+<dt>server_info</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-serverinfo"><span class="std std-ref">extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo</span></a>) General server information.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-mcpjsonrestbridge-tool-config">
+<dt>tool_config</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig"><span class="std std-ref">extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig</span></a>) Configuration for the MCP tools.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-mcp-json-rest-bridge-v3-serverinfo">
+<span id="envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-serverinfo"></span><h2>extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo<a class="headerlink" href="#extensions-filters-http-mcp-json-rest-bridge-v3-serverinfo" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L101">[extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo proto]</a></p>
+<p>Configuration for the server metadata.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;fallback_protocol_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-serverinfo-fallback-protocol-version">
+<dt>fallback_protocol_version</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#stringvalue">StringValue</a>) The fallback protocol version to use if the client does not provide the <code class="docutils literal notranslate"><span class="pre">mcp-protocol-version</span></code> header.</p>
+<ul class="simple">
+<li><p>If provided: The extension uses this version as the fallback protocol version.</p></li>
+<li><p>If not provided: The extension uses the fallback protocol version defined in the latest MCP
+specification. For example, the current latest 2025-11-25 specification designates “2025-03-26”
+as the fallback protocol version.
+See <a class="reference external" href="https://modelcontextprotocol.io/specification/2025-11-25/basic/transports#protocol-version-header">https://modelcontextprotocol.io/specification/2025-11-25/basic/transports#protocol-version-header</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig">
+<span id="envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig"></span><h2>extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig<a class="headerlink" href="#extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L130">[extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig proto]</a></p>
+<p>Configuration for the MCP tool capability of the server.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;tool_list_http_rule&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig-tools">
+<dt>tools</dt><dd><p>(<strong>repeated</strong> <a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig"><span class="std std-ref">extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig</span></a>) List of MCP tools configurations.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-servertoolconfig-tool-list-http-rule">
+<dt>tool_list_http_rule</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-httprule"><span class="std std-ref">extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule</span></a>) Optional configuration to transcode the tools/list requests to a standard HTTP request.</p>
+<p>Note: tools/list should be mapped to a GET request with an empty body.</p>
+<ul class="simple">
+<li><p>If provided: The extension transcodes the request and forwards it down the filter chain.
+The response (whether from an upstream backend, a configured <code class="docutils literal notranslate"><span class="pre">direct_response</span></code>, or another
+extension) MUST be a JSON body strictly matching the MCP <code class="docutils literal notranslate"><span class="pre">ListToolsResult</span></code> schema.
+Ref: <a class="reference external" href="https://modelcontextprotocol.io/specification/2025-11-25/schema#listtoolsresult">https://modelcontextprotocol.io/specification/2025-11-25/schema#listtoolsresult</a></p></li>
+<li><p>If not provided: The <code class="docutils literal notranslate"><span class="pre">tools/list</span></code> request is passed through. This allows subsequent
+extension or the backend itself to handle the tools/list request if they support it.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig">
+<span id="envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig"></span><h2>extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig<a class="headerlink" href="#extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L153">[extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig proto]</a></p>
+<p>Configuration for a specific MCP tool.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;http_rule&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig-name">
+<dt>name</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) Name of the tool.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-toolconfig-http-rule">
+<dt>http_rule</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-httprule"><span class="std std-ref">extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule</span></a>) The HTTP configuration rules that apply to the normal backend.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-mcp-json-rest-bridge-v3-httprule">
+<span id="envoy-v3-api-msg-extensions-filters-http-mcp-json-rest-bridge-v3-httprule"></span><h2>extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule<a class="headerlink" href="#extensions-filters-http-mcp-json-rest-bridge-v3-httprule" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L174">[extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule proto]</a></p>
+<p>Defines the schema of the JSON-RPC to REST mapping. It specifies how the “arguments”
+in a tools/call request are mapped to the URL path, query parameters, and HTTP request body.</p>
+<p>Mapping Rules:</p>
+<ol class="arabic simple">
+<li><p>Path: Fields defined in the path template (e.g., <code class="docutils literal notranslate"><span class="pre">/v1/resources/{id}</span></code>) are extracted from
+arguments and placed in the URL.</p></li>
+<li><p>Body: Determined by the <code class="docutils literal notranslate"><span class="pre">body</span></code> field.
+- If “*”: All arguments not used in the path become the HTTP JSON body.
+- If specify a field: Only that specific argument becomes the HTTP JSON body.
+- If empty: No body is sent.</p></li>
+<li><p>Query: Any leaf arguments not mapped to Path or Body are added as URL query parameters.</p></li>
+</ol>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;get&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;put&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;post&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;delete&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-get">
+<dt>get</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Determines the HTTP method and the URL path template.</p>
+<p>Path templating uses curly braces <code class="docutils literal notranslate"><span class="pre">{}</span></code> to mark a section of the URL path as replaceable.
+Each template variable MUST correspond to a field in the JSON-RPC “arguments”.
+Use dot-notation to access fields within nested objects (e.g., “user.id” maps the value of the
+“id” field inside “user”).</p>
+<p>To support backward compatibility with future methods, these are defined as individual fields
+rather than a “oneof”. If multiple fields are present, the one with the highest field number
+highest priority) is the effective method.</p>
+<p>Maps to HTTP GET.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-put">
+<dt>put</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Maps to HTTP PUT.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-post">
+<dt>post</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Maps to HTTP POST.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-delete">
+<dt>delete</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Maps to HTTP DELETE.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-patch">
+<dt>patch</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) Maps to HTTP PATCH.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-mcp-json-rest-bridge-v3-httprule-body">
+<dt>body</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) The name of the request field whose value is mapped to the HTTP request body.</p>
+<ul class="simple">
+<li><p>If “*”: All fields not bound by the path template are mapped to the request body.</p></li>
+<li><p>If specify a field: This specific field is mapped to the body. Uses dot-notation for nested
+fields (e.g., “user.data” maps the value of the “data” field inside “user”).</p></li>
+<li><p>If omitted: There is no HTTP request body; fields not in the path become query parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../mcp/v3/mcp.proto.html" class="btn btn-neutral float-left" title="MCP (proto)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../mcp_router/v3/mcp_router.proto.html" class="btn btn-neutral float-right" title="MCP Multiplexer/Demultiplexer (proto)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

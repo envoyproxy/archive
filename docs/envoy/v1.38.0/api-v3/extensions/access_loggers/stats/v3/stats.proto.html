@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stats logger (proto) &mdash; envoy tag-v1.38.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=c8f67d13" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/tabs.css?v=4da122e5" />
+
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=69e4fe29"></script>
+      <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Standard Streams Access loggers (proto)" href="../../stream/v3/stream.proto.html" />
+    <link rel="prev" title="OpenTelemetry Access Log (proto)" href="../../open_telemetry/v3/logs_service.proto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html">
+            
+              <img src="../../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../api/api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/api_supported_versions.html">Supported API versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../api.html">v3 API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../bootstrap/bootstrap.html">Bootstrap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../clusters/clusters.html">Clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../http_routes/http_routes.html">HTTP route management</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../config/config.html">Extensions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/accesslog/filters.html">Access log extension filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/formatter/formatter.html">Access log formatters</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../config/accesslog/accesslog.html">Access loggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/certificate_mappers/certificate_mappers.html">Certificate mappers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/certificate_selectors/certificate_selectors.html">Certificate selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/certificate_validators/certificate_validators.html">Certificate validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/cluster/cluster.html">Cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/common/common.html">Common</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/compression/compression.html">Compression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/config_validators/config_validators.html">Config validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/content_parsers/content_parsers.html">Content parsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/contrib/contrib.html">Contrib extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/dns_resolver/dns_resolver.html">DNS resolver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/endpoint/endpoint.html">Endpoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/filter/filter.html">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/grpc_credential/grpc_credential.html">Grpc credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/health_check_event_sinks/health_check_event_sinks.html">Health check event sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/health_checker/health_checker.html">Health checkers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/early_header_mutation.html">HTTP early header mutation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/cache_v2.html">HttpCacheV2 cache implementations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/custom_response.html">Custom response policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/ext_proc.html">External Processing Extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/header_formatters.html">HTTP header formatters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/header_validators.html">HTTP header validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/original_ip_detection.html">HTTP original IP detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/http/stateful_session.html">HTTP stateful session</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/injected_credentials/injected_credentials.html">Injected credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/geoip_provider/geoip_provider.html">Geolocation providers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/trace/trace.html">HTTP tracers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/internal_redirect/internal_redirect.html">Internal redirect predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/path/match/path_matcher.html">Path matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/path/rewrite/path_rewriter.html">Path rewriter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/quic/quic_extensions.html">Quic extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/descriptors/descriptors.html">Rate limit descriptors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/rbac/rbac.html">RBAC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/rbac/matchers.html">RBAC matchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/rbac/matchers.html#rbac-principals">RBAC principals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/request_id/request_id.html">Request ID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/resource_monitor/resource_monitor.html">Resource monitors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/retry/retry.html">Retry predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/stat_sinks/stat_sinks.html">Stat sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/string_matcher/string_matcher.html">String Matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/transport_socket/transport_socket.html">Transport sockets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/upstream/upstream.html">Upstream configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/wasm/wasm.html">WASM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/watchdog/watchdog.html">Watchdog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/load_balancing_policies/load_balancing_policies.html">Load balancing policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/cluster_specifier/cluster_specifier.html">Cluster specifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../config/local_address_selectors/local_address_selectors.html">Local address selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../admin/admin.html">Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../data/data.html">Envoy data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../service/service.html">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../common_messages/common_messages.html">Common messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../common_messages/common_messages_xds.html">Common messages (XDS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../types/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api-docs/xds_protocol.html">xDS REST and gRPC protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/client_features.html">Well Known Client Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../api/api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="../../../../api.html">v3 API reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../config/config.html">Extensions</a></li>
+          <li class="breadcrumb-item"><a href="../../../../config/accesslog/accesslog.html">Access loggers</a></li>
+      <li class="breadcrumb-item active">Stats logger (proto)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/api-v3/extensions/access_loggers/stats/v3/stats.proto.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stats-logger-proto">
+<span id="envoy-v3-api-file-envoy-extensions-access-loggers-stats-v3-stats-proto"></span><h1>Stats logger (proto)<a class="headerlink" href="#stats-logger-proto" title="Link to this heading"></a></h1>
+<p id="extension-envoy-access-loggers-stats">This extension has the qualified name <code class="docutils literal notranslate"><span class="pre">envoy.access_loggers.stats</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This extension is work-in-progress. Functionality is incomplete and it is not intended for production use.</p>
+<p>This extension is not hardened and should only be used in deployments
+where both the downstream and upstream are trusted.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This extension extends and can be used with the following extension category:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../../../config/accesslog/v3/accesslog.proto.html#extension-category-envoy-access-loggers"><span class="std std-ref">envoy.access_loggers</span></a></p></li>
+</ul>
+<p>This extension must be configured with one of the following type URLs:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config"><span class="std std-ref">type.googleapis.com/envoy.extensions.access_loggers.stats.v3.Config</span></a></p></li>
+</ul>
+</div>
+<p>Configuration for an access logger that emits custom Envoy stats according to its
+configuration. The stats can have tags and values derived from
+<a class="reference internal" href="../../../../../configuration/observability/access_log/usage.html#config-access-log-command-operators"><span class="std std-ref">command operators</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is easy to configure and use this extension in ways that create very
+large numbers of stats in Envoy, which can cause excessive memory or CPU use
+leading to a denial of service in Envoy, or can overwhelm any configured
+stat sinks by sending too many unique metrics.</p>
+</div>
+<section id="extensions-access-loggers-stats-v3-config">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config"></span><h2>extensions.access_loggers.stats.v3.Config<a class="headerlink" href="#extensions-access-loggers-stats-v3-config" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L32">[extensions.access_loggers.stats.v3.Config proto]</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;stat_prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;histograms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;counters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;gauges&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-stat-prefix">
+<dt>stat_prefix</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) The stat prefix for the generated stats.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-histograms">
+<dt>histograms</dt><dd><p>(<strong>repeated</strong> <a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-histogram"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Histogram</span></a>) The histograms this logger will emit.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-counters">
+<dt>counters</dt><dd><p>(<strong>repeated</strong> <a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-counter"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Counter</span></a>) The counters this logger will emit.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauges">
+<dt>gauges</dt><dd><p>(<strong>repeated</strong> <a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Gauge</span></a>) The gauges this logger will emit.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-tag">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-tag"></span><h2>extensions.access_loggers.stats.v3.Config.Tag<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-tag" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L34">[extensions.access_loggers.stats.v3.Config.Tag proto]</a></p>
+<p>Defines a tag on a stat.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-tag-name">
+<dt>name</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) The name of the tag.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-tag-value-format">
+<dt>value_format</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) The value of the tag, using <a class="reference internal" href="../../../../../configuration/observability/access_log/usage.html#config-access-log-command-operators"><span class="std std-ref">command operators</span></a>.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-tag-rules">
+<dt>rules</dt><dd><p>(<a class="reference internal" href="../../../../../xds/type/matcher/v3/matcher.proto.html#envoy-v3-api-msg-xds-type-matcher-v3-matcher"><span class="std std-ref">.xds.type.matcher.v3.Matcher</span></a>) The custom rules to generate the stat tags. Currently, the only
+supported input is
+<a class="reference internal" href="../../../matching/common_inputs/stats/v3/stats.proto.html#envoy-v3-api-msg-extensions-matching-common-inputs-stats-v3-stattagvalueinput"><span class="std std-ref">Stat tag value input</span></a>.
+The supported actions are
+- <a class="reference internal" href="../../../matching/actions/transform_stat/v3/transform_stat.proto.html#envoy-v3-api-msg-extensions-matching-actions-transform-stat-v3-transformstat"><span class="std std-ref">Transform stat action</span></a>.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-stat">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-stat"></span><h2>extensions.access_loggers.stats.v3.Config.Stat<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-stat" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L51">[extensions.access_loggers.stats.v3.Config.Stat proto]</a></p>
+<p>Defines the name and tags of a stat.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-stat-name">
+<dt>name</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) The name of the stat.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-stat-tags">
+<dt>tags</dt><dd><p>(<strong>repeated</strong> <a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-tag"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Tag</span></a>) The tags for the stat.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-histogram">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-histogram"></span><h2>extensions.access_loggers.stats.v3.Config.Histogram<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-histogram" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L60">[extensions.access_loggers.stats.v3.Config.Histogram proto]</a></p>
+<p>Configuration for a histogram stat.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;stat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-histogram-stat">
+<dt>stat</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-stat"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Stat</span></a>, <em>REQUIRED</em>) The name and tags of this histogram.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-histogram-unit">
+<dt>unit</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-enum-extensions-access-loggers-stats-v3-config-histogram-unit"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Histogram.Unit</span></a>) The units for this histogram.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-histogram-value-format">
+<dt>value_format</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <em>REQUIRED</em>) The format string for the value of this histogram, using <a class="reference internal" href="../../../../../configuration/observability/access_log/usage.html#config-access-log-command-operators"><span class="std std-ref">command operators</span></a>.
+This must evaluate to a positive number.</p>
+</dd>
+</dl>
+</section>
+<section id="enum-extensions-access-loggers-stats-v3-config-histogram-unit">
+<span id="envoy-v3-api-enum-extensions-access-loggers-stats-v3-config-histogram-unit"></span><h2>Enum extensions.access_loggers.stats.v3.Config.Histogram.Unit<a class="headerlink" href="#enum-extensions-access-loggers-stats-v3-config-histogram-unit" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L62">[extensions.access_loggers.stats.v3.Config.Histogram.Unit proto]</a></p>
+<p>The histogram units. The units are needed for some stat sinks.</p>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-access-loggers-stats-v3-config-histogram-unit-unspecified">
+<dt>Unspecified</dt><dd><p><em>(DEFAULT)</em> ⁣</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-access-loggers-stats-v3-config-histogram-unit-bytes">
+<dt>Bytes</dt><dd><p>⁣</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-access-loggers-stats-v3-config-histogram-unit-microseconds">
+<dt>Microseconds</dt><dd><p>⁣</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-access-loggers-stats-v3-config-histogram-unit-milliseconds">
+<dt>Milliseconds</dt><dd><p>⁣</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-enum-value-extensions-access-loggers-stats-v3-config-histogram-unit-percent">
+<dt>Percent</dt><dd><p>⁣Values are scaled to range 0-1.0, indicating 0%-100%. Values can be outside this range,
+but must be positive. Values extremely far out of this range may overflow.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-counter">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-counter"></span><h2>extensions.access_loggers.stats.v3.Config.Counter<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-counter" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L88">[extensions.access_loggers.stats.v3.Config.Counter proto]</a></p>
+<p>Configuration for a counter stat.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;stat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;value_fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-counter-stat">
+<dt>stat</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-stat"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Stat</span></a>, <em>REQUIRED</em>) The name and tags of this counter.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-counter-value-format">
+<dt>value_format</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) The format string for the value to add to this counter, using <a class="reference internal" href="../../../../../configuration/observability/access_log/usage.html#config-access-log-command-operators"><span class="std std-ref">command operators</span></a>.
+One of <code class="docutils literal notranslate"><span class="pre">value_format</span></code> or <code class="docutils literal notranslate"><span class="pre">value_fixed</span></code> must be configured.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-counter-value-fixed">
+<dt>value_fixed</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#uint64value">UInt64Value</a>) A fixed value to add to this counter.
+One of <code class="docutils literal notranslate"><span class="pre">value_format</span></code> or <code class="docutils literal notranslate"><span class="pre">value_fixed</span></code> must be configured.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-gauge">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge"></span><h2>extensions.access_loggers.stats.v3.Config.Gauge<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-gauge" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L106">[extensions.access_loggers.stats.v3.Config.Gauge proto]</a></p>
+<p>Configuration for a gauge stat. Gauges can be used to add, subtract, or set
+values, and are useful for tracking concurrency or other mutable values
+over time.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;stat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;value_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;value_fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;add_subtract&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;set&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-stat">
+<dt>stat</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-stat"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Stat</span></a>, <em>REQUIRED</em>) The name and tags of this gauge.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-value-format">
+<dt>value_format</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) The format string for the value of this gauge, using <a class="reference internal" href="../../../../../configuration/observability/access_log/usage.html#config-access-log-command-operators"><span class="std std-ref">command
+operators</span></a>. This must evaluate to a
+positive number.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-value-fixed">
+<dt>value_fixed</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#uint64value">UInt64Value</a>) A fixed value to add/subtract/set to this gauge.
+One of <code class="docutils literal notranslate"><span class="pre">value_format</span></code> or <code class="docutils literal notranslate"><span class="pre">value_fixed</span></code> must be configured.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-add-subtract">
+<dt>add_subtract</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Gauge.PairedAddSubtract</span></a>) The PairedAddSubtract operation.
+Only one of PairedAddSubtract and Set can be defined.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-set">
+<dt>set</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge-set"><span class="std std-ref">extensions.access_loggers.stats.v3.Config.Gauge.Set</span></a>) The Set operation.
+Only one of PairedAddSubtract and Set can be defined.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-gauge-set">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge-set"></span><h2>extensions.access_loggers.stats.v3.Config.Gauge.Set<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-gauge-set" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L108">[extensions.access_loggers.stats.v3.Config.Gauge.Set proto]</a></p>
+<p>The Set operation config.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;log_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-set-log-type">
+<dt>log_type</dt><dd><p>(<a class="reference internal" href="../../../../data/accesslog/v3/accesslog.proto.html#envoy-v3-api-enum-data-accesslog-v3-accesslogtype"><span class="std std-ref">data.accesslog.v3.AccessLogType</span></a>) The access log type to trigger the operation.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract">
+<span id="envoy-v3-api-msg-extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract"></span><h2>extensions.access_loggers.stats.v3.Config.Gauge.PairedAddSubtract<a class="headerlink" href="#extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.38.0/api/envoy/extensions/access_loggers/stats/v3/stats.proto#L122">[extensions.access_loggers.stats.v3.Config.Gauge.PairedAddSubtract proto]</a></p>
+<p>The PairedAddSubtract operation config.
+Usage restrictions:</p>
+<ol class="arabic simple">
+<li><p>We only support add first then subtract logic and we rely on the symmetrical log types
+(e.g., DownstreamStart/DownstreamEnd) to increment and decrement the gauge.</p></li>
+<li><p>During runtime, sub_log_type will execute if and only if add_log_type operation has
+been done, tracked by inflight counter in filter state.</p></li>
+<li><p>If the add_log_type operation was executed, the sub_log_type will happen when the
+stream/connection is closed, even if the configured log type didn’t happen.</p></li>
+</ol>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;add_log_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sub_log_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract-add-log-type">
+<dt>add_log_type</dt><dd><p>(<a class="reference internal" href="../../../../data/accesslog/v3/accesslog.proto.html#envoy-v3-api-enum-data-accesslog-v3-accesslogtype"><span class="std std-ref">data.accesslog.v3.AccessLogType</span></a>) The access log type to trigger the add operation.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-access-loggers-stats-v3-config-gauge-pairedaddsubtract-sub-log-type">
+<dt>sub_log_type</dt><dd><p>(<a class="reference internal" href="../../../../data/accesslog/v3/accesslog.proto.html#envoy-v3-api-enum-data-accesslog-v3-accesslogtype"><span class="std std-ref">data.accesslog.v3.AccessLogType</span></a>) The access log type to trigger the subtract operation.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../open_telemetry/v3/logs_service.proto.html" class="btn btn-neutral float-left" title="OpenTelemetry Access Log (proto)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../stream/v3/stream.proto.html" class="btn btn-neutral float-right" title="Standard Streams Access loggers (proto)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

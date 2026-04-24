@@ -1,0 +1,92 @@
+.. _envoy_v3_api_file_contrib/envoy/extensions/filters/network/peer_metadata/v3/peer_metadata.proto:
+
+Peer metadata network filter (proto)
+====================================
+
+.. _extension_envoy.filters.network.peer_metadata:
+
+This extension has the qualified name ``envoy.filters.network.peer_metadata``
+
+.. note::
+
+  This extension is only available in :ref:`contrib <install_contrib>` images.
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension is not hardened and should only be used in deployments
+  where both the downstream and upstream are trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.filters.network <extension_category_envoy.filters.network>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.network.peer_metadata.v3.Config <envoy_v3_api_msg_extensions.filters.network.peer_metadata.v3.Config>`
+
+
+
+
+Peer metadata network filter for extracting and propagating peer telemetry
+attributes from HBONE CONNECT response headers.
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.network.peer_metadata.v3.Config:
+
+extensions.filters.network.peer_metadata.v3.Config
+--------------------------------------------------
+
+
+:repo:`[extensions.filters.network.peer_metadata.v3.Config proto] <api/contrib/envoy/extensions/filters/network/peer_metadata/v3/peer_metadata.proto#L23>`
+
+Configuration for the downstream network filter installed in the
+connect_originate or inner_connect_originate filter chains. It extracts
+peer metadata from TCP Proxy filter state (baggage header from HBONE CONNECT
+response) and injects it as a data preamble to be consumed by the upstream
+filter.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "baggage_key": ...
+  }
+
+.. _envoy_v3_api_field_extensions.filters.network.peer_metadata.v3.Config.baggage_key:
+
+
+baggage_key
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Filter state key under which the baggage value encoding the proxy workload
+  is stored. The upstream filter that populates the baggage header in the
+  HBONE request should use the same key.
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.network.peer_metadata.v3.UpstreamConfig:
+
+extensions.filters.network.peer_metadata.v3.UpstreamConfig
+----------------------------------------------------------
+
+
+:repo:`[extensions.filters.network.peer_metadata.v3.UpstreamConfig proto] <api/contrib/envoy/extensions/filters/network/peer_metadata/v3/peer_metadata.proto#L34>`
+
+Configuration for the upstream network filter installed in service clusters
+that communicate over HBONE. It consumes and removes the metadata preamble
+injected by the downstream filter and populates filter state for use by
+Istio telemetry filters.
+
+
+
+

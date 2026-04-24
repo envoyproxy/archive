@@ -1,0 +1,56 @@
+.. _envoy_v3_api_file_envoy/extensions/matching/http/dynamic_modules/v3/dynamic_modules.proto:
+
+Dynamic Modules HTTP Match Input (proto)
+========================================
+
+.. _extension_envoy.matching.inputs.dynamic_module_data_input:
+
+This extension has the qualified name ``envoy.matching.inputs.dynamic_module_data_input``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension is not hardened and should only be used in deployments
+  where both the downstream and upstream are trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.matching.http.input <extension_category_envoy.matching.http.input>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.matching.http.dynamic_modules.v3.HttpDynamicModuleMatchInput <envoy_v3_api_msg_extensions.matching.http.dynamic_modules.v3.HttpDynamicModuleMatchInput>`
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.matching.http.dynamic_modules.v3.HttpDynamicModuleMatchInput:
+
+extensions.matching.http.dynamic_modules.v3.HttpDynamicModuleMatchInput
+-----------------------------------------------------------------------
+
+
+:repo:`[extensions.matching.http.dynamic_modules.v3.HttpDynamicModuleMatchInput proto] <api/envoy/extensions/matching/http/dynamic_modules/v3/dynamic_modules.proto#L22>`
+
+Configuration for the dynamic modules HTTP match input. This input extracts HTTP request and
+response data from the matching context and makes it available to the dynamic module matcher
+via ABI callbacks during match evaluation.
+
+This data input should be used together with the
+:ref:`dynamic modules input matcher
+<envoy_v3_api_msg_extensions.matching.input_matchers.dynamic_modules.v3.DynamicModuleMatcher>`.
+
+
+
+
