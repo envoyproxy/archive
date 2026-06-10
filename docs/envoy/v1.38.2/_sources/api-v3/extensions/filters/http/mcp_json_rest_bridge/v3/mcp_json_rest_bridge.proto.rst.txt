@@ -1,0 +1,353 @@
+.. _envoy_v3_api_file_envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto:
+
+MCP JSON REST Bridge (proto)
+============================
+
+.. _extension_envoy.filters.http.mcp_json_rest_bridge:
+
+This extension has the qualified name ``envoy.filters.http.mcp_json_rest_bridge``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension has an unknown security posture and should only be
+  used in deployments where both the downstream and upstream are
+  trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.filters.http <extension_category_envoy.filters.http>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge>`
+
+
+
+.. warning::
+   This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the :ref:`threat model <arch_overview_threat_model>`, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge:
+
+extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge
+-----------------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge proto] <api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L92>`
+
+Configuration for the MCP MCP JSON REST Bridge.
+
+This extension translates Model Context Protocol (MCP) JSON-RPC requests into standard JSON-REST
+HTTP requests. This enables existing REST backends to function as MCP servers without native MCP
+support.
+
+Main functionalities:
+
+1. Transcoding: Converts JSON-RPC request payload to HTTP REST request, and maps JSON response
+   back to JSON-RPC.
+2. Session negotiation: Handles MCP connection prerequisites.
+
+The core logic transforms "tools/call" request into HTTP request following the ``HttpRule``
+specification.
+
+Example 1: GET request with path and query parameters
+
+.. code-block:: text
+
+  tools: {
+    name: "getResource"
+    http_rule: {
+      get: "/v1/projects/{project_id}/resources/{resource_id}"
+      // body is omitted for GET
+    }
+  }
+  If tools/call params are:
+  { "name": "getResource", "arguments": {"project_id": "foo", "resource_id": "res-789", "view": "FULL"} }
+  Translation:
+  - Method: GET
+  - URL: /v1/projects/foo/resources/res-789?view=FULL
+    (Arguments not matching path templates become query parameters.)
+
+Example 2: POST request with wildcard body
+
+.. code-block:: text
+
+  tools: {
+    name: "createResource"
+    http_rule: {
+      post: "/v1/projects/{project_id}/resources"
+      body: "*"
+    }
+  }
+  If tools/call params are:
+  { "name": "createResource", "arguments": {"project_id": "foo", "resource_id": "res-456", "payload": { "data": "some value" }} }
+  Translation:
+  - Method: POST
+  - URL: /v1/projects/foo/resources
+  - Body: {"resource_id": "res-456", "payload": { "data": "some value" }}
+    (Arguments not used in the path form the body, as per body: "*".)
+
+Example 3: PUT request with a specific field as body
+
+.. code-block:: text
+
+  tools: {
+    name: "updateResource"
+    http_rule: {
+      put: "/v1/projects/{project_id}"
+      body: "payload"
+    }
+  }
+  If tools/call params are:
+  { "name": "updateResource", "arguments": {"project_id": "foo", "resource_id": "res-456", "payload": { "data": "updated value" }} }
+  Translation:
+  - Method: PUT
+  - URL: /v1/projects/foo?resource_id=res-456
+  - Body: {"data": "updated value"}
+    (Only the "payload" field from arguments is used as the body. Other arguments not in the
+    path, like 'resource_id', become query parameters.)
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "server_info": {...},
+    "tool_config": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge.server_info:
+
+
+server_info
+  (:ref:`extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo>`) General server information.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.McpJsonRestBridge.tool_config:
+
+
+tool_config
+  (:ref:`extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig>`) Configuration for the MCP tools.
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo:
+
+extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo
+----------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo proto] <api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L101>`
+
+Configuration for the server metadata.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "fallback_protocol_version": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.ServerInfo.fallback_protocol_version:
+
+
+fallback_protocol_version
+  (`StringValue <https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#stringvalue>`_) The fallback protocol version to use if the client does not provide the ``mcp-protocol-version`` header.
+
+  - If provided: The extension uses this version as the fallback protocol version.
+  - If not provided: The extension uses the fallback protocol version defined in the latest MCP
+    specification. For example, the current latest 2025-11-25 specification designates "2025-03-26"
+    as the fallback protocol version.
+    See https://modelcontextprotocol.io/specification/2025-11-25/basic/transports#protocol-version-header
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig:
+
+extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig
+----------------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig proto] <api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L130>`
+
+Configuration for the MCP tool capability of the server.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "tools": [],
+    "tool_list_http_rule": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig.tools:
+
+
+tools
+  (**repeated** :ref:`extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig>`) List of MCP tools configurations.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.ServerToolConfig.tool_list_http_rule:
+
+
+tool_list_http_rule
+  (:ref:`extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule>`) Optional configuration to transcode the tools/list requests to a standard HTTP request.
+
+  Note: tools/list should be mapped to a GET request with an empty body.
+
+  - If provided: The extension transcodes the request and forwards it down the filter chain.
+    The response (whether from an upstream backend, a configured ``direct_response``, or another
+    extension) MUST be a JSON body strictly matching the MCP ``ListToolsResult`` schema.
+    Ref: https://modelcontextprotocol.io/specification/2025-11-25/schema#listtoolsresult
+  - If not provided: The ``tools/list`` request is passed through. This allows subsequent
+    extension or the backend itself to handle the tools/list request if they support it.
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig:
+
+extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig
+----------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig proto] <api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L153>`
+
+Configuration for a specific MCP tool.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "name": ...,
+    "http_rule": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig.name:
+
+
+name
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_, *REQUIRED*) Name of the tool.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.ToolConfig.http_rule:
+
+
+http_rule
+  (:ref:`extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule <envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule>`) The HTTP configuration rules that apply to the normal backend.
+
+
+
+.. _envoy_v3_api_msg_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule:
+
+extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule
+--------------------------------------------------------
+
+
+:repo:`[extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule proto] <api/envoy/extensions/filters/http/mcp_json_rest_bridge/v3/mcp_json_rest_bridge.proto#L174>`
+
+Defines the schema of the JSON-RPC to REST mapping. It specifies how the "arguments"
+in a tools/call request are mapped to the URL path, query parameters, and HTTP request body.
+
+Mapping Rules:
+
+1. Path: Fields defined in the path template (e.g., ``/v1/resources/{id}``) are extracted from
+   arguments and placed in the URL.
+2. Body: Determined by the ``body`` field.
+   - If "*": All arguments not used in the path become the HTTP JSON body.
+   - If specify a field: Only that specific argument becomes the HTTP JSON body.
+   - If empty: No body is sent.
+3. Query: Any leaf arguments not mapped to Path or Body are added as URL query parameters.
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "get": ...,
+    "put": ...,
+    "post": ...,
+    "delete": ...,
+    "patch": ...,
+    "body": ...
+  }
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.get:
+
+
+get
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Determines the HTTP method and the URL path template.
+
+  Path templating uses curly braces ``{}`` to mark a section of the URL path as replaceable.
+  Each template variable MUST correspond to a field in the JSON-RPC "arguments".
+  Use dot-notation to access fields within nested objects (e.g., "user.id" maps the value of the
+  "id" field inside "user").
+
+  To support backward compatibility with future methods, these are defined as individual fields
+  rather than a "oneof". If multiple fields are present, the one with the highest field number
+  highest priority) is the effective method.
+
+  Maps to HTTP GET.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.put:
+
+
+put
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Maps to HTTP PUT.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.post:
+
+
+post
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Maps to HTTP POST.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.delete:
+
+
+delete
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Maps to HTTP DELETE.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.patch:
+
+
+patch
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Maps to HTTP PATCH.
+
+
+.. _envoy_v3_api_field_extensions.filters.http.mcp_json_rest_bridge.v3.HttpRule.body:
+
+
+body
+  (`string <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) The name of the request field whose value is mapped to the HTTP request body.
+
+  - If "*": All fields not bound by the path template are mapped to the request body.
+  - If specify a field: This specific field is mapped to the body. Uses dot-notation for nested
+    fields (e.g., "user.data" maps the value of the "data" field inside "user").
+  - If omitted: There is no HTTP request body; fields not in the path become query parameters.
+
+
