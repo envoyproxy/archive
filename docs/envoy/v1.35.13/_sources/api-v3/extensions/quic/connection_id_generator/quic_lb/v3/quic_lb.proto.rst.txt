@@ -1,0 +1,126 @@
+.. _envoy_v3_api_file_envoy/extensions/quic/connection_id_generator/quic_lb/v3/quic_lb.proto:
+
+QUIC-LB connection ID generator config (proto)
+==============================================
+
+.. _extension_envoy.quic.connection_id_generator.quic_lb:
+
+This extension has the qualified name ``envoy.quic.connection_id_generator.quic_lb``
+
+
+.. note::
+  This extension is functional but has not had substantial production burn time,
+  use only with this caveat.
+
+  This extension has an unknown security posture and should only be
+  used in deployments where both the downstream and upstream are
+  trusted.
+
+.. tip::
+  This extension extends and can be used with the following extension category:
+
+
+  - :ref:`envoy.quic.connection_id_generator <extension_category_envoy.quic.connection_id_generator>`
+
+
+
+  This extension must be configured with one of the following type URLs:
+
+
+
+  - :ref:`type.googleapis.com/envoy.extensions.quic.connection_id_generator.quic_lb.v3.Config <envoy_v3_api_msg_extensions.quic.connection_id_generator.quic_lb.v3.Config>`
+
+
+
+
+
+
+
+.. _envoy_v3_api_msg_extensions.quic.connection_id_generator.quic_lb.v3.Config:
+
+extensions.quic.connection_id_generator.quic_lb.v3.Config
+---------------------------------------------------------
+
+
+:repo:`[extensions.quic.connection_id_generator.quic_lb.v3.Config proto] <api/envoy/extensions/quic/connection_id_generator/quic_lb/v3/quic_lb.proto#L34>`
+
+Configuration for a connection ID generator implementation for the QUIC-LB draft RFC for
+routable connection IDs.
+
+Connection IDs always have the length self encoded, as described in
+https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers#name-length-self-description.
+
+See https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers for details.
+
+.. warning::
+
+   This is still a work in progress. Performance is expected to be poor. Interoperability testing
+   has not yet been performed.
+
+.. warning::
+   This API feature is currently work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the :ref:`threat model <arch_overview_threat_model>`, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+
+
+
+
+.. code-block:: json
+  :force:
+
+  {
+    "unsafe_unencrypted_testing_mode": ...,
+    "server_id": {...},
+    "expected_server_id_length": ...,
+    "nonce_length_bytes": ...,
+    "encryption_parameters": {...}
+  }
+
+.. _envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.unsafe_unencrypted_testing_mode:
+
+
+unsafe_unencrypted_testing_mode
+  (`bool <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Use the unencrypted mode. This is useful for testing, but allows for linking different CIDs
+  for the same connection, and leaks information about the valid server IDs in use. This should
+  only be used for testing.
+
+
+.. _envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.server_id:
+
+
+server_id
+  (:ref:`config.core.v3.DataSource <envoy_v3_api_msg_config.core.v3.DataSource>`, *REQUIRED*) Must be at least 1 octet.
+  The length of server_id and nonce_length_bytes must be 18 or less.
+  See https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers#name-server-id-allocation.
+
+
+.. _envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.expected_server_id_length:
+
+
+expected_server_id_length
+  (`uint32 <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) Optional validation of the expected server ID length. If this is non-zero and the value in ``server_id``
+  does not have a matching length, a configuration error is generated. This can be useful for validating
+  that the server ID is valid.
+
+
+.. _envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.nonce_length_bytes:
+
+
+nonce_length_bytes
+  (`uint32 <https://developers.google.com/protocol-buffers/docs/proto#scalar>`_) The nonce length must be at least 4 bytes.
+  The length of server_id and nonce_length_bytes must be 18 bytes or less.
+
+
+.. _envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.encryption_parameters:
+
+
+encryption_parameters
+  (:ref:`extensions.transport_sockets.tls.v3.SdsSecretConfig <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.SdsSecretConfig>`, *REQUIRED*) Configuration to fetch the encryption key and configuration version.
+
+  The SDS service is for a :ref:`GenericSecret <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.GenericSecret>`.
+  The data should populate :ref:`secrets <envoy_v3_api_field_extensions.transport_sockets.tls.v3.GenericSecret.secrets>`:
+
+  "encryption_key" must contain the 16 byte encryption key.
+
+  "configuration_version" must contain a 1 byte unsigned integer of value less than 7.
+  See https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers#name-config-rotation.
+
+
