@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bandwidth share (proto) &mdash; envoy tag-v1.39.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=c8f67d13" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.ico"/>
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=1831b470"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="Basic Auth (proto)" href="../../basic_auth/v3/basic_auth.proto.html" />
+    <link rel="prev" title="Bandwidth limit (proto)" href="../../bandwidth_limit/v3/bandwidth_limit.proto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../api/api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/api_supported_versions.html">Supported API versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../api.html">v3 API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../bootstrap/bootstrap.html">Bootstrap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../listeners/listeners.html">Listeners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../clusters/clusters.html">Clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../http_routes/http_routes.html">HTTP route management</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../../config/config.html">Extensions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/accesslog/filters.html">Access log extension filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/formatter/formatter.html">Access log formatters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/accesslog/accesslog.html">Access loggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_mappers/certificate_mappers.html">Certificate mappers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_selectors/certificate_selectors.html">Certificate selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/certificate_validators/certificate_validators.html">Certificate validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/cluster/cluster.html">Cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/common/common.html">Common</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/compression/compression.html">Compression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/config_validators/config_validators.html">Config validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/content_parsers/content_parsers.html">Content parsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/contrib/contrib.html">Contrib extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/dns_resolver/dns_resolver.html">DNS resolver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/endpoint/endpoint.html">Endpoint</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../../config/filter/filter.html">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/grpc_credential/grpc_credential.html">Grpc credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/health_check_event_sinks/health_check_event_sinks.html">Health check event sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/health_checker/health_checker.html">Health checkers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/early_header_mutation.html">HTTP early header mutation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/cache_v2.html">HttpCacheV2 cache implementations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/custom_response.html">Custom response policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/ext_proc.html">External Processing Extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/header_formatters.html">HTTP header formatters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/header_validators.html">HTTP header validators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/original_ip_detection.html">HTTP original IP detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/http/stateful_session.html">HTTP stateful session</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/injected_credentials/injected_credentials.html">Injected credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/geoip_provider/geoip_provider.html">Geolocation providers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/trace/trace.html">HTTP tracers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/internal_redirect/internal_redirect.html">Internal redirect predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/path/match/path_matcher.html">Path matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/path/rewrite/path_rewriter.html">Path rewriter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/quic/quic_extensions.html">Quic extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/descriptors/descriptors.html">Rate limit descriptors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/rbac.html">RBAC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/matchers.html">RBAC matchers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/rbac/matchers.html#rbac-principals">RBAC principals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/request_id/request_id.html">Request ID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/resource_monitor/resource_monitor.html">Resource monitors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/retry/retry.html">Retry predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/stat_sinks/stat_sinks.html">Stat sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/string_matcher/string_matcher.html">String Matcher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/transport_socket/transport_socket.html">Transport sockets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/upstream/upstream.html">Upstream configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/wasm/wasm.html">WASM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/watchdog/watchdog.html">Watchdog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/load_balancing_policies/load_balancing_policies.html">Load balancing policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/cluster_specifier/cluster_specifier.html">Cluster specifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../config/local_address_selectors/local_address_selectors.html">Local address selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../admin/admin.html">Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../data/data.html">Envoy data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../service/service.html">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../common_messages/common_messages.html">Common messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../common_messages/common_messages_xds.html">Common messages (XDS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../types/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api-docs/xds_protocol.html">xDS REST and gRPC protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../api/client_features.html">Well Known Client Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../../api/api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../api.html">v3 API reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/config.html">Extensions</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/filter/filter.html">Filters</a></li>
+          <li class="breadcrumb-item"><a href="../../../../../config/filter/http/http.html">HTTP filters</a></li>
+      <li class="breadcrumb-item active">Bandwidth share (proto)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/api-v3/extensions/filters/http/bandwidth_share/v3/bandwidth_share.proto.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bandwidth-share-proto">
+<span id="envoy-v3-api-file-envoy-extensions-filters-http-bandwidth-share-v3-bandwidth-share-proto"></span><h1>Bandwidth share (proto)<a class="headerlink" href="#bandwidth-share-proto" title="Link to this heading"></a></h1>
+<p id="extension-envoy-filters-http-bandwidth-share">This extension has the qualified name <code class="docutils literal notranslate"><span class="pre">envoy.filters.http.bandwidth_share</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This extension is work-in-progress. Functionality is incomplete and it is not intended for production use.</p>
+<p>This extension has an unknown security posture and should only be
+used in deployments where both the downstream and upstream are
+trusted.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This extension extends and can be used with the following extension category:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../filter_chain/v3/filter_chain.proto.html#extension-category-envoy-filters-http"><span class="std std-ref">envoy.filters.http</span></a></p></li>
+</ul>
+<p>This extension must be configured with one of the following type URLs:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare"><span class="std std-ref">type.googleapis.com/envoy.extensions.filters.http.bandwidth_share.v3.BandwidthShare</span></a></p></li>
+</ul>
+</div>
+<p>Bandwidth share <a class="reference internal" href="../../../../../../configuration/http/http_filters/bandwidth_share_filter.html#config-http-filters-bandwidth-share"><span class="std std-ref">configuration overview</span></a>.</p>
+<section id="extensions-filters-http-bandwidth-share-v3-bandwidthshare">
+<span id="envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare"></span><h2>extensions.filters.http.bandwidth_share.v3.BandwidthShare<a class="headerlink" href="#extensions-filters-http-bandwidth-share-v3-bandwidthshare" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.39.0/api/envoy/extensions/filters/http/bandwidth_share/v3/bandwidth_share.proto#L24">[extensions.filters.http.bandwidth_share.v3.BandwidthShare proto]</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;request_limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;response_limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;fill_interval&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;enable_response_trailers&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response_trailer_prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tenant_name_selector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;tenant_configs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;default_tenant_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-request-limit">
+<dt>request_limit</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit"><span class="std std-ref">extensions.filters.http.bandwidth_share.v3.BandwidthShare.Limit</span></a>) Configuration for request limiting. If unset, requests are not limited.
+If <code class="docutils literal notranslate"><span class="pre">kbps</span></code> is zero, requests are not limited.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-response-limit">
+<dt>response_limit</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit"><span class="std std-ref">extensions.filters.http.bandwidth_share.v3.BandwidthShare.Limit</span></a>) Configuration for response limiting. If unset, responses are not limited.
+If <code class="docutils literal notranslate"><span class="pre">kbps</span></code> is zero, responses are not limited.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-fill-interval">
+<dt>fill_interval</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a>) Optional fill interval in milliseconds for the token refills. Defaults to 50ms.
+It must be at least 20ms to avoid too aggressive refills.</p>
+<p>Lower values will use more CPU and provide smoother bandwidth distribution
+when the limit is being enforced.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-enable-response-trailers">
+<dt>enable_response_trailers</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bool</a>) Enable response trailers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If set true, the following 4 trailers will be added, prefixed by <code class="docutils literal notranslate"><span class="pre">response_trailer_prefix</span></code>:
+* bandwidth-request-delay-ms: delay time in milliseconds added by the limiter.
+* bandwidth-response-delay-ms: delay time in milliseconds added by the limiter.
+* bandwidth-request-duration-ms: total duration of receiving and processing the request.
+* bandwidth-response-duration-ms: total duration of receiving and processing the response.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">response_limit</span></code> is unset or has <code class="docutils literal notranslate"><span class="pre">kbps</span></code> of 0, the trailers will not be set.</p>
+<p>If both the request and response delay time is 0, the trailers will not be set.</p>
+<p>Note that the delay time may overlap with other factors such that it may not actually
+increase the duration by the stated amount - for example, the source data may still be
+arriving into a buffer during the artificial delay, such that it’s possible to fully
+“catch up” the lost time by reading from that buffer at a later, less-constrained time.</p>
+</div>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-response-trailer-prefix">
+<dt>response_trailer_prefix</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) The prefix for the response trailers. Empty string is a valid prefix.</p>
+<p>If set, <code class="docutils literal notranslate"><span class="pre">enable_response_trailers</span></code> must be true.</p>
+<p>For example, if this value is <code class="docutils literal notranslate"><span class="pre">x-banana-</span></code> then the trailer keys will be
+<code class="docutils literal notranslate"><span class="pre">x-banana-bandwidth-request-delay-ms</span></code>, <code class="docutils literal notranslate"><span class="pre">x-banana-bandwidth-response-duration-ms</span></code>,
+etc.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenant-name-selector">
+<dt>tenant_name_selector</dt><dd><p>(<a class="reference internal" href="../../../../../../xds/type/matcher/v3/matcher.proto.html#envoy-v3-api-msg-xds-type-matcher-v3-matcher"><span class="std std-ref">.xds.type.matcher.v3.Matcher</span></a>) An optional matcher which returns a string to use as a tenant name.</p>
+<p>If unset, the tenant name will always be the empty string, and all requests will
+have equal weight when limiting is being enforced.</p>
+<p>If tenant names are set when limiting is being enforced, traffic may be
+distributed unevenly - for example, assuming all requests want all possible
+bandwidth, if there are five streams with tenant <code class="docutils literal notranslate"><span class="pre">foo</span></code> and two streams with
+tenant <code class="docutils literal notranslate"><span class="pre">bar</span></code>, and no custom weights, <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> will get an equal
+share of the bandwidth (half), then the requests within each tenant will get
+an equal share of that tenant’s share, i.e. the <code class="docutils literal notranslate"><span class="pre">foo</span></code> requests will each
+get a fifth of the <code class="docutils literal notranslate"><span class="pre">foo</span></code> half, a tenth of the total, and the <code class="docutils literal notranslate"><span class="pre">bar</span></code> requests
+will each get half of the <code class="docutils literal notranslate"><span class="pre">bar</span></code> half, a quarter of the total.</p>
+<p>An example way this might be used is to have <code class="docutils literal notranslate"><span class="pre">tenant_name_selector</span></code> make
+each source IP address a tenant. Then if one source IP is trying to make 100
+requests in parallel, and 99 other IPs are making one request each, the
+total bandwidth distribution (assuming the limit is being exceeded) would
+be equal per IP, versus with no tenants it would be equal per request and
+the greedy IP address would be getting 100x more bandwidth than the others.</p>
+<p>Note that if the limit is not consistently exceeded, all available bandwidth
+is still distributed - so in this case if the 99 other IPs were only using
+half the available bandwidth total between them, the greedy IP would still
+be able to get 50x more bandwidth than the rest. In this example the value is
+clearer - the less greedy tenants get all the bandwidth they want, and
+only the greedy tenant gets throttled, vs. without tenants all the requests
+would be throttled equally.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenant-configs">
+<dt>tenant_configs</dt><dd><p>(map&lt;<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>, <a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig"><span class="std std-ref">extensions.filters.http.bandwidth_share.v3.BandwidthShare.TenantConfig</span></a>&gt;) A map from tenant names to configurations. If a tenant name is not present
+in the map, <code class="docutils literal notranslate"><span class="pre">default_tenant_config</span></code> is used.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-default-tenant-config">
+<dt>default_tenant_config</dt><dd><p>(<a class="reference internal" href="#envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig"><span class="std std-ref">extensions.filters.http.bandwidth_share.v3.BandwidthShare.TenantConfig</span></a>) Optional configuration override for the default tenant. If unset, the
+default values are used.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig">
+<span id="envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig"></span><h2>extensions.filters.http.bandwidth_share.v3.BandwidthShare.TenantConfig<a class="headerlink" href="#extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.39.0/api/envoy/extensions/filters/http/bandwidth_share/v3/bandwidth_share.proto#L25">[extensions.filters.http.bandwidth_share.v3.BandwidthShare.TenantConfig proto]</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;include_stats_tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig-weight">
+<dt>weight</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">uint32</a>) Weight of the tenant. For example, if two tenants are competing for
+limited bandwidth, one has weight=3 and the other has weight=1, the
+contested bandwidth will be distributed 3/4 to the weight=3 tenant
+and 1/4 to the weight=1 tenant.</p>
+<p>If unset or 0, the default weight of 1 will be used.</p>
+</dd>
+</dl>
+<dl class="simple" id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-tenantconfig-include-stats-tag">
+<dt>include_stats_tag</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">bool</a>) True to record stats with <code class="docutils literal notranslate"><span class="pre">tenant</span></code> tag set to the tenant name.
+If false or unset, the stats tag will be empty. It is recommended not
+to set this to default true if tenant names are dynamically generated
+from untrusted sources (or otherwise with unlimited scope), to
+avoid creating unlimited stats cardinality.</p>
+</dd>
+</dl>
+</section>
+<section id="extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit">
+<span id="envoy-v3-api-msg-extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit"></span><h2>extensions.filters.http.bandwidth_share.v3.BandwidthShare.Limit<a class="headerlink" href="#extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit" title="Link to this heading"></a></h2>
+<p><a class="extlink-repo reference external" href="https://github.com/envoyproxy/envoy/blob/v1.39.0/api/envoy/extensions/filters/http/bandwidth_share/v3/bandwidth_share.proto#L42">[extensions.filters.http.bandwidth_share.v3.BandwidthShare.Limit proto]</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;bucket_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;kbps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit-bucket-id">
+<dt>bucket_id</dt><dd><p>(<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/proto#scalar">string</a>) The unique id of the limiter. Should be set if you want to apply distinct
+limits on different listeners, or distinct limits for requests and responses.
+With matching <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code> values, multiple listeners can share a single limit
+(e.g. for https and http listener that share a network bandwidth constraint).</p>
+<p>Also used for the <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code> stats tag.</p>
+<p>The empty string is a valid <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code>.</p>
+</dd>
+</dl>
+<dl id="envoy-v3-api-field-extensions-filters-http-bandwidth-share-v3-bandwidthshare-limit-kbps">
+<dt>kbps</dt><dd><p>(<a class="reference internal" href="../../../../../config/core/v3/base.proto.html#envoy-v3-api-msg-config-core-v3-runtimeuint32"><span class="std std-ref">config.core.v3.RuntimeUInt32</span></a>, <em>REQUIRED</em>) The limit supplied in KiB/s.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The limit is associated with the <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code>. If the same <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code>
+is used in multiple listeners/routes, it is a config error for the
+configurations to not be identical. If the configuration is updated
+dynamically via xds, changing the runtime key, the <code class="docutils literal notranslate"><span class="pre">bucket_id</span></code> must
+also be changed or it is a config error.</p>
+</div>
+<p>The limit can be updated dynamically via runtime. Setting the limit
+to zero, or unset, disables the filter.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../bandwidth_limit/v3/bandwidth_limit.proto.html" class="btn btn-neutral float-left" title="Bandwidth limit (proto)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../basic_auth/v3/basic_auth.proto.html" class="btn btn-neutral float-right" title="Basic Auth (proto)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
