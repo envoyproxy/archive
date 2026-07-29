@@ -6,6 +6,8 @@ common:ci --noshow_loading_progress
 common:ci --test_output=errors
 
 common --noenable_bzlmod
+common --enable_workspace
+common --legacy_external_runfiles
 common --@rules_python//python/config_settings:bootstrap_impl=script
 
 build --jobs=HOST_CPUS-1
