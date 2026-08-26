@@ -33,17 +33,25 @@ build_docs () {
     local version="$1"
     cd "${ENVOY_SRC}" || exit 1
     git checkout "${version}"
-    sed -i 's/morganite/mordenite/g' .bazelrc
+    sed -i -E 's/[A-Za-z0-9-]+\.cluster\.engflow\.com/mordenite.cluster.engflow.com/g' .bazelrc
     sed -i 's/59f14d4fb373083b9dc8d389f16bbb817b5f936d1d436aa67e16eb6936028a51/fc694942e8a7491dcc1dde1bddf48a31370a1f46fef862bc17acf07c34dc6325/g' bazel/repository_locations.bzl
     export DOCS_BUILD_RELEASE=1
     if [[ "$version" =~ ^(1.25|1.24)\..* ]]; then
         ./docs/build.sh
     else
-        if git grep -q "remote-envoy-engflow" .bazelrc; then
-            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=remote-envoy-engflow"
-        elif git grep -q "rbe-envoy-engflow" .bazelrc; then
-            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=rbe-envoy-engflow"
+        if [[ -z "$GITHUB_TOKEN" ]]; then
+            echo "GITHUB_TOKEN is not set, cannot build docs (${version})" >&2
+            exit 1
         fi
+        if grep -q "remote-envoy-engflow" .bazelrc; then
+            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=remote-envoy-engflow"
+        elif grep -q "rbe-envoy-engflow" .bazelrc; then
+            export BAZEL_BUILD_EXTRA_OPTIONS="--config=ci --config=rbe-envoy-engflow"
+        else
+            echo "No engflow config found in .bazelrc, cannot build docs (${version})" >&2
+            exit 1
+        fi
+        echo "BAZEL_BUILD_EXTRA_OPTIONS: ${BAZEL_BUILD_EXTRA_OPTIONS}"
         ./ci/run_envoy_docker.sh './ci/do_ci.sh docs'
     fi
     echo "Docs ${version} built ..."
