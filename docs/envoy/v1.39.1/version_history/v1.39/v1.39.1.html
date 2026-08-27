@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.39.1 (August 27, 2026) &mdash; envoy tag-v1.39.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=c8f67d13" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bc493069"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.39.0 (July 14, 2026)" href="v1.39.0.html" />
+    <link rel="prev" title="v1.39" href="v1.39.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../version_history.html">Version history</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../version_history.html#stable-versions">Stable versions</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="v1.39.html">v1.39: 1.39.1 (August 27, 2026)</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1.39.1 (August 27, 2026)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="v1.39.0.html">1.39.0 (July 14, 2026)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../v1.38/v1.38.html">v1.38: 1.38.4 (August 26, 2026)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v1.37/v1.37.html">v1.37: 1.37.6 (August 26, 2026)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v1.36/v1.36.html">v1.36: 1.36.10 (August 26, 2026)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../version_history.html#archived-versions">Archived versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../version_history.html#deprecation-policy">Deprecation Policy</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../version_history.html">Version history</a></li>
+          <li class="breadcrumb-item"><a href="v1.39.html">v1.39</a></li>
+      <li class="breadcrumb-item active">1.39.1 (August 27, 2026)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/version_history/v1.39/v1.39.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="august-27-2026">
+<span id="version-history-1-39-1"></span><h1>1.39.1 (August 27, 2026)<a class="headerlink" href="#august-27-2026" title="Link to this heading"></a></h1>
+<section id="minor-behavior-changes">
+<h2>Minor behavior changes<a class="headerlink" href="#minor-behavior-changes" title="Link to this heading"></a></h2>
+<p><em>Changes that may cause incompatibilities for some users, but should
+not for most</em></p>
+<ul>
+<li><p><strong>rbac</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-77x5-xqjg-hprq">CVE-2026-73553</a></p>
+<p>RBAC path matching (via <code class="docutils literal notranslate"><span class="pre">PathMatcher</span></code> and <code class="docutils literal notranslate"><span class="pre">UriTemplateMatcher</span></code>) now respects the route’s
+<code class="docutils literal notranslate"><span class="pre">ignore_path_parameters_in_path_matching</span></code> configuration. When enabled on a route, the RBAC filter
+will strip path parameters (everything after a semicolon in each path segment, e.g., transforming
+<code class="docutils literal notranslate"><span class="pre">/admin;x=y/action;foo=bar</span></code> to <code class="docutils literal notranslate"><span class="pre">/admin/action</span></code>) before evaluating the path match. This ensures
+path matching consistency between the Router and the RBAC filter, preventing authorization bypasses
+where an attacker could append path parameters to bypass RBAC rules while still being routed to the
+protected endpoint.</p>
+<p>This behavioral change can be temporarily reverted by setting the runtime guard
+<code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.rbac_respect_ignore_path_parameters</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading"></a></h2>
+<p><em>Changes expected to improve the state of the world and are unlikely
+to have negative effects</em></p>
+<ul>
+<li><p><strong>ext_authz</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-q8wp-gf7q-m8cv">CVE-2026-50572</a></p>
+<p>Fixed UAF when ext_authz over HTTP causes request to be rejected.</p>
+</li>
+<li><p><strong>ext_authz</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-87ph-jqwm-pg6r">CVE-2026-73547</a></p>
+<p>Fixed abnormal process termination when Envoy calls ext_authz service with requests without URI path
+(i.e. CONNECT).</p>
+</li>
+<li><p><strong>ext_proc</strong>: Fixed multiple lifetime bugs in the external processing (<code class="docutils literal notranslate"><span class="pre">ext_proc</span></code>) filter and the underlying
+gRPC async client that could lead to use-after-free or double delivery of callbacks. The gRPC
+<a class="reference internal" href="../../api-v3/config/core/v3/grpc_service.proto.html#envoy-v3-api-msg-config-core-v3-grpcservice"><span class="std std-ref">async client</span></a> now holds an optional reference to
+its stream callbacks and drops it once the stream is cleaned up or the owner detaches via
+<code class="docutils literal notranslate"><span class="pre">waitForRemoteCloseAndDelete()</span></code>, so a stream that outlives its callbacks (for example while awaiting
+remote close) no longer invokes callbacks on freed memory. Re-entrant resets during stream
+initialization are guarded so remote close is not notified (and the tracing span not finished) twice
+when the cluster is missing or stream creation fails synchronously, and half-close/cleanup no longer
+dereference a stream that was never established. The <code class="docutils literal notranslate"><span class="pre">ext_proc</span></code> <code class="docutils literal notranslate"><span class="pre">ThreadLocalStreamManager</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ProcessorStreamImpl</span></code> now close any still-open streams on destruction to avoid dangling references
+into the underlying gRPC stream.</p></li>
+<li><p><strong>html</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-pv9h-4fxf-7vrg">CVE-2026-73546</a></p>
+<p>Sanitize stat names before converting them to HTML.
+The change is guarded by runtime guard <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.sanitize_html_stats_names</span></code>.</p>
+</li>
+<li><p><strong>http</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-3vhp-c83q-jqc2">CVE-2026-73548</a>.</p>
+<p>Fixed a vulnerability where payload sent before a generic HTTP upgrade was accepted could be
+interpreted as a pipelined HTTP/1 request and poison a shared upstream connection. Generic upgrade
+payload is now paused until the upstream accepts the upgrade. This change can be temporarily
+reverted by setting <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.http_pause_generic_upgrade_request_body</span></code> to
+<code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+<li><p><strong>http</strong>: Fixed a request/response body data-loss bug in the HTTP filter manager. When a filter stopped
+iteration on headers (for example a wasm filter with <code class="docutils literal notranslate"><span class="pre">allow_on_headers_stop_iteration</span></code>, which maps
+to a single-iteration stop rather than <code class="docutils literal notranslate"><span class="pre">StopAllIterationAndWatermark</span></code>), resumed asynchronously, and
+then on a subsequent body frame moved that frame into the filter-manager buffer via
+<code class="docutils literal notranslate"><span class="pre">addDecodedData()</span></code>/<code class="docutils literal notranslate"><span class="pre">addEncodedData()</span></code> before returning <code class="docutils literal notranslate"><span class="pre">Continue</span></code>, the now-empty frame was
+forwarded down the chain and the buffered bytes were silently dropped. This corrupted large streamed
+request bodies (for example one 16 KiB chunk lost when chained with an <code class="docutils literal notranslate"><span class="pre">ext_proc</span></code> filter in
+<code class="docutils literal notranslate"><span class="pre">FULL_DUPLEX_STREAMED</span></code> mode). The just-buffered data is now forwarded instead of the empty frame.
+This behavioral change can be reverted by setting the runtime guard
+<code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.filter_manager_forward_added_data_on_continue</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><strong>http2</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-jjmm-fw8p-crpw">CVE-2026-73513</a></p>
+<p>Fixed abnormal process termination when Envoy receives trailers without the END_STREAM flag
+over HTTP/2 protocol.</p>
+</li>
+<li><p><strong>http2</strong>: Fixes <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-qgf6-qvhw-4hvh">CVE-2026-73550</a></p>
+<p>Account for the length of dropped <code class="docutils literal notranslate"><span class="pre">Host</span></code> headers in HTTP/2 request header map size and count limits. <code class="docutils literal notranslate"><span class="pre">Host</span></code> headers
+are dropped when they match HTTP/2 <code class="docutils literal notranslate"><span class="pre">`:authority</span></code> header.</p>
+<p>This behavioral change can be reverted by setting the runtime
+guard <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.http2_track_size_of_dropped_host_header</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+<li><p><strong>http3</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-5vff-j9p4-38j3">CVE-2026-48521</a></p>
+<p>Fixed abnormal process termination when Envoy is configured to automatically select a protocol with upstream
+server based on ALPN and the server uses HTTP/3.</p>
+</li>
+<li><p><strong>http3</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-r6j2-mrm5-72mg">CVE-2026-73512</a></p>
+<p>Fixed UAF when Envoy receives specifically timed sequence of HTTP/3 frames.</p>
+</li>
+<li><p><strong>quic</strong>: Fix: <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-jp5f-qr64-c9vw">CVE-2026-73549</a></p>
+<p>Fixed a crash when handling scoped IPv6 addresses in QUIC client connection and Original Dst cluster.</p>
+</li>
+<li><p><strong>safe_regex</strong>: Fix <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-23xh-2qxr-3xv8">CVE-2026-73552</a></p>
+<p>Switch safe_regex charset mode from UTF-8 to Latin1. HTTP headers are not UTF-8 encoded
+and must use Latin1 charset for regex expressions.
+This behavioral change can be temporarily reverted by setting runtime
+guard <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.re2_use_latin1_mode</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+<li><p><strong>tls</strong>: Fixed a bug where OpenSSL was using glibc’s allocator instead of tcmalloc. This
+resulted in OpenSSL operating on a completely separate heap, defeating
+tcmalloc’s performance benefits on the TLS hot path and making all OpenSSL
+allocations invisible to tcmalloc heap profiling and memory dumps.</p></li>
+<li><p><strong>tls</strong>: Fixed a memory leak in the OpenSSL compatibility layer where <code class="docutils literal notranslate"><span class="pre">SSL_get0_peer_certificates()</span></code>
+called <code class="docutils literal notranslate"><span class="pre">SSL_get_peer_certificate()</span></code> without freeing the returned reference. Each call leaked
+one <code class="docutils literal notranslate"><span class="pre">X509</span></code> refcount, preventing the certificate and its sub-allocations from being freed when
+the connection closed, causing unbounded memory growth in certain deployments.</p></li>
+<li><p><strong>url_normalization</strong>: Fixes <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-m745-gh6x-349x">CVE-2026-73511</a></p>
+<p>Strip path parameters from individual path segments per <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">https://datatracker.ietf.org/doc/html/rfc3986#section-3.3</a></p>
+<p>This behavioral change can be temporarily reverted by setting runtime
+guard <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.strip_path_parameters_per_segment</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+<li><p><strong>url_normalization</strong>: Fixes <a class="reference external" href="https://github.com/envoyproxy/envoy/security/advisories/GHSA-2w8w-rfw7-8gg4">CVE-2026-73551</a></p>
+<p>Strip URL path parameters from dot and dotdot segments (segments that start with <code class="docutils literal notranslate"><span class="pre">/..;</span></code> or <code class="docutils literal notranslate"><span class="pre">/.;</span></code>). This allows
+path canonicalization to interpret them correctly. Stripping of path parameters from dot and dotdot segments
+occurs only if the <code class="docutils literal notranslate"><span class="pre">normalize_path</span></code> configuration option is enabled.</p>
+<p>This behavioral change can be temporarily reverted by setting runtime
+guard <code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.strip_dotdot_segments_with_parameters</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="v1.39.html" class="btn btn-neutral float-left" title="v1.39" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v1.39.0.html" class="btn btn-neutral float-right" title="1.39.0 (July 14, 2026)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

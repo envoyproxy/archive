@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Load-aware locality load balancing &mdash; envoy tag-v1.39.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=c8f67d13" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/envoy.css?v=3ec0219e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=bc493069"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=db7b0edf"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/envoy-logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../about_docs.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../start/start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/configuration.html">Configuration reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/operations.html">Operations and administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extending/extending.html">Extending Envoy for custom use cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq/overview.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../version_history/version_history.html">Version history</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">envoy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Load-aware locality load balancing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/intro/arch_overview/upstream/load_balancing/load_aware_locality.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="load-aware-locality-load-balancing">
+<span id="arch-overview-load-balancing-load-aware-locality"></span><h1>Load-aware locality load balancing<a class="headerlink" href="#load-aware-locality-load-balancing" title="Link to this heading"></a></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This extension is <strong>work-in-progress</strong> and is not yet implemented.</p>
+</div>
+<p>The load-aware locality LB policy
+(<a class="reference internal" href="../../../../api-v3/extensions/load_balancing_policies/load_aware_locality/v3/load_aware_locality.proto.html#envoy-v3-api-msg-extensions-load-balancing-policies-load-aware-locality-v3-loadawarelocality"><span class="std std-ref">envoy.load_balancing_policies.load_aware_locality</span></a>)
+is a locality-picking load balancer designed for deployments where incoming
+load is not evenly distributed across zones, causing some localities to run
+hotter than others. It uses per-endpoint utilization from
+<a class="reference external" href="https://github.com/cncf/xds/blob/main/proposals/A51-custom-lb-policies.md">ORCA</a>
+reports to weight each locality by its available headroom, preferring the
+local zone when load is balanced and spilling to remote zones as the local
+zone heats up.</p>
+<section id="choosing-this-policy">
+<span id="load-aware-locality-comparison"></span><h2>Choosing this policy<a class="headerlink" href="#choosing-this-policy" title="Link to this heading"></a></h2>
+<p>Use this policy when upstream endpoints report ORCA utilization and Envoy
+should make cross-zone routing decisions from observed backend load. It is
+most useful when traffic should stay local while zones are similarly loaded,
+then spill toward remote localities with more available headroom as the
+local zone’s load rises.</p>
+<p>Envoy offers three locality-selection strategies. The right choice depends
+on whether ORCA reporting is available, whether the control plane supplies
+locality weights, and whether the deployment must react to runtime load
+imbalance.</p>
+<ul class="simple">
+<li><p><strong>Pick this policy when</strong> upstream endpoints emit ORCA utilization and
+routing should react to runtime load imbalance from the data plane,
+with no control-plane involvement in locality weighting.</p></li>
+<li><p><strong>Pick zone-aware routing when</strong> only local-zone preference is needed
+and traffic is already balanced by other means. It has no ORCA
+dependency and is simpler to operate, but it only applies at priority
+0 and does not react to backend load.</p></li>
+<li><p><strong>Pick</strong>
+<a class="reference internal" href="../../../../api-v3/extensions/load_balancing_policies/wrr_locality/v3/wrr_locality.proto.html#envoy-v3-api-msg-extensions-load-balancing-policies-wrr-locality-v3-wrrlocality"><span class="std std-ref">WrrLocality</span></a>
+<strong>when</strong> the control plane owns locality weights and should compute
+them centrally via EDS. Weights are static between updates and do not
+react to runtime load.</p></li>
+<li><p><strong>For deterministic routing</strong> (session affinity, consistent hashing),
+use ring hash or Maglev. They can also be configured as the
+endpoint-picking child policy of this policy, but see
+<a class="reference internal" href="#load-aware-locality-caveats"><span class="std std-ref">Caveats</span></a> for the resulting behavior.</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+<p>The policy operates at two levels: locality picking (this policy, by
+ORCA-derived headroom) and endpoint picking (a configurable child policy).
+The split lets you pair load-aware locality selection with whatever
+endpoint-picking strategy fits your workload.</p>
+<p>Request path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Incoming</span> <span class="n">request</span>
+  <span class="o">|</span>
+  <span class="o">+--</span> <span class="mf">1.</span> <span class="n">Priority</span> <span class="n">selection</span>  <span class="p">(</span><span class="n">standard</span> <span class="n">healthy</span><span class="o">/</span><span class="n">degraded</span> <span class="n">priority</span> <span class="n">load</span><span class="p">)</span>
+  <span class="o">|</span>
+  <span class="o">+--</span> <span class="mf">2.</span> <span class="n">Locality</span> <span class="n">selection</span>  <span class="p">(</span><span class="n">this</span> <span class="n">policy</span><span class="p">:</span> <span class="n">weighted</span> <span class="n">random</span> <span class="n">by</span> <span class="n">ORCA</span> <span class="n">headroom</span><span class="p">)</span>
+  <span class="o">|</span>
+  <span class="o">+--</span> <span class="mf">3.</span> <span class="n">Endpoint</span> <span class="n">selection</span>  <span class="p">(</span><span class="n">child</span> <span class="n">LB</span><span class="p">)</span>
+  <span class="o">|</span>
+  <span class="n">v</span>
+<span class="n">Chosen</span> <span class="n">upstream</span> <span class="n">host</span>
+</pre></div>
+</div>
+<section id="implementation-model">
+<h3>Implementation model<a class="headerlink" href="#implementation-model" title="Link to this heading"></a></h3>
+<p>The policy is implemented as a <code class="docutils literal notranslate"><span class="pre">ThreadAwareLoadBalancer</span></code>:</p>
+<ul class="simple">
+<li><p>A main-thread timer recomputes per-locality weights from ORCA data and
+publishes an immutable snapshot to worker threads via a thread-local slot.
+The snapshot carries a generation counter; workers rebuild per-locality
+child LB instances when membership changes bump the generation.</p></li>
+<li><p>Worker threads read the latest snapshot lock-free on the request path,
+pick a locality, and delegate endpoint selection to the child LB for that
+locality.</p></li>
+<li><p>ORCA reports flow through per-host <code class="docutils literal notranslate"><span class="pre">HostLbPolicyData</span></code> slots shared
+with other ORCA consumers; see <a class="reference internal" href="#load-aware-locality-orca-data-flow"><span class="std std-ref">ORCA data flow</span></a> below for coexistence details.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code> is set, a cluster-level OOB manager runs
+on the main-thread dispatcher and owns one ORCA gRPC streaming session
+per host, reacting to membership updates to add and remove sessions. It
+decodes reports into the same shared report handler that backs the
+in-band path, so workers see OOB and in-band samples through the same
+<code class="docutils literal notranslate"><span class="pre">HostLbPolicyData</span></code> slots.</p></li>
+</ul>
+</section>
+<section id="orca-data-flow">
+<span id="load-aware-locality-orca-data-flow"></span><h3>ORCA data flow<a class="headerlink" href="#orca-data-flow" title="Link to this heading"></a></h3>
+<p>Upstream endpoints must report ORCA utilization. The policy supports both
+in-band and out-of-band reporting modes:</p>
+<ul class="simple">
+<li><p><strong>In-band (default).</strong> ORCA reports returned on the response headers or
+trailers of upstream responses. Sample rate is tied to the request rate
+to each host, so probing (<code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code>) is required to keep
+remote-locality data fresh.</p></li>
+<li><p><strong>Out-of-band (OOB).</strong> When <code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code> is set, the policy
+opens a per-host ORCA gRPC stream and the endpoint pushes reports every
+<code class="docutils literal notranslate"><span class="pre">oob_reporting_period</span></code> independent of request traffic. OOB reuses the
+same central ORCA client as
+<a class="reference internal" href="load_balancers.html#arch-overview-load-balancing-types-client-side-weighted-round-robin"><span class="std std-ref">CSWRR</span></a>:
+a cluster-level OOB manager owns one streaming session per host, reacts to
+membership changes to add and remove sessions, and feeds every decoded
+report into the shared ORCA report handler. Because OOB decouples sample
+rate from request rate, <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code> may safely be set to 0.</p></li>
+</ul>
+<p>Either way reports land in the same per-host <code class="docutils literal notranslate"><span class="pre">HostLbPolicyData</span></code> slots, so
+weight computation is identical regardless of reporting mode.</p>
+<p>Pairing this policy with
+<a class="reference internal" href="load_balancers.html#arch-overview-load-balancing-types-client-side-weighted-round-robin"><span class="std std-ref">CSWRR</span></a>
+as <code class="docutils literal notranslate"><span class="pre">endpoint_picking_policy</span></code> yields two-level ORCA-aware balancing:
+locality selection by aggregate headroom, endpoint selection by
+per-endpoint capacity. Each consumer attaches independent
+<code class="docutils literal notranslate"><span class="pre">HostLbPolicyData</span></code> entries, so the two policies do not interfere.</p>
+<p>Utilization is derived from each host’s ORCA report using the same
+extraction as CSWRR (precedence may be flipped by the
+<code class="docutils literal notranslate"><span class="pre">envoy.reloadable_features.orca_weight_manager_use_named_metrics_first</span></code>
+runtime feature). By default:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">application_utilization</span></code> – value in [0, 1], used when reported and
+greater than 0.</p></li>
+<li><p>Named metrics via <code class="docutils literal notranslate"><span class="pre">metric_names_for_computing_utilization</span></code> – max of
+present values, used when <code class="docutils literal notranslate"><span class="pre">application_utilization</span></code> is not reported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpu_utilization</span></code> – final fallback.</p></li>
+</ol>
+</section>
+</section>
+<section id="weight-computation">
+<span id="load-aware-locality-weight-computation"></span><h2>Weight computation<a class="headerlink" href="#weight-computation" title="Link to this heading"></a></h2>
+<p>On each <code class="docutils literal notranslate"><span class="pre">weight_update_period</span></code> tick, the main thread recomputes per-
+locality routing weights in five stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Filter and average.</strong> Drop hosts whose last ORCA report is older than
+<code class="docutils literal notranslate"><span class="pre">weight_expiration_period</span></code> and average utilization across the remaining
+hosts in each locality. The locality’s EWMA state continues unchanged
+over the remaining reporters – there is no synthetic reset. If every
+host in a locality is stale, the locality is marked stale and falls
+back to host-count weighting in stage 3.</p></li>
+<li><p><strong>Smooth.</strong> Apply EWMA smoothing per locality. The first sample for a
+locality is applied raw (no blending) so the policy begins differentiating
+within a single tick after cold start; subsequent samples blend with the
+prior smoothed value. At startup with no ORCA data every locality
+defaults to utilization 0 (full headroom), so weights reduce to host
+counts – equivalent to round-robin locality selection until the first
+reports arrive.</p></li>
+<li><p><strong>Headroom weight.</strong> Compute each locality’s base weight as
+<code class="docutils literal notranslate"><span class="pre">host_count</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">smoothed_util)</span></code> – capacity-weighted headroom. Stale
+localities fall back to <code class="docutils literal notranslate"><span class="pre">host_count</span></code> so traffic keeps flowing without
+artificially boosting them.</p></li>
+<li><p><strong>Local preference.</strong> If the local locality’s smoothed utilization is at
+most <code class="docutils literal notranslate"><span class="pre">utilization_variance_threshold</span></code> above the host-count-weighted
+remote average, snap to all-local routing. One-sided: if the local
+locality is less loaded than the remote localities, all-local routing
+always applies regardless of gap size.</p></li>
+<li><p><strong>Probe floor.</strong> Enforce <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code> by taking a slice of
+local weight and redistributing it across remote localities in proportion
+to host count – not headroom – so all remotes are sampled fairly. The
+amount taken from local is capped at the local weight itself.</p></li>
+</ol>
+<section id="worked-example">
+<h3>Worked example<a class="headerlink" href="#worked-example" title="Link to this heading"></a></h3>
+<p>Three localities, default variance threshold 0.1:</p>
+<ul class="simple">
+<li><p><strong>A</strong> (local): 10 hosts, utilization 0.7</p></li>
+<li><p><strong>B</strong> (remote): 10 hosts, utilization 0.3</p></li>
+<li><p><strong>C</strong> (remote): 10 hosts, utilization 0.4</p></li>
+</ul>
+<p>Host-count-weighted remote average: <code class="docutils literal notranslate"><span class="pre">(0.3*10</span> <span class="pre">+</span> <span class="pre">0.4*10)</span> <span class="pre">/</span> <span class="pre">20</span> <span class="pre">=</span> <span class="pre">0.35</span></code>.
+Local (0.7) exceeds <code class="docutils literal notranslate"><span class="pre">0.35</span> <span class="pre">+</span> <span class="pre">0.1</span> <span class="pre">=</span> <span class="pre">0.45</span></code>, so spillover is active.</p>
+<p>Headroom weights: A=3, B=7, C=6, total=16. Traffic split: <strong>A ~19%,
+B ~44%, C ~37%</strong> – traffic flows from the hot local zone toward
+localities with more headroom.</p>
+<p>If load rebalances and all localities converge to ~0.45, local is within
+threshold and the policy snaps to <strong>100% local</strong> (minus the 3% remote
+probe). Asymmetric host counts shift the weighted average accordingly: a
+larger remote locality pulls the average toward its own utilization.</p>
+</section>
+<section id="pseudocode">
+<h3>Pseudocode<a class="headerlink" href="#pseudocode" title="Link to this heading"></a></h3>
+<p>The pseudocode below specifies the exact semantics of the five stages
+above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Per-tick smoothing factor (consistent settling regardless of tick rate)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">weight_update_period</span> <span class="o">/</span> <span class="n">smoothing_time_constant</span><span class="p">)</span>
+
+<span class="c1"># Per-host sample validity filter (excludes hosts whose last ORCA report</span>
+<span class="c1"># is older than weight_expiration_period; if disabled, all hosts qualify)</span>
+<span class="n">valid</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>         <span class="o">=</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">last_report_time</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">weight_expiration_period</span>
+<span class="n">valid_hosts</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>   <span class="o">=</span> <span class="p">{</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hosts</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="p">:</span> <span class="n">valid</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="c1"># Per-locality utilization (EWMA smoothed; first sample applied raw so</span>
+<span class="c1"># the policy reacts within one tick instead of waiting ~5 time constants</span>
+<span class="c1"># to converge from the cold-start prior of 0)</span>
+<span class="k">if</span> <span class="n">valid_hosts</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="ow">is</span> <span class="n">empty</span><span class="p">:</span>
+    <span class="n">smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">prev_smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>   <span class="c1"># carry prior value</span>
+    <span class="n">stale</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">true</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">raw_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">avg</span> <span class="n">over</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">valid_hosts</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="n">of</span> <span class="n">util</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">no</span> <span class="n">prior</span> <span class="n">smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>              <span class="c1"># first sample for L</span>
+        <span class="n">smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">raw_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">raw_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+                           <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">prev_smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">stale</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">false</span>
+
+<span class="c1"># Base headroom weight; stale localities use host_count baseline</span>
+<span class="k">if</span> <span class="n">stale</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="n">base_weight</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">host_count</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">headroom</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">smoothed_util</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+    <span class="n">base_weight</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">host_count</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">headroom</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="n">total_base_weight</span>  <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">base_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">L_i</span><span class="p">)</span>
+<span class="n">remote_host_count</span>  <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">host_count</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">remote</span> <span class="n">R_i</span><span class="p">)</span>
+
+<span class="c1"># All-overloaded fallback</span>
+<span class="k">if</span> <span class="n">total_base_weight</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span> <span class="o">=</span> <span class="n">host_count</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span> <span class="o">=</span> <span class="n">base_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">local</span> <span class="n">exists</span> <span class="ow">and</span> <span class="n">remote_host_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Local preference (one-sided: local must not be too far ABOVE remote)</span>
+        <span class="n">remote_weighted_avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">smoothed_util</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="o">*</span> <span class="n">host_count</span><span class="p">(</span><span class="n">R_i</span><span class="p">))</span>
+                              <span class="o">/</span> <span class="n">remote_host_count</span>
+        <span class="k">if</span> <span class="n">smoothed_util</span><span class="p">(</span><span class="n">local</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">remote_weighted_avg</span> <span class="o">+</span> <span class="n">utilization_variance_threshold</span><span class="p">:</span>
+            <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">local</span><span class="p">)</span> <span class="o">=</span> <span class="n">total_base_weight</span>
+            <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+        <span class="c1"># Remote probe enforcement. Conserve total weight: take only as</span>
+        <span class="c1"># much from local as it actually has, and redistribute exactly</span>
+        <span class="c1"># that amount across remotes.</span>
+        <span class="n">total_adjusted_weight</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">adjusted_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">L_i</span><span class="p">)</span>
+        <span class="n">remote_weight</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">adjusted_weight</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">remote</span> <span class="n">R_i</span><span class="p">)</span>
+        <span class="n">remote_share</span> <span class="o">=</span> <span class="n">remote_weight</span> <span class="o">/</span> <span class="n">total_adjusted_weight</span>
+        <span class="k">if</span> <span class="n">remote_share</span> <span class="o">&lt;</span> <span class="n">remote_probe_fraction</span><span class="p">:</span>
+            <span class="n">deficit</span>          <span class="o">=</span> <span class="n">remote_probe_fraction</span> <span class="o">*</span> <span class="n">total_adjusted_weight</span> <span class="o">-</span> <span class="n">remote_weight</span>
+            <span class="n">take_from_local</span>  <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">deficit</span><span class="p">,</span> <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">local</span><span class="p">))</span>
+            <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">local</span><span class="p">)</span> <span class="o">-=</span> <span class="n">take_from_local</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="n">remote</span> <span class="n">R_i</span><span class="p">:</span>
+                <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="o">+=</span> <span class="n">take_from_local</span> <span class="o">*</span> <span class="n">host_count</span><span class="p">(</span><span class="n">R_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">remote_host_count</span>
+
+<span class="n">routing_share</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">=</span> <span class="n">adjusted_weight</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">adjusted_weight</span><span class="p">(</span><span class="n">L_i</span><span class="p">)</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">L_i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Host-count proportional probe redistribution is intentional: when probing
+for fresh data, the policy samples remote localities fairly rather than
+biasing toward localities whose current (possibly stale) utilization
+happens to look lower.</p>
+</section>
+</section>
+<section id="example-configuration">
+<h2>Example configuration<a class="headerlink" href="#example-configuration" title="Link to this heading"></a></h2>
+<p>Minimal configuration with round robin endpoint picking:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">load_balancing_policy</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">policies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">typed_extension_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.load_balancing_policies.load_aware_locality</span>
+<span class="w">      </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="w">        </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.load_balancing_policies.load_aware_locality.v3.LoadAwareLocality</span>
+<span class="w">        </span><span class="nt">endpoint_picking_policy</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">policies</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">typed_extension_config</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy.load_balancing_policies.round_robin</span>
+<span class="w">              </span><span class="nt">typed_config</span><span class="p">:</span>
+<span class="w">                </span><span class="s">&quot;@type&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type.googleapis.com/envoy.extensions.load_balancing_policies.round_robin.v3.RoundRobin</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration-parameters">
+<h2>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 10.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">endpoint_picking_policy</span></code></p></td>
+<td><p>(required)</p></td>
+<td><p>Child LB policy for selecting an endpoint within the chosen locality.
+Any LB policy may be configured here, including ring hash and Maglev,
+though policies that build cluster-wide structures will operate over
+only the chosen locality’s host slice. See
+<a class="reference internal" href="#load-aware-locality-caveats"><span class="std std-ref">Caveats</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">weight_update_period</span></code></p></td>
+<td><p>1 s</p></td>
+<td><p>How often locality weights are recomputed from ORCA data. Must be at
+least 100 ms.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">metric_names_for_computing_utilization</span></code></p></td>
+<td><p>(unset)</p></td>
+<td><p>Named ORCA metrics used to compute utilization when
+<code class="docutils literal notranslate"><span class="pre">application_utilization</span></code> is not reported. The max of matching
+values is taken. Map entries use <code class="docutils literal notranslate"><span class="pre">&lt;map_field_name&gt;.&lt;map_key&gt;</span></code> (e.g.
+<code class="docutils literal notranslate"><span class="pre">named_metrics.foo</span></code>). See
+<a class="reference internal" href="#load-aware-locality-weight-computation"><span class="std std-ref">Weight computation</span></a> for
+precedence.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">utilization_variance_threshold</span></code></p></td>
+<td><p>0.1</p></td>
+<td><p>When the local locality’s utilization exceeds the host-count-weighted
+remote average by no more than this threshold, all traffic routes
+locally. One-sided check: if the local locality is less loaded than
+the remote localities, all-local routing always applies. Range:
+[0, 1].</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">smoothing_time_constant</span></code></p></td>
+<td><p>5 s</p></td>
+<td><p>EWMA time constant for per-locality utilization smoothing. The
+per-tick smoothing factor is derived as
+<code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">exp(-weight_update_period</span> <span class="pre">/</span> <span class="pre">smoothing_time_constant)</span></code>,
+so settling time is independent of the configured tick rate. Larger
+values produce more stable weights; smaller values react faster.
+Must be greater than 0 s.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code></p></td>
+<td><p>0.03</p></td>
+<td><p>Minimum fraction of traffic sent to non-local localities to keep ORCA
+data fresh in all-local mode. The deficit is redistributed
+proportionally to host count. Set to 0 to disable (safe only with
+out-of-band ORCA reporting or when cross-zone traffic must be strictly
+avoided). Range: [0, 1). See
+<a class="reference internal" href="#load-aware-locality-caveats"><span class="std std-ref">Caveats</span></a> for scaling notes.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">weight_expiration_period</span></code></p></td>
+<td><p>3 minutes</p></td>
+<td><p>Per-host sample validity window. Hosts that have not reported within
+this duration are excluded from their locality’s utilization
+aggregation. The locality’s EWMA continues over the remaining
+reporting hosts; if every host in a locality is stale, the locality
+falls back to host-count-proportional weighting. Tune higher to
+tolerate longer reporting gaps; tune lower to prune draining
+backends faster. Set to 0 s to disable expiration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code></p></td>
+<td><p>(unset / false)</p></td>
+<td><p>Enables out-of-band (OOB) ORCA utilization reporting. When set, the
+policy opens a per-host ORCA gRPC stream and the endpoint pushes
+reports on its own schedule rather than piggybacking on responses.
+When unset, only in-band reports on response headers/trailers are
+consumed. See <a class="reference internal" href="#load-aware-locality-orca-data-flow"><span class="std std-ref">ORCA data flow</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">oob_reporting_period</span></code></p></td>
+<td><p>10 s</p></td>
+<td><p>Requested load-reporting interval, used only when
+<code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code> is true. The upstream may report less
+frequently than requested.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="priority-support">
+<h2>Priority support<a class="headerlink" href="#priority-support" title="Link to this heading"></a></h2>
+<p>The policy respects Envoy’s
+<a class="reference internal" href="priority.html#arch-overview-load-balancing-priority-levels"><span class="std std-ref">priority levels</span></a>.
+Priority selection happens first via the standard healthy/degraded
+priority load calculation; locality selection then applies within the
+chosen priority. Unlike zone-aware routing (priority 0 only), this
+policy applies at all priority levels.</p>
+<p>Three independent weight sets are maintained per priority:</p>
+<ul class="simple">
+<li><p><strong>Healthy</strong> – common case, healthy hosts only.</p></li>
+<li><p><strong>Degraded</strong> – when Envoy selects
+<a class="reference internal" href="degraded.html#arch-overview-load-balancing-degraded"><span class="std std-ref">degraded</span></a> hosts.</p></li>
+<li><p><strong>All-host</strong> – when the priority is in
+<a class="reference internal" href="panic_threshold.html#arch-overview-load-balancing-panic-threshold"><span class="std std-ref">panic mode</span></a>.</p></li>
+</ul>
+<p>Each set tracks its own per-locality utilization average and headroom
+weight, computed from the same per-host ORCA data in a single tick pass.</p>
+</section>
+<section id="caveats-and-known-limitations">
+<span id="load-aware-locality-caveats"></span><h2>Caveats and known limitations<a class="headerlink" href="#caveats-and-known-limitations" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong>Probing is required with in-band reporting.</strong> In the default in-band
+mode, a locality only produces fresh ORCA samples when it receives
+traffic, so <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code> must stay above 0 to keep remote
+localities reporting. Set it to 0 only when <code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code>
+is on (OOB streams report independently of traffic) or when cross-zone
+traffic must be strictly avoided.</p></li>
+<li><p><strong>Hash-based child policies.</strong> Ring hash and Maglev build their hash
+structures from the host set they are given. With this policy, that set
+is the chosen locality’s hosts, not the full cluster. The same request
+hash will not necessarily map to the same endpoint cluster-wide, so
+consistency guarantees apply only within a locality.</p></li>
+<li><p><strong>Probe-fraction scaling.</strong> <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code> is a global value
+divided across all remote localities, then again across each locality’s
+hosts. The per-host probe rate is therefore approximately
+<code class="docutils literal notranslate"><span class="pre">Total</span> <span class="pre">RPS</span> <span class="pre">*</span> <span class="pre">remote_probe_fraction</span> <span class="pre">/</span> <span class="pre">(N</span> <span class="pre">remotes</span> <span class="pre">*</span> <span class="pre">Hosts/locality)</span></code>,
+and the expected interval between consecutive probes to a given host
+is the reciprocal. When that interval exceeds
+<code class="docutils literal notranslate"><span class="pre">weight_expiration_period</span></code>, hosts are likely to go stale between
+probes and the locality falls back to host-count weighting – defeating
+the load-awareness this policy provides.</p>
+<p>Approximate sample intervals per host at the default <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code>
+of 0.03:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Total RPS</p></th>
+<th class="head"><p>N remotes</p></th>
+<th class="head"><p>Hosts/locality</p></th>
+<th class="head"><p>Sample interval/host</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1000</p></td>
+<td><p>3</p></td>
+<td><p>10</p></td>
+<td><p>~1 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>1000</p></td>
+<td><p>100</p></td>
+<td><p>10</p></td>
+<td><p>~33 s</p></td>
+</tr>
+<tr class="row-even"><td><p>100</p></td>
+<td><p>100</p></td>
+<td><p>10</p></td>
+<td><p>~5.5 min</p></td>
+</tr>
+</tbody>
+</table>
+<p>The top row is comfortably faster than the 3-minute default expiration.
+The middle row is still safe but leaves less headroom. In the bottom
+row, samples expire before the next probe arrives, so remote
+localities will alternate between fresh data and host-count fallback
+every few ticks. To avoid this, either reduce locality count, raise
+<code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code>, raise <code class="docutils literal notranslate"><span class="pre">weight_expiration_period</span></code> to
+tolerate longer gaps, or enable OOB ORCA reporting via
+<code class="docutils literal notranslate"><span class="pre">enable_oob_load_report</span></code> (which decouples sample rate from request
+rate entirely).</p>
+</li>
+<li><p><strong>Variance-threshold oscillation.</strong> Workloads sitting near the
+<code class="docutils literal notranslate"><span class="pre">utilization_variance_threshold</span></code> boundary can theoretically oscillate
+between snap-to-local and spillover modes across consecutive ticks.
+EWMA smoothing dampens this in practice; tune
+<code class="docutils literal notranslate"><span class="pre">smoothing_time_constant</span></code> higher if oscillation is observed.</p></li>
+<li><p><strong>Subsetting.</strong> Load balancer
+<a class="reference internal" href="subsets.html#arch-overview-load-balancer-subsets"><span class="std std-ref">subsetting</span></a> partitions
+hosts orthogonally to locality boundaries. The policy will operate
+over the post-subset host slice; per-locality weights are computed
+over whatever hosts remain after subsetting filters them. This is
+rarely the behavior subset users expect.</p></li>
+</ul>
+</section>
+<section id="statistics">
+<h2>Statistics<a class="headerlink" href="#statistics" title="Link to this heading"></a></h2>
+<p>The policy emits stats under <code class="docutils literal notranslate"><span class="pre">cluster.&lt;cluster_name&gt;.load_aware_locality.*</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Counter</p></th>
+<th class="head"><p>Increments when</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">recompute_total</span></code></p></td>
+<td><p>Per main-thread tick that recomputes weights.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">all_overloaded_total</span></code></p></td>
+<td><p>Per tick where every locality’s headroom was 0 (fallback to
+host-count weighting).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">local_preferred_total</span></code></p></td>
+<td><p>Per tick where the variance-threshold check snapped routing to
+100% local.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">probe_active_total</span></code></p></td>
+<td><p>Per tick where <code class="docutils literal notranslate"><span class="pre">remote_probe_fraction</span></code> redistribution kicked in.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stale_locality_total</span></code></p></td>
+<td><p>Incremented once per stale locality per tick (a locality whose
+hosts were all stale and fell back to host-count baseline). A
+5-locality cluster with 2 stale localities adds 2 each tick.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Migrating from zone-aware routing? The closest counter mappings:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Zone-aware counter</p></th>
+<th class="head"><p>Load-aware-locality equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lb_zone_routing_all_directly</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">load_aware_locality.local_preferred_total</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lb_recalculate_zone_structures</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">load_aware_locality.recompute_total</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Envoy Project Authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
