@@ -1,0 +1,50 @@
+module(name = "envoy_archive")
+
+bazel_dep(name = "envoy")
+bazel_dep(name = "envoy_api", version = "1.40.0-dev")
+bazel_dep(name = "envoy_toolshed", version = "0.4.13.envoy")
+bazel_dep(name = "protobuf", version = "35.1.bcr.envoy")
+bazel_dep(name = "rules_python", version = "2.2.0")
+
+bazel_dep(name = "toolchains_llvm", version = "1.9.0.envoy", dev_dependency = True)
+
+# Loaded by `//:BUILD` (jq) and `//docs:BUILD` (pkg_files/pkg_filegroup)
+bazel_dep(name = "aspect_bazel_lib", version = "2.22.0")
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+archive_override(
+    module_name = "envoy",
+    urls = ["https://github.com/envoyproxy/envoy/archive/69bc1cf5355798df3a041eafffda0a954b3b89d7.tar.gz"],
+    sha256 = "3e5f419c78ff7ae8d754c1ffe3f7820879dcb3262ad8b0c1a2a1f79ed1bf833e",
+    strip_prefix = "envoy-69bc1cf5355798df3a041eafffda0a954b3b89d7",
+)
+
+archive_override(
+    module_name = "envoy_api",
+    urls = ["https://github.com/envoyproxy/envoy/archive/69bc1cf5355798df3a041eafffda0a954b3b89d7.tar.gz"],
+    sha256 = "3e5f419c78ff7ae8d754c1ffe3f7820879dcb3262ad8b0c1a2a1f79ed1bf833e",
+    strip_prefix = "envoy-69bc1cf5355798df3a041eafffda0a954b3b89d7/api",
+)
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    is_default = True,
+    python_version = "3.12",
+)
+use_repo(
+    python,
+    "python_3_12",
+    python = "python_versions",
+)
+
+envoy_toolchains_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_toolchains_extension")
+use_repo(envoy_toolchains_ext, "clang_platform")
+
+# `@envoy_repo//:project` is used by `update-archive.sh` to resolve Envoy releases
+envoy_repo_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_repo_extension")
+use_repo(envoy_repo_ext, "envoy_repo")
+
+# The `base_pip3` hub is declared by @envoy - pip hub names must be unique across
+# modules, so it is imported rather than redeclared.
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+use_repo(pip, "base_pip3")
