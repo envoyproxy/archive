@@ -1,17 +1,28 @@
 startup --host_jvm_args=-Xmx3g
 
-common --color=yes
-common:ci --noshow_progress
-common:ci --noshow_loading_progress
-common:ci --test_output=errors
+build --color=yes
+fetch --color=yes
+run --color=yes
 
-common --noenable_bzlmod
-common --enable_workspace
+common --registry=https://bcr.bazel.build/
+common --registry=https://raw.githubusercontent.com/envoyproxy/bazel-registry/b6e15c00b1c0493cd194b1b248c562bd8bc46648
+common --noincompatible_disallow_empty_glob
+# Required for `@envoy//tools/jq` (toolshed `jqcat`): `$(JQ_BIN)` expands to an
+# execroot-relative `external/...` path that is only present in `bazel run`
+# runfiles with the legacy layout.
 common --legacy_external_runfiles
+
 common --@rules_python//python/config_settings:bootstrap_impl=script
+build --incompatible_default_to_explicit_init_py
+common --@protobuf//bazel/flags:prefer_prebuilt_protoc=true
+common --incompatible_enable_proto_toolchain_resolution
 
 build --jobs=HOST_CPUS-1
 build --action_env=SPHINX_JOBS
+
+common:ci --noshow_progress
+common:ci --noshow_loading_progress
+common:ci --test_output=errors
 
 # RBE (Engflow Envoy)
 build:common-envoy-engflow --google_default_credentials=false
@@ -33,3 +44,6 @@ build:remote-envoy-engflow --config=common-envoy-engflow
 build:remote-envoy-engflow --config=cache-envoy-engflow
 build:remote-envoy-engflow --config=bes-envoy-engflow
 build:remote-envoy-engflow --config=rbe-envoy-engflow
+
+try-import %workspace%/repo.bazelrc
+try-import %workspace%/user.bazelrc
