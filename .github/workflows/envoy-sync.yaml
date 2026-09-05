@@ -79,7 +79,15 @@ jobs:
         ENVOY_VERSION="$(git -C ../envoy rev-parse HEAD)"
         echo "Syncing Envoy -> ${ENVOY_VERSION}"
         export CARGO_BAZEL_REPIN=true
-        bazel run --config=ci --config=remote-envoy-engflow //bazel:update envoy "${ENVOY_VERSION}"
+        # Repin the `envoy`/`envoy_api` `archive_override`s in MODULE.bazel
+        ENVOY_SHA256="$(curl -sfL "https://github.com/envoyproxy/envoy/archive/${ENVOY_VERSION}.tar.gz" | sha256sum | cut -d' ' -f1)"
+        CURRENT_VERSION="$(sed -n 's|.*/envoy/archive/\([0-9a-f]\{40\}\)\.tar\.gz.*|\1|p' MODULE.bazel | head -n1)"
+        CURRENT_SHA256="$(grep -A1 "envoy/archive/${CURRENT_VERSION}.tar.gz" MODULE.bazel | sed -n 's|.*sha256 = "\([0-9a-f]\{64\}\)".*|\1|p' | head -n1)"
+        if [[ -z "$ENVOY_SHA256" || -z "$CURRENT_VERSION" || -z "$CURRENT_SHA256" ]]; then
+            echo "Unable to resolve Envoy pins in MODULE.bazel" >&2
+            exit 1
+        fi
+        sed -i -e "s/${CURRENT_VERSION}/${ENVOY_VERSION}/g" -e "s/${CURRENT_SHA256}/${ENVOY_SHA256}/g" MODULE.bazel
         ./update-archive.sh
       env:
         COMMITTER_NAME: "update-envoy[bot]"
