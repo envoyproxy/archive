@@ -1,0 +1,57 @@
+name: GCS seed
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version dir (e.g. v1.36.5) or 'all'"
+        type: string
+        required: true
+        default: v1.39.1
+
+jobs:
+  seed:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+
+    - uses: envoyproxy/toolshed/actions/gcp/setup@4a6a2986abd53c8a2d1077de4165fae369c5bc41  # actions-v0.4.23
+      with:
+        key: ${{ secrets.GCS_ARCHIVE_KEY }}
+
+    - name: Upload
+      run: |
+        set -euo pipefail
+        VERSION="${{ inputs.version }}"
+        if [[ "$VERSION" == all ]]; then
+          SRC="docs/envoy"
+          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy"
+        else
+          SRC="docs/envoy/${VERSION}"
+          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/${VERSION}"
+        fi
+        if [[ ! -d "$SRC" ]]; then
+          echo "Source directory not found: $SRC" >&2
+          exit 1
+        fi
+        gcloud storage rsync -r --no-clobber \
+          --cache-control="public, max-age=31536000, immutable" \
+          "$SRC" "$DST"
+
+    - name: Verify
+      run: |
+        set -euo pipefail
+        VERSION="${{ inputs.version }}"
+        if [[ "$VERSION" == all ]]; then
+          VERSION="v1.39.1"
+        fi
+        URL="https://storage.googleapis.com/${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/${VERSION}/index.html"
+        HEADERS="$(curl -fsI "$URL")"
+        if ! grep -qi "cache-control: public, max-age=31536000, immutable" <<<"$HEADERS"; then
+          echo "Unexpected Cache-Control header for $URL" >&2
+          echo "$HEADERS" >&2
+          exit 1
+        fi
