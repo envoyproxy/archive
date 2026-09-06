@@ -56,7 +56,15 @@ def wanted_versions(project: dict) -> tuple:
 
 def main(*args) -> int:
     parsed = parse_args(args)
-    project = json.loads(pathlib.Path(parsed.project_json).read_text())
+    project_json = pathlib.Path(parsed.project_json)
+    if not project_json.exists():
+        print(
+            f"Envoy project data not found: {project_json}. This is provided "
+            "by `@envoy_repo//:project` and resolved from the runfiles, so "
+            "this must be run with `bazel run`.",
+            file=sys.stderr)
+        return 1
+    project = json.loads(project_json.read_text())
     want, excluded = wanted_versions(project)
     gcs_client = gcs.client()
     have = manifest.sort_versions(

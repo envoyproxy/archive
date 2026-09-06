@@ -30,7 +30,7 @@ py_test(
 py_binary(
     name = "reconcile",
     srcs = ["reconcile.py"],
-    args = ["--project-json=$(location @envoy_repo//:project)"],
+    args = ["--project-json=$(rootpath @envoy_repo//:project)"],
     data = ["@envoy_repo//:project"],
     deps = [
         ":gcs",
