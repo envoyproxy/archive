@@ -40,7 +40,7 @@ use_repo(
 envoy_toolchains_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_toolchains_extension")
 use_repo(envoy_toolchains_ext, "clang_platform")
 
-# `@envoy_repo//:project` is used by `update-archive.sh` to resolve Envoy releases
+# `@envoy_repo//:project` is used by `//tools/archive:reconcile` to resolve Envoy releases
 envoy_repo_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_repo_extension")
 use_repo(envoy_repo_ext, "envoy_repo")
 
@@ -48,3 +48,12 @@ use_repo(envoy_repo_ext, "envoy_repo")
 # modules, so it is imported rather than redeclared.
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 use_repo(pip, "base_pip3")
+
+# Requirements for `//tools/archive` - the GCS client used to reconcile the
+# docs archive bucket is not provided by `base_pip3`.
+pip.parse(
+    hub_name = "archive_pip3",
+    python_version = "3.12",
+    requirements_lock = "//tools/archive:requirements.txt",
+)
+use_repo(pip, "archive_pip3")
