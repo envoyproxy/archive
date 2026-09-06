@@ -1,16 +1,26 @@
 module(name = "envoy_archive")
 
+bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "envoy")
 bazel_dep(name = "envoy_api", version = "1.40.0-dev")
 bazel_dep(name = "envoy_toolshed", version = "0.4.13.envoy")
 bazel_dep(name = "protobuf", version = "35.1.bcr.envoy")
+bazel_dep(name = "rclone", version = "1.70.3.envoy")
 bazel_dep(name = "rules_python", version = "2.2.0")
 
 bazel_dep(name = "toolchains_llvm", version = "1.9.0.envoy", dev_dependency = True)
 
-# Loaded by `//:BUILD` (jq) and `//docs:BUILD` (pkg_files/pkg_filegroup)
+# Loaded by `//:BUILD` (jq), `//docs:BUILD` (pkg_files/pkg_filegroup) and
+# `//tools/archive:BUILD` (jq, jq toolchain for sh_binary/sh_test)
 bazel_dep(name = "aspect_bazel_lib", version = "2.22.0")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+# Used by `//tools/archive:BUILD` sh_binary targets
+bazel_dep(name = "rules_shell", version = "0.8.0")
+
+bazel_lib_toolchains = use_extension("@aspect_bazel_lib//lib:extensions.bzl", "toolchains")
+bazel_lib_toolchains.jq(version = "1.7")
+use_repo(bazel_lib_toolchains, "jq_toolchains")
 
 archive_override(
     module_name = "envoy",
@@ -40,7 +50,7 @@ use_repo(
 envoy_toolchains_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_toolchains_extension")
 use_repo(envoy_toolchains_ext, "clang_platform")
 
-# `@envoy_repo//:project` is used by `update-archive.sh` to resolve Envoy releases
+# `@envoy_repo//:project` is used by `//tools/archive:reconcile` to resolve Envoy releases
 envoy_repo_ext = use_extension("@envoy//bazel:extensions.bzl", "envoy_repo_extension")
 use_repo(envoy_repo_ext, "envoy_repo")
 

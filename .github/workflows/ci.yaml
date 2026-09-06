@@ -1,0 +1,74 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  archive-tools:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+      with:
+        sparse-checkout: |
+          .bazelrc
+          .bazelversion
+          BUILD
+          MODULE.bazel
+          bazel
+          tools
+          versions.bzl
+        sparse-checkout-cone-mode: false
+
+    # The ci config controls Bazel output only; remote execution requires the
+    # separate remote-envoy-engflow config and is not used by this workflow.
+    - name: Test
+      working-directory: .
+      run: |
+        set -euo pipefail
+        bazel test --config=ci //tools/archive/...
+
+    - name: Build publish targets
+      working-directory: .
+      run: |
+        set -euo pipefail
+        bazel build //tools/archive:publish //tools/archive:publish_manifest
+
+    - name: Reconcile (read-only)
+      working-directory: .
+      run: |
+        set -euo pipefail
+        bazel build \
+            //tools/archive:plan \
+            //tools/archive:missing_txt \
+            //tools/archive:summary \
+            //tools/archive:manifest \
+            //tools/archive:changed
+        cat bazel-bin/tools/archive/summary.txt
+        test -s bazel-bin/tools/archive/plan.json
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish guard
+      working-directory: .
+      run: |
+        set -euo pipefail
+        unset GCP_KEY_PATH
+        tar czf "${RUNNER_TEMP}/x.tar.gz" -T /dev/null
+        if bazel run //tools/archive:publish -- \
+            --version=v0.0.0 --tarball="${RUNNER_TEMP}/x.tar.gz"; then
+            echo "expected publish to fail without GCP_KEY_PATH" >&2
+            exit 1
+        fi
+        if bazel run //tools/archive:publish_manifest; then
+            echo "expected publish_manifest to fail without GCP_KEY_PATH" >&2
+            exit 1
+        fi
