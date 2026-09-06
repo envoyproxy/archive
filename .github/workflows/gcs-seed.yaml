@@ -28,10 +28,10 @@ jobs:
         VERSION="${{ inputs.version }}"
         if [[ "$VERSION" == all ]]; then
           SRC="docs/envoy"
-          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy"
+          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/docs"
         else
           SRC="docs/envoy/${VERSION}"
-          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/${VERSION}"
+          DST="gs://${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/docs/${VERSION}"
         fi
         if [[ ! -d "$SRC" ]]; then
           echo "Source directory not found: $SRC" >&2
@@ -48,7 +48,7 @@ jobs:
         if [[ "$VERSION" == all ]]; then
           VERSION="v1.39.1"
         fi
-        URL="https://storage.googleapis.com/${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/${VERSION}/index.html"
+        URL="https://storage.googleapis.com/${{ vars.GCS_ARCHIVE_BUCKET }}/envoy/docs/${VERSION}/index.html"
         HEADERS="$(curl -fsI "$URL")"
         if ! grep -qi "cache-control: public, max-age=31536000, immutable" <<<"$HEADERS"; then
           echo "Unexpected Cache-Control header for $URL" >&2
