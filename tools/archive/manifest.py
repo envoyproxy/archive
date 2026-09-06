@@ -59,7 +59,7 @@ def classify_versions(versions: Iterable[str]) -> dict:
     minors = group_minors(versions)
     stable = list(minors)[:STABLE_MINORS]
     return dict(
-        latest=(sort_versions(versions)[0] if minors else None),
+        latest=(minors[stable[0]][0] if minors else None),
         stable={minor: minors[minor] for minor in stable},
         archived={
             minor: releases

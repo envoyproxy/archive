@@ -32,7 +32,9 @@ def parse_args(args) -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Only report the plan")
+        help=(
+            "Only report the plan. This is read-only either way, and the "
+            "plan is written in both cases"))
     return parser.parse_args(args)
 
 
