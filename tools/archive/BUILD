@@ -2,11 +2,19 @@ load("@aspect_bazel_lib//lib:diff_test.bzl", "diff_test")
 load("@aspect_bazel_lib//lib:jq.bzl", "jq")
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
-load(":archive_rules.bzl", "archive_no_cache_genrule", "archive_rclone_genrule", "string_flag_value")
+load(":archive_rules.bzl", "archive_rclone_genrule", "string_flag_value")
 
 ARCHIVE_JQ_ARGS = [
     "-L",
     "tools/archive/jq",
+]
+
+# The manifest is content-addressed once published, so its bytes must be a
+# function of its content alone: sorted keys, compact whitespace, one
+# trailing LF.
+MANIFEST_JQ_ARGS = [
+    "-S",
+    "-c",
 ]
 
 string_flag(
@@ -49,12 +57,6 @@ fi
 """,
 )
 
-archive_no_cache_genrule(
-    name = "now",
-    outs = ["now.txt"],
-    cmd = "date -u +%Y-%m-%dT%H:%M:%SZ > \"$@\"",
-)
-
 jq(
     name = "plan_inputs",
     srcs = ["@envoy_repo//:project"],
@@ -86,8 +88,10 @@ fi
 printf '[' > "$@"
 sep=""
 while IFS= read -r name; do
+    # Per-version sidecars only - the same prefix also holds the
+    # content-addressed `sha256-<hex>.json` manifest copies.
     case "$${name}" in
-        *.json) ;;
+        v*.json) ;;
         *) continue ;;
     esac
     if [[ -n "$${sep}" ]]; then printf ',' >> "$@"; fi
@@ -193,7 +197,7 @@ jq(
     srcs = [],
     out = "versions.json",
     filter_file = "jq/manifest.jq",
-    args = ARCHIVE_JQ_ARGS + [
+    args = ARCHIVE_JQ_ARGS + MANIFEST_JQ_ARGS + [
         "-n",
         "--slurpfile",
         "existing",
@@ -207,9 +211,6 @@ jq(
         "--rawfile",
         "archive_bucket",
         "$(location :archive_bucket_value)",
-        "--rawfile",
-        "generated",
-        "$(location :now)",
         "--argjson",
         "stable_minors",
         "4",
@@ -220,7 +221,6 @@ jq(
         ":existing",
         ":have",
         ":new_entries",
-        ":now",
         "jq/versions.jq",
     ],
 )
@@ -318,6 +318,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "ARCHIVE_BUCKET_FILE": "$(rlocationpath :archive_bucket_value)",
         "META_BUCKET_FILE": "$(rlocationpath :meta_bucket_value)",
@@ -336,6 +337,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "ARCHIVE_BUCKET_FILE": "$(rlocationpath :archive_bucket_value)",
         "META_BUCKET_FILE": "$(rlocationpath :meta_bucket_value)",
@@ -356,6 +358,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "CHANGED_FILE": "$(rlocationpath :changed)",
         "DROPPED_FILE": "$(rlocationpath :dropped)",
@@ -542,7 +545,7 @@ jq(
     srcs = [],
     out = "versions.fixture.json",
     filter_file = "jq/manifest.jq",
-    args = ARCHIVE_JQ_ARGS + [
+    args = ARCHIVE_JQ_ARGS + MANIFEST_JQ_ARGS + [
         "-n",
         "--slurpfile",
         "existing",
@@ -556,9 +559,6 @@ jq(
         "--arg",
         "archive_bucket",
         "archive",
-        "--arg",
-        "generated",
-        "2026-09-06T12:00:00Z",
         "--argjson",
         "stable_minors",
         "4",
