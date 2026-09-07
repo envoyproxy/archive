@@ -29,26 +29,44 @@ RCLONE="$(archive_rlocation "${RCLONE_BIN}")"
 ARCHIVE_BUCKET="$(cat "$(archive_rlocation "${ARCHIVE_BUCKET_FILE}")")"
 META_BUCKET="$(cat "$(archive_rlocation "${META_BUCKET_FILE}")")"
 
-existing_sidecars() {
-    "${RCLONE}" --config /dev/null lsf --files-only "gcs:${META_BUCKET}/envoy/docs/versions" 2>/dev/null || true
+# Sidecars already present in the meta bucket, as bare versions (no .json).
+# The prefix may not exist yet - treat that as "none".
+mapfile -t EXISTING < <(
+    "${RCLONE}" --config /dev/null lsf --files-only "gcs:${META_BUCKET}/envoy/docs/versions" 2>/dev/null \
+        | sed -n 's/\.json$//p' || true)
+
+has_sidecar() {
+    local version="$1" existing
+    for existing in "${EXISTING[@]}"; do
+        [[ "${existing}" == "${version}" ]] && return 0
+    done
+    return 1
 }
-EXISTING_SIDECARS="$(existing_sidecars)"
 
 if [[ "${ALL}" == "true" ]]; then
+    mapfile -t ARCHIVED < <(
+        "${RCLONE}" --config /dev/null lsf --dirs-only "gcs:${ARCHIVE_BUCKET}/envoy/docs" \
+            | sed 's#/$##' \
+            | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' || true)
+    printf 'Archived versions: %d, existing sidecars: %d\n' "${#ARCHIVED[@]}" "${#EXISTING[@]}"
     VERSIONS=()
-    while IFS= read -r version; do
-        [[ -n "${version}" ]] || continue
-        VERSIONS+=("${version}")
-    done < <("${RCLONE}" --config /dev/null lsf --dirs-only "gcs:${ARCHIVE_BUCKET}/envoy/docs" \
-        | sed 's#/$##' \
-        | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
-        | grep -vxF -f <(printf '%s\n' "${EXISTING_SIDECARS}" | sed 's/\.json$//') || true)
+    for version in "${ARCHIVED[@]}"; do
+        has_sidecar "${version}" || VERSIONS+=("${version}")
+    done
 fi
 
-[[ "${#VERSIONS[@]}" -gt 0 ]] || { echo "Nothing to backfill"; exit 0; }
+if [[ "${#VERSIONS[@]}" -eq 0 ]]; then
+    echo "Nothing to backfill"
+    exit 0
+fi
+printf 'Backfilling %d version(s)\n' "${#VERSIONS[@]}"
 
 work="$(mktemp -d)"; trap 'rm -rf "${work}"' EXIT
 for version in "${VERSIONS[@]}"; do
+    if has_sidecar "${version}"; then
+        printf 'Sidecar already exists for %s, skipping\n' "${version}"
+        continue
+    fi
     dir="${work}/${version}"
     mkdir -p "${dir}"
     "${RCLONE}" --config /dev/null copy "gcs:${ARCHIVE_BUCKET}/envoy/docs/${version}" "${dir}"
@@ -56,15 +74,12 @@ for version in "${VERSIONS[@]}"; do
     archive_write_sidecar "${version}" "${dir}" "${sidecar}"
     if [[ "${DRY_RUN}" == "true" ]]; then
         printf '%s: %s\n' "${version}" "$(cat "${sidecar}")"
-        continue
+    else
+        "${RCLONE}" --config /dev/null copyto \
+            --ignore-existing \
+            --header-upload "Cache-Control: public, max-age=300" \
+            "${sidecar}" "gcs:${META_BUCKET}/envoy/docs/versions/${version}.json"
+        printf 'Backfilled sidecar for %s\n' "${version}"
     fi
-    if printf '%s\n' "${EXISTING_SIDECARS}" | grep -qxF "${version}.json"; then
-        printf 'Sidecar already exists for %s, skipping\n' "${version}"
-        continue
-    fi
-    "${RCLONE}" --config /dev/null copyto \
-        --ignore-existing \
-        --header-upload "Cache-Control: public, max-age=300" \
-        "${sidecar}" "gcs:${META_BUCKET}/envoy/docs/versions/${version}.json"
-    printf 'Backfilled sidecar for %s\n' "${version}"
+    rm -rf "${dir}" "${sidecar}"
 done
