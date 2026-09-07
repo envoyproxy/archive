@@ -318,6 +318,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "ARCHIVE_BUCKET_FILE": "$(rlocationpath :archive_bucket_value)",
         "META_BUCKET_FILE": "$(rlocationpath :meta_bucket_value)",
@@ -336,6 +337,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "ARCHIVE_BUCKET_FILE": "$(rlocationpath :archive_bucket_value)",
         "META_BUCKET_FILE": "$(rlocationpath :meta_bucket_value)",
@@ -356,6 +358,7 @@ sh_binary(
         "runfiles.sh",
         "@rclone//:rclone",
     ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
     env = {
         "CHANGED_FILE": "$(rlocationpath :changed)",
         "DROPPED_FILE": "$(rlocationpath :dropped)",
