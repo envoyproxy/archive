@@ -49,7 +49,7 @@ jobs:
     # Checkout the Envoy repo - the docs for each missing version are built
     # from its own checkout
     - name: 'Checkout Envoy'
-      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         repository: envoyproxy/envoy
         ref: main
@@ -58,7 +58,7 @@ jobs:
 
     # Checkout this repo, excluding the (legacy) `docs/` directory
     - name: 'Checkout Repository'
-      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         path: archive
         sparse-checkout: |
