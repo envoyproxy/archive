@@ -25,7 +25,27 @@ while read -r version; do
     [[ -z "${version}" ]] && continue
     printf 'WARNING: %s is recorded in the manifest but is not present in the archive bucket, dropping the entry. This should not happen and may indicate bucket tampering.\n' "${version}" >&2
 done < "${DROPPED}"
+digest="$(sha256sum "${MANIFEST}" | cut -d' ' -f1)"
+pinned="gcs:${META_BUCKET}/envoy/docs/manifest/sha256-${digest}.json"
+
+# Immutable, content-addressed copy. The object name is the sha256 of its
+# bytes, so --ignore-existing is a correct no-op for identical content and a
+# consumer pinning this URL can verify it with the same value. It is written
+# before the mutable pointer, so the pointer never refers to a manifest that
+# is not also available under its digest.
+"${RCLONE}" --config /dev/null copyto \
+    --ignore-existing \
+    --header-upload "Cache-Control: public, max-age=31536000, immutable" \
+    "${MANIFEST}" "${pinned}"
+
+# Mutable pointer, always the latest manifest.
 "${RCLONE}" --config /dev/null rcat \
     --header-upload "Cache-Control: public, max-age=300" \
     "gcs:${META_BUCKET}/envoy/docs/versions.json" < "${MANIFEST}"
-printf 'Manifest updated: gs://%s/envoy/docs/versions.json\n' "${META_BUCKET}"
+
+# Digest of the mutable pointer, for consumers that do not hash it themselves.
+printf '%s\n' "${digest}" | "${RCLONE}" --config /dev/null rcat \
+    --header-upload "Cache-Control: public, max-age=300" \
+    "gcs:${META_BUCKET}/envoy/docs/versions.json.sha256"
+
+printf 'Manifest updated: gs://%s/envoy/docs/versions.json (sha256:%s)\n' "${META_BUCKET}" "${digest}"

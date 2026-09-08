@@ -32,5 +32,9 @@ archive_require_gcp_key() {
     fi
     export RCLONE_CONFIG_GCS_TYPE="google cloud storage"
     export RCLONE_CONFIG_GCS_SERVICE_ACCOUNT_FILE="${GCP_KEY_PATH}"
+    # Never attempt to create buckets; the SA has object perms only.
+    export RCLONE_CONFIG_GCS_NO_CHECK_BUCKET=true
+    # Buckets use uniform bucket-level access; per-object ACLs are rejected.
+    export RCLONE_CONFIG_GCS_BUCKET_POLICY_ONLY=true
     unset RCLONE_CONFIG_GCS_ANONYMOUS || true
 }
