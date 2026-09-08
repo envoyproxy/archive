@@ -1,3 +1,9 @@
+> [!WARNING]
+> **This repository is archived and no longer maintained.**
+>
+> The Envoy docs can be reached via the Envoy website: **https://www.envoyproxy.io/docs**
+
+
 # Envoy Proxy archive
 
 This is an archive for the [Envoy Proxy](https://www.envoyproxy.io) documentation.
